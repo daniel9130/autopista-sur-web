@@ -1,0 +1,59 @@
+name: Actualizar tablero MetroLab
+
+on:
+  schedule:
+    # Cada 6 horas: 00:30, 06:30, 12:30 y 18:30 hora de Bogotá (cron va en UTC = Bogotá + 5 h)
+    - cron: "30 5,11,17,23 * * *"
+  workflow_dispatch:        # botón "Run workflow" para correrlo a mano
+
+permissions:
+  contents: write           # para publicar el tablero en este mismo repositorio
+
+concurrency:
+  group: tablero-metrolab   # nunca dos corridas al tiempo
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: metrolab/requirements.txt
+
+      - name: Guardar en caché el conector de Azure para Spark
+        uses: actions/cache@v4
+        with:
+          path: ~/.ivy2
+          key: ivy-hadoop-azure-3.4.1
+
+      - name: Instalar librerías
+        run: |
+          pip install -q -r metrolab/requirements.txt
+          python -m ipykernel install --user --name python3
+
+      - name: Correr la línea 01 → 02 → 03 → 04
+        env:
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+          AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
+          AZURE_FILE_SYSTEM: ${{ secrets.AZURE_FILE_SYSTEM }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python metrolab/ejecutar_linea.py
+
+      - name: Guardar los cuadernos ejecutados (para revisar errores)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cuadernos-ejecutados
+          path: salidas/
+          retention-days: 7

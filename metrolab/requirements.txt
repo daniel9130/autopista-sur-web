@@ -1,0 +1,13 @@
+pyspark>=4.0,<4.1
+xgboost>=3.0
+pandas>=2.2
+numpy
+pyarrow
+scipy
+holidays
+psutil
+matplotlib
+requests
+azure-storage-file-datalake
+papermill
+ipykernel
