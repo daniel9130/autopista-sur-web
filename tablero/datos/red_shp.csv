@@ -1,0 +1,744 @@
+FROM_TO,NomVia,NomMpio,NomVia2,coords
+464_130681,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13779 4.59466;-74.13769 4.59476
+130681_465,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13769 4.59476;-74.13757 4.59475
+494_495,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.12814 4.59345;-74.12498 4.59359
+496_497,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.12503 4.59380;-74.12814 4.59367
+2213_144335,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35001 4.52543;-74.35137 4.52494
+144335_193307,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35137 4.52494;-74.35310 4.52427
+193307_23171,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35310 4.52427;-74.35333 4.52418
+23171_76536,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35333 4.52418;-74.35419 4.52388;-74.35461 4.52384;-74.35520 4.52399;-74.35614 4.52448;-74.35650 4.52453;-74.35691 4.52445;-74.35714 4.52431;-74.35748 4.52385;-74.35762 4.52285
+76536_76541,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35762 4.52285;-74.35772 4.52213
+76541_197846,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35772 4.52213;-74.35795 4.52050;-74.35795 4.51985
+197846_84400,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35795 4.51985;-74.35767 4.51799;-74.35768 4.51750
+84400_193316,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35768 4.51750;-74.35774 4.51721
+193316_84404,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35774 4.51721;-74.35808 4.51646
+84404_84405,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35808 4.51646;-74.35857 4.51567
+84405_153007,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.35857 4.51567;-74.36001 4.51338
+153007_2214,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.36001 4.51338;-74.36047 4.51271;-74.36282 4.50987
+23017_72659,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.33444 4.53029;-74.33318 4.53112;-74.33266 4.53135;-74.33223 4.53145;-74.33197 4.53143;-74.32504 4.53028;-74.32239 4.52900;-74.32130 4.52840
+72659_23018,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.32130 4.52840;-74.32029 4.52798;-74.31961 4.52792
+23037_147305,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38612 4.46243;-74.38538 4.46090
+147305_192918,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38538 4.46090;-74.38479 4.46031;-74.38339 4.45942;-74.38227 4.45848;-74.38181 4.45793;-74.38094 4.45656
+192918_192917,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38094 4.45656;-74.38081 4.45635
+192917_207048,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38081 4.45635;-74.37975 4.45442
+207048_193333,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37975 4.45442;-74.37961 4.45419
+193333_147025,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37961 4.45419;-74.37894 4.45293;-74.37870 4.45229;-74.37868 4.45165;-74.37884 4.45078
+147025_147012,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37884 4.45078;-74.37895 4.45021
+147012_192910,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37895 4.45021;-74.37940 4.44772;-74.37939 4.44730
+192910_146938,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37939 4.44730;-74.37934 4.44579;-74.37945 4.44333
+146938_146949,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37945 4.44333;-74.37950 4.44229;-74.37963 4.44166;-74.37987 4.44132;-74.38044 4.44090
+146949_146946,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38044 4.44090;-74.38059 4.44080
+146946_193342,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38059 4.44080;-74.38091 4.44060
+193342_76529,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38091 4.44060;-74.38295 4.43933;-74.38345 4.43883
+76529_146917,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38345 4.43883;-74.38402 4.43789
+146917_76531,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38402 4.43789;-74.38487 4.43634;-74.38524 4.43540
+76531_145883,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38524 4.43540;-74.38536 4.43499
+145883_23038,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38536 4.43499;-74.38553 4.43317;-74.38565 4.43286;-74.38603 4.43243
+23039_185021,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37392 4.48981;-74.37394 4.48917;-74.37366 4.48559
+185021_200573,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37366 4.48559;-74.37356 4.48403;-74.37368 4.48353;-74.37612 4.47887;-74.37655 4.47818;-74.37702 4.47760
+200573_26903,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37702 4.47760;-74.37736 4.47717
+26903_23040,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37736 4.47717;-74.37920 4.47538
+23041_192903,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39250 4.42885;-74.39259 4.42867
+192903_192904,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39259 4.42867;-74.39263 4.42857
+192904_23045,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39263 4.42857;-74.39268 4.42809;-74.39258 4.42773;-74.39128 4.42622
+23045_145890,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39128 4.42622;-74.39081 4.42571;-74.39036 4.42537;-74.38845 4.42460;-74.38811 4.42424;-74.38796 4.42392;-74.38792 4.42362;-74.38796 4.42338;-74.38829 4.42268;-74.38851 4.42180;-74.38905 4.42049;-74.38905 4.42006;-74.38879 4.41927;-74.38875 4.41890;-74.38889 4.41844;-74.38924 4.41810
+23043_23041,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39231 4.42906;-74.39250 4.42885
+23457_23458,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.16313 4.59597;-74.16499 4.59596
+23459_23457,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.16059 4.59614;-74.16313 4.59597
+23481_23482,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15251 4.59572;-74.15227 4.59563
+23485_23486,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15221 4.59579;-74.15247 4.59589
+35204_35189,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11686 4.59490;-74.11664 4.59497
+35205_35213,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11526 4.59540;-74.11450 4.59565
+35213_103330,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11450 4.59565;-74.11436 4.59570
+103330_103335,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11436 4.59570;-74.11357 4.59596
+103335_35206,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11357 4.59596;-74.11347 4.59600
+35980_251167,Diagonal 45B Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14115 4.59496;-74.14111 4.59495
+251167_7601,Diagonal 45B Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14111 4.59495;-74.14073 4.59488
+7601_36027,Diagonal 45B Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14073 4.59488;-74.14028 4.59478
+36027_36023,Diagonal 45B Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14028 4.59478;-74.13911 4.59455
+36023_238982,Diagonal 45B Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13911 4.59455;-74.13798 4.59432
+238982_97059,Diagonal 45B Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13798 4.59432;-74.13793 4.59431
+23482_112015,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15227 4.59563;-74.15191 4.59553
+112015_130707,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15191 4.59553;-74.15083 4.59540
+130707_112018,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15083 4.59540;-74.15072 4.59539
+112018_232296,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15072 4.59539;-74.14979 4.59528
+232296_164431,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14979 4.59528;-74.14912 4.59520
+164431_262092,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14912 4.59520;-74.14893 4.59517
+262092_36172,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14893 4.59517;-74.14834 4.59510
+35000_231881,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10698 4.59866;-74.10710 4.59862
+231881_36273,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10710 4.59862;-74.10716 4.59860
+36283_245612,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11436 4.59598;-74.11521 4.59570
+245612_36284,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11521 4.59570;-74.11674 4.59524
+38521_111214,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13145 4.59389;-74.13187 4.59397
+111214_198404,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13187 4.59397;-74.13217 4.59403
+198404_23496,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13217 4.59403;-74.13263 4.59411
+23496_23493,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13263 4.59411;-74.13323 4.59423
+23493_38277,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13323 4.59423;-74.13372 4.59432
+38277_38289,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13372 4.59432;-74.13455 4.59449
+38289_38321,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13455 4.59449;-74.13502 4.59458
+38321_111229,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13502 4.59458;-74.13506 4.59458
+111229_94638,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13506 4.59458;-74.13525 4.59462
+94638_3982,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13525 4.59462;-74.13533 4.59464
+10860_205569,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15490 4.59659;-74.15511 4.59658
+205569_205567,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15511 4.59658;-74.15555 4.59654
+205567_59349,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15555 4.59654;-74.15592 4.59650
+59349_94663,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15592 4.59650;-74.15638 4.59647
+94663_112005,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15638 4.59647;-74.15648 4.59647
+112005_40624,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15648 4.59647;-74.15673 4.59645
+40908_94692,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.16545 4.59596;-74.16667 4.59595;-74.16762 4.59580;-74.16890 4.59582;-74.17112 4.59611;-74.17195 4.59646
+94692_24046,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.17195 4.59646;-74.17223 4.59652
+24046_24041,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.17223 4.59652;-74.17305 4.59662
+24041_40909,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.17305 4.59662;-74.17441 4.59674
+44761_114753,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15537 4.59627;-74.15500 4.59631
+114753_111947,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15500 4.59631;-74.15490 4.59632
+111947_111950,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15490 4.59632;-74.15411 4.59623
+111950_44762,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15411 4.59623;-74.15357 4.59609
+44764_36252,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13107 4.59355;-74.13029 4.59344;-74.12941 4.59342
+44765_58779,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17526 4.59654;-74.17461 4.59644
+58779_24054,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17461 4.59644;-74.17352 4.59629
+24054_238725,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17352 4.59629;-74.17286 4.59619
+238725_247202,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17286 4.59619;-74.17243 4.59613
+247202_163496,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17243 4.59613;-74.17211 4.59608
+163496_94690,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17211 4.59608;-74.17174 4.59602
+94690_59244,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17174 4.59602;-74.17139 4.59597
+59244_111807,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17139 4.59597;-74.16978 4.59574
+111807_163494,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16978 4.59574;-74.16959 4.59571
+163494_44766,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16959 4.59571;-74.16887 4.59564
+45390_109154,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.12204 4.59385;-74.11997 4.59423
+109154_36275,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11997 4.59423;-74.11983 4.59426
+36275_109151,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11983 4.59426;-74.11804 4.59463
+109151_45391,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11804 4.59463;-74.11712 4.59483
+36284_35334,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11674 4.59524;-74.11697 4.59517
+35334_130551,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11697 4.59517;-74.11707 4.59514
+130551_20789,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11707 4.59514;-74.11794 4.59492
+20789_8881,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11794 4.59492;-74.11909 4.59468
+8881_3175,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11909 4.59468;-74.12066 4.59436
+70188_122017,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.29852 4.54878;-74.29780 4.54934;-74.29739 4.54947;-74.29707 4.54946;-74.29661 4.54927;-74.29589 4.54861;-74.29548 4.54842;-74.29286 4.54783;-74.29114 4.54759;-74.29056 4.54735;-74.28978 4.54672;-74.28952 4.54637;-74.28893 4.54534;-74.28866 4.54505;-74.28647 4.54399;-74.28603 4.54359;-74.28592 4.54334;-74.28582 4.54194;-74.28571 4.54141;-74.28552 4.54104;-74.28529 4.54077
+122017_70189,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.28529 4.54077;-74.28515 4.54064
+73640_73641,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16310 4.59563;-74.16056 4.59578
+76008_192915,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38111 4.45710;-74.38179 4.45805
+192915_119201,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38179 4.45805;-74.38262 4.45895;-74.38501 4.46062
+119201_147366,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38501 4.46062;-74.38520 4.46081;-74.38554 4.46139
+147366_76007,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38554 4.46139;-74.38568 4.46175;-74.38576 4.46256
+76532_145889,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38884 4.42079;-74.38837 4.42202
+145889_145887,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38837 4.42202;-74.38822 4.42261;-74.38792 4.42322
+145887_76533,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38792 4.42322;-74.38780 4.42359;-74.38780 4.42394;-74.38792 4.42427;-74.38820 4.42463;-74.38860 4.42488;-74.39019 4.42549;-74.39063 4.42572;-74.39236 4.42758;-74.39252 4.42789;-74.39257 4.42822;-74.39250 4.42849;-74.39235 4.42874
+76534_76054,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36943 4.49675;-74.37187 4.49306
+76054_76535,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37187 4.49306;-74.37217 4.49267
+76542_145352,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.36331 4.50934;-74.36381 4.50885
+145352_119183,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.36381 4.50885;-74.36501 4.50771
+119183_145545,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.36501 4.50771;-74.36574 4.50692;-74.36588 4.50666;-74.36602 4.50608;-74.36597 4.50536;-74.36558 4.50461
+145545_145345,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36558 4.50461;-74.36437 4.50313;-74.36410 4.50241;-74.36409 4.50186
+145345_206455,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36409 4.50186;-74.36426 4.50123;-74.36514 4.50000
+206455_206454,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36514 4.50000;-74.36544 4.49958
+206454_145635,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36544 4.49958;-74.36617 4.49867
+145635_145401,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36617 4.49867;-74.36702 4.49803;-74.36742 4.49786
+145401_193322,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36742 4.49786;-74.36750 4.49783
+193322_69669,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36750 4.49783;-74.36858 4.49742
+69669_76534,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.36858 4.49742;-74.36890 4.49725;-74.36943 4.49675
+76560_69678,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30527 4.54243;-74.30595 4.54147;-74.30706 4.54066;-74.30732 4.54034;-74.30747 4.54001
+69678_189348,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30747 4.54001;-74.30800 4.53875;-74.30894 4.53714;-74.30894 4.53645;-74.30852 4.53560;-74.30846 4.53515;-74.30862 4.53457;-74.30898 4.53403
+189348_108735,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30898 4.53403;-74.30968 4.53327
+108735_76561,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30968 4.53327;-74.30993 4.53313;-74.31041 4.53302;-74.31172 4.53313;-74.31212 4.53301;-74.31330 4.53242;-74.31400 4.53219;-74.31465 4.53208;-74.31571 4.53202;-74.31628 4.53188;-74.31661 4.53165;-74.31683 4.53138;-74.31808 4.52900;-74.31828 4.52878
+76533_78260,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39235 4.42874;-74.39216 4.42898
+78457_197848,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.36249 4.50968;-74.36173 4.51106;-74.36010 4.51306
+197848_197552,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.36010 4.51306;-74.35785 4.51667;-74.35765 4.51709
+197552_193315,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35765 4.51709;-74.35764 4.51713
+193315_145226,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35764 4.51713;-74.35760 4.51723
+145226_76540,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35760 4.51723;-74.35755 4.51802;-74.35786 4.52020;-74.35774 4.52109;-74.35739 4.52205
+76540_76537,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35739 4.52205;-74.35725 4.52257;-74.35731 4.52290
+76537_26908,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35731 4.52290;-74.35741 4.52335;-74.35740 4.52364;-74.35725 4.52403;-74.35695 4.52431;-74.35647 4.52441
+26908_76538,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35647 4.52441;-74.35597 4.52427;-74.35515 4.52384;-74.35455 4.52370;-74.35397 4.52380;-74.35327 4.52408
+76538_26890,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35327 4.52408;-74.35324 4.52409
+26890_193310,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35324 4.52409;-74.35299 4.52418
+193310_101250,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35299 4.52418;-74.35167 4.52469;-74.35096 4.52487
+101250_78458,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.35096 4.52487;-74.34973 4.52508
+79584_79585,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22127 4.57751;-74.22145 4.57741
+79595_79596,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22137 4.57726;-74.22121 4.57736
+79597_246871,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23103 4.56084;-74.22908 4.56314;-74.22854 4.56410
+246871_206248,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22854 4.56410;-74.22835 4.56464
+206248_79598,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22835 4.56464;-74.22831 4.56478
+79603_153614,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21464 4.58121;-74.21751 4.57961
+153614_10107,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21751 4.57961;-74.21822 4.57921
+10107_26930,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21822 4.57921;-74.21928 4.57863
+26930_44208,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21928 4.57863;-74.22010 4.57818
+44208_241859,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22010 4.57818;-74.22063 4.57788
+241859_79584,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22063 4.57788;-74.22127 4.57751
+92045_92046,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.11340 4.59603;-74.11331 4.59606
+93491_93492,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26255 4.53984;-74.26297 4.53964;-74.26342 4.53954;-74.26389 4.53956;-74.26434 4.53970
+93499_181981,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25043 4.54154;-74.25063 4.54154
+181981_181980,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25063 4.54154;-74.25147 4.54151
+181980_159832,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25147 4.54151;-74.25224 4.54149
+159832_181603,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25224 4.54149;-74.25300 4.54145
+181603_181605,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25300 4.54145;-74.25343 4.54143
+181605_93500,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25343 4.54143;-74.25404 4.54141
+93501_93502,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26407 4.53898;-74.26351 4.53888;-74.26314 4.53894;-74.26283 4.53910
+93505_253561,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26133 4.54070;-74.26175 4.54029
+253561_93491,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26175 4.54029;-74.26255 4.53984
+93506_94028,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24579 4.54283;-74.24438 4.54471
+94028_93507,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24438 4.54471;-74.24383 4.54543
+93512_93513,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25772 4.54237;-74.25808 4.54241
+93514_180027,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24395 4.54550;-74.24444 4.54486
+180027_208528,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24444 4.54486;-74.24484 4.54431
+208528_162031,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24484 4.54431;-74.24515 4.54390
+162031_208530,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24515 4.54390;-74.24529 4.54371
+208530_180026,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24529 4.54371;-74.24550 4.54343
+180026_93515,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24550 4.54343;-74.24592 4.54287
+93611_93612,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.27131 4.53864;-74.27113 4.54027;-74.27104 4.54067;-74.27076 4.54128;-74.27035 4.54178
+93615_93613,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26179 4.54006;-74.26097 4.54069
+93613_93517,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26097 4.54069;-74.26036 4.54097;-74.25946 4.54104
+93517_93510,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25946 4.54104;-74.25941 4.54105
+93510_93509,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25941 4.54105;-74.25710 4.54115
+93509_206271,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25710 4.54115;-74.25694 4.54115
+206271_206266,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25694 4.54115;-74.25561 4.54120
+206266_161426,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25561 4.54120;-74.25553 4.54120
+161426_153723,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25553 4.54120;-74.25406 4.54124
+153723_181932,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25406 4.54124;-74.25326 4.54129
+181932_181935,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25326 4.54129;-74.25294 4.54131
+181935_161419,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25294 4.54131;-74.25224 4.54134
+161419_161617,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25224 4.54134;-74.25105 4.54139
+161617_93616,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.25105 4.54139;-74.24867 4.54146
+101932_30572,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20917 4.58396;-74.20899 4.58405
+30572_28059,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20899 4.58405;-74.20884 4.58412
+28059_186635,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20884 4.58412;-74.20860 4.58424
+186635_186634,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20860 4.58424;-74.20844 4.58432
+186634_7808,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20844 4.58432;-74.20752 4.58477
+7808_236814,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20752 4.58477;-74.20701 4.58502
+236814_236817,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20701 4.58502;-74.20692 4.58507
+236817_91854,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20692 4.58507;-74.20644 4.58531
+91854_236818,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20644 4.58531;-74.20629 4.58539
+236818_236820,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20629 4.58539;-74.20595 4.58556
+236820_170983,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20595 4.58556;-74.20539 4.58583
+170983_170740,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20539 4.58583;-74.20484 4.58609
+170740_152342,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20484 4.58609;-74.20343 4.58677
+152342_80122,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20343 4.58677;-74.20317 4.58690
+80122_152343,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20317 4.58690;-74.20289 4.58704
+152343_170985,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20289 4.58704;-74.20214 4.58741
+170985_170747,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20214 4.58741;-74.20158 4.58770
+170747_170743,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20158 4.58770;-74.20137 4.58781
+170743_190169,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20137 4.58781;-74.20112 4.58794
+190169_171301,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20112 4.58794;-74.20086 4.58808
+171301_171302,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20086 4.58808;-74.20057 4.58824
+171302_203388,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20057 4.58824;-74.20037 4.58834
+203388_172616,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20037 4.58834;-74.19988 4.58860
+172616_236863,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19988 4.58860;-74.19943 4.58884
+236863_80135,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19943 4.58884;-74.19890 4.58911
+80135_80104,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19890 4.58911;-74.19823 4.58944
+80104_80103,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19823 4.58944;-74.19724 4.58994
+80103_170226,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19724 4.58994;-74.19608 4.59052
+170226_117517,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19608 4.59052;-74.19518 4.59098
+117517_237010,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19518 4.59098;-74.19421 4.59145
+237010_237009,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19421 4.59145;-74.19388 4.59162
+237009_237017,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19388 4.59162;-74.19357 4.59177
+237017_236991,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19357 4.59177;-74.19273 4.59218
+236991_171043,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19273 4.59218;-74.19261 4.59224
+171043_170230,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19261 4.59224;-74.19222 4.59243
+170230_82489,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19222 4.59243;-74.19167 4.59271
+82489_169153,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19167 4.59271;-74.19034 4.59336
+169153_169151,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19034 4.59336;-74.18989 4.59357
+169151_169513,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18989 4.59357;-74.18959 4.59372
+169513_169514,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18959 4.59372;-74.18944 4.59379
+169514_169148,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18944 4.59379;-74.18909 4.59396
+169148_169149,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18909 4.59396;-74.18887 4.59405
+169149_146639,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18887 4.59405;-74.18847 4.59425
+146639_8143,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18847 4.59425;-74.18689 4.59504;-74.18536 4.59565
+8143_169158,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18536 4.59565;-74.18452 4.59597
+169158_169210,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18452 4.59597;-74.18424 4.59607
+169210_101933,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18424 4.59607;-74.18409 4.59613
+93507_94027,Autopista Sur,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24383 4.54543;-74.24377 4.54552
+94027_161425,Autopista Sur,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24377 4.54552;-74.24338 4.54601
+161425_28715,Autopista Sur,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24338 4.54601;-74.24318 4.54626
+28715_233550,Autopista Sur,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24318 4.54626;-74.24246 4.54717
+233550_224341,Autopista Sur,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24246 4.54717;-74.24242 4.54721
+224341_256941,Autopista Sur,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24242 4.54721;-74.23737 4.55326
+256941_226037,Autopista Sur,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.23737 4.55326;-74.23604 4.55485
+226037_247015,Autopista Sur,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.23604 4.55485;-74.23590 4.55501
+247015_225994,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23590 4.55501;-74.23585 4.55508
+225994_225995,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23585 4.55508;-74.23342 4.55800
+225995_103503,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23342 4.55800;-74.23163 4.56014
+35206_92045,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11347 4.59600;-74.11340 4.59603
+109004_185894,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.11059 4.59727;-74.10954 4.59779
+185894_157007,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.10954 4.59779;-74.10922 4.59794
+157007_23499,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.10922 4.59794;-74.10878 4.59814;-74.10843 4.59814
+109015_103598,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11345 4.59632;-74.11362 4.59626
+93492_253564,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26434 4.53970;-74.26457 4.53987;-74.26481 4.54018
+253564_109445,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26481 4.54018;-74.26552 4.54180;-74.26586 4.54225;-74.26618 4.54251;-74.26655 4.54270;-74.26713 4.54286;-74.26820 4.54275;-74.26971 4.54234;-74.27028 4.54198;-74.27071 4.54153;-74.27105 4.54093;-74.27118 4.54049;-74.27143 4.53870
+113147_87529,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10869 4.59843;-74.10888 4.59839
+87529_87530,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10888 4.59839;-74.10906 4.59831
+87530_185891,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10906 4.59831;-74.10991 4.59789
+185891_87532,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10991 4.59789;-74.11027 4.59771
+87532_87534,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11027 4.59771;-74.11056 4.59757
+87534_159249,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11056 4.59757;-74.11139 4.59716
+159249_166411,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11139 4.59716;-74.11159 4.59708
+166411_113148,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11159 4.59708;-74.11213 4.59684
+133714_23734,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.27256 4.53632;-74.27478 4.53197;-74.27521 4.53145;-74.27563 4.53114;-74.27599 4.53096;-74.27703 4.53059;-74.27782 4.53044;-74.27835 4.53047;-74.27888 4.53064;-74.27940 4.53099;-74.27986 4.53156;-74.28010 4.53210;-74.28069 4.53399;-74.28118 4.53582;-74.28128 4.53661;-74.28133 4.53829
+23734_119934,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28133 4.53829;-74.28148 4.53865;-74.28179 4.53903
+119934_69578,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28179 4.53903;-74.28210 4.53940
+69578_133715,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28210 4.53940;-74.28265 4.53993;-74.28339 4.54024
+101933_94763,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.18409 4.59613;-74.18353 4.59634
+94763_58878,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18353 4.59634;-74.18302 4.59652
+58878_168716,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18302 4.59652;-74.18248 4.59664
+168716_169209,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18248 4.59664;-74.18217 4.59669
+169209_58477,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18217 4.59669;-74.18197 4.59671
+58477_205576,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18197 4.59671;-74.18139 4.59672
+205576_118326,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18139 4.59672;-74.18111 4.59671
+118326_58583,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18111 4.59671;-74.18021 4.59673
+58583_20144,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18021 4.59673;-74.18007 4.59674
+20144_160880,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.18007 4.59674;-74.17980 4.59675
+160880_94758,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.17980 4.59675;-74.17967 4.59675
+94758_134606,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.17967 4.59675;-74.17929 4.59677
+19017_42729,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.18222 4.59698;-74.18316 4.59680
+42729_94762,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.18316 4.59680;-74.18365 4.59665
+94762_236905,Autopista Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.18365 4.59665;-74.18421 4.59639
+236905_134607,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.18421 4.59639;-74.18424 4.59638
+112019_72599,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14622 4.59516;-74.14652 4.59515
+72599_70989,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14652 4.59515;-74.14804 4.59531
+70989_232302,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14804 4.59531;-74.14865 4.59536
+232302_17928,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14865 4.59536;-74.15077 4.59559
+17928_135266,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15077 4.59559;-74.15081 4.59559
+135266_65099,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15081 4.59559;-74.15105 4.59561
+65099_65103,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15105 4.59561;-74.15131 4.59564
+65103_65101,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15131 4.59564;-74.15160 4.59566
+65101_79091,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15160 4.59566;-74.15188 4.59569
+79091_23485,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15188 4.59569;-74.15221 4.59579
+88186_7579,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14409 4.59529;-74.14353 4.59535
+7579_135267,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14353 4.59535;-74.14222 4.59549
+145960_145961,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38798 4.43087;-74.38766 4.43097
+145962_145963,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38773 4.43118;-74.38804 4.43108
+145963_192905,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38804 4.43108;-74.39128 4.42998
+192905_192907,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39128 4.42998;-74.39149 4.42984
+192907_26898,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39149 4.42984;-74.39174 4.42963
+26898_23043,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39174 4.42963;-74.39231 4.42906
+78260_145964,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39216 4.42898;-74.39139 4.42974;-74.39017 4.43019
+152509_76008,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38048 4.45597;-74.38111 4.45710
+147023_193336,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37872 4.45275;-74.37951 4.45426
+193336_152509,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37951 4.45426;-74.38048 4.45597
+152510_191897,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37941 4.44196;-74.37936 4.44294
+191897_146941,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37936 4.44294;-74.37929 4.44410
+146941_146936,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37929 4.44410;-74.37922 4.44540
+146936_191844,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37922 4.44540;-74.37923 4.44599
+191844_191845,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37923 4.44599;-74.37923 4.44613
+191845_147014,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37923 4.44613;-74.37925 4.44696
+147014_147010,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37925 4.44696;-74.37923 4.44789;-74.37883 4.45006
+147010_147023,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37883 4.45006;-74.37853 4.45190;-74.37857 4.45228;-74.37872 4.45275
+145964_145960,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.39017 4.43019;-74.38798 4.43087
+102078_233411,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22309 4.57631;-74.22297 4.57638
+233411_233405,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22297 4.57638;-74.22249 4.57664
+233405_233404,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22249 4.57664;-74.22205 4.57689
+233404_233413,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22205 4.57689;-74.22173 4.57707
+233413_233416,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22173 4.57707;-74.22146 4.57721
+233416_79595,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22146 4.57721;-74.22137 4.57726
+152650_31282,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22349 4.57598;-74.22337 4.57610
+31282_102078,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22337 4.57610;-74.22309 4.57631
+152721_152722,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26592 4.54218;-74.26567 4.54189;-74.26548 4.54153;-74.26518 4.54076
+152722_93627,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26518 4.54076;-74.26475 4.53964;-74.26456 4.53935
+93627_93501,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26456 4.53935;-74.26407 4.53898
+93516_93614,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26032 4.54143;-74.26077 4.54116
+93614_152727,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26077 4.54116;-74.26082 4.54113
+93513_93516,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25808 4.54241;-74.25872 4.54246;-74.25897 4.54240;-74.25917 4.54228;-74.25970 4.54176;-74.26032 4.54143
+30903_79603,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21175 4.58279;-74.21464 4.58121
+92729_111112,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13530 4.59435;-74.13430 4.59414
+111112_88048,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13430 4.59414;-74.13196 4.59372
+79596_162251,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22121 4.57736;-74.22110 4.57741
+162251_30906,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22110 4.57741;-74.21828 4.57899
+30906_7933,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21828 4.57899;-74.21805 4.57911
+7933_191761,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21805 4.57911;-74.21730 4.57953
+191761_162805,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21730 4.57953;-74.21670 4.57986
+162805_31568,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21670 4.57986;-74.21530 4.58063
+153611_153612,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21088 4.58339;-74.21179 4.58292
+153612_153613,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21179 4.58292;-74.21183 4.58290
+153613_201468,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21183 4.58290;-74.21466 4.58137
+201468_254084,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21466 4.58137;-74.21561 4.58085
+254084_246888,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21561 4.58085;-74.21606 4.58061
+246888_159162,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21606 4.58061;-74.21671 4.58025
+159162_186830,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21671 4.58025;-74.21744 4.57981;-74.21751 4.57970
+186830_153614,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21751 4.57970;-74.21751 4.57961
+155603_199572,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21458 4.58104;-74.21451 4.58107
+199572_7812,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21451 4.58107;-74.21441 4.58113
+7812_31289,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21441 4.58113;-74.21370 4.58152
+31289_44219,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21370 4.58152;-74.21315 4.58182
+44219_144074,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21315 4.58182;-74.21213 4.58240
+108138_155610,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22586 4.57224;-74.22593 4.57211
+79601_193644,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22354 4.57615;-74.22432 4.57500;-74.22509 4.57369
+193644_195717,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22509 4.57369;-74.22515 4.57356
+195717_119969,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22515 4.57356;-74.22535 4.57320
+119969_119970,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22535 4.57320;-74.22536 4.57316
+119970_151298,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22536 4.57316;-74.22561 4.57270
+155611_76461,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22579 4.57206;-74.22572 4.57219
+155612_250892,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22547 4.57265;-74.22479 4.57392
+250892_250897,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22479 4.57392;-74.22446 4.57449
+250897_7869,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22446 4.57449;-74.22433 4.57470
+7869_31369,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22433 4.57470;-74.22410 4.57506
+31369_7971,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22410 4.57506;-74.22368 4.57571
+155610_177630,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22593 4.57211;-74.22633 4.57125
+177630_108137,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22633 4.57125;-74.22653 4.57078
+108137_28685,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22653 4.57078;-74.22743 4.56803
+110262_93432,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22746 4.56743;-74.22705 4.56872
+93432_161655,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22705 4.56872;-74.22634 4.57086
+161655_173825,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22634 4.57086;-74.22621 4.57118
+173825_173823,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22621 4.57118;-74.22608 4.57146
+173823_155611,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22608 4.57146;-74.22579 4.57206
+102079_155658,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22312 4.57649;-74.22318 4.57644
+155658_79601,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22318 4.57644;-74.22354 4.57615
+79585_176763,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22145 4.57741;-74.22194 4.57714
+176763_176764,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22194 4.57714;-74.22267 4.57674
+176764_102079,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22267 4.57674;-74.22312 4.57649
+155659_159886,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22766 4.56733;-74.22808 4.56602
+159886_254940,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22808 4.56602;-74.22846 4.56483
+254940_26924,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22846 4.56483;-74.22868 4.56417;-74.22907 4.56341
+26924_44477,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22907 4.56341;-74.22956 4.56281
+44477_44465,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22956 4.56281;-74.23011 4.56219
+44465_141668,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.23011 4.56219;-74.23145 4.56072
+141668_226214,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.23145 4.56072;-74.23166 4.56048
+226214_4389,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.23166 4.56048;-74.23170 4.56043
+155978_119189,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37305 4.49120;-74.37291 4.49152;-74.37209 4.49258
+119189_73027,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37209 4.49258;-74.37149 4.49337;-74.37068 4.49463
+73027_69671,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37068 4.49463;-74.36920 4.49684;-74.36880 4.49720;-74.36847 4.49735
+69671_193318,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36847 4.49735;-74.36752 4.49771
+193318_155979,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36752 4.49771;-74.36708 4.49788;-74.36669 4.49812
+155979_153010,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36669 4.49812;-74.36619 4.49847;-74.36549 4.49934
+153010_206767,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36549 4.49934;-74.36492 4.50012
+206767_145351,Autopista Bogota-Girardot,Granada,Autopista Bogota-Girardot,-74.36492 4.50012;-74.36428 4.50096;-74.36410 4.50131;-74.36394 4.50194
+145351_145350,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.36394 4.50194;-74.36398 4.50257;-74.36408 4.50289;-74.36447 4.50350
+145350_119187,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.36447 4.50350;-74.36550 4.50473;-74.36570 4.50505;-74.36591 4.50570;-74.36592 4.50608;-74.36568 4.50685;-74.36489 4.50769
+119187_145346,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.36489 4.50769;-74.36397 4.50852;-74.36313 4.50908
+109449_193290,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28444 4.54061;-74.28519 4.54100;-74.28540 4.54121;-74.28559 4.54154
+193290_208532,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28559 4.54154;-74.28573 4.54218
+208532_158080,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28573 4.54218;-74.28578 4.54327;-74.28596 4.54374;-74.28638 4.54410;-74.28746 4.54459
+158080_133122,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28746 4.54459;-74.28834 4.54496;-74.28874 4.54523;-74.28962 4.54664;-74.28990 4.54695;-74.29042 4.54735
+133122_133124,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.29042 4.54735;-74.29075 4.54754;-74.29118 4.54768;-74.29342 4.54802
+133124_158079,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.29342 4.54802;-74.29560 4.54854;-74.29593 4.54874;-74.29625 4.54907
+158079_23730,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.29625 4.54907;-74.29658 4.54935;-74.29695 4.54952;-74.29725 4.54956;-74.29758 4.54951;-74.29794 4.54935;-74.29887 4.54865;-74.30035 4.54786
+23730_133139,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30035 4.54786;-74.30063 4.54764;-74.30091 4.54725;-74.30136 4.54591
+133139_133133,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30136 4.54591;-74.30148 4.54550
+133133_109906,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30148 4.54550;-74.30169 4.54480;-74.30189 4.54440
+109906_109899,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30189 4.54440;-74.30213 4.54408;-74.30253 4.54375;-74.30344 4.54342
+109899_109902,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30344 4.54342;-74.30405 4.54326
+109902_133130,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30405 4.54326;-74.30448 4.54310
+133130_76560,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30448 4.54310;-74.30484 4.54286;-74.30527 4.54243
+156047_145769,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38893 4.41824;-74.38875 4.41852
+145769_145897,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38875 4.41852;-74.38868 4.41874;-74.38868 4.41912
+145897_156048,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38868 4.41912;-74.38877 4.41950
+207663_156047,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38967 4.41784;-74.38921 4.41800;-74.38893 4.41824
+156048_76532,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38877 4.41950;-74.38898 4.42023;-74.38894 4.42054;-74.38884 4.42079
+156078_119191,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37539 4.47999;-74.37517 4.48040
+119191_200506,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37517 4.48040;-74.37464 4.48144
+200506_26921,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37464 4.48144;-74.37366 4.48323;-74.37350 4.48365;-74.37342 4.48406;-74.37347 4.48514;-74.37377 4.48823;-74.37375 4.48887;-74.37352 4.48972
+156079_190500,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38386 4.46988;-74.38369 4.47053;-74.38349 4.47090
+190500_190502,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38349 4.47090;-74.38316 4.47132
+190502_147227,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38316 4.47132;-74.38181 4.47267
+147227_190504,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38181 4.47267;-74.38160 4.47288
+190504_208540,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38160 4.47288;-74.38116 4.47331
+208540_193330,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38116 4.47331;-74.38106 4.47341
+193330_147420,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38106 4.47341;-74.38062 4.47384
+147420_147423,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38062 4.47384;-74.37738 4.47694
+147423_156078,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37738 4.47694;-74.37643 4.47814;-74.37539 4.47999
+156080_192896,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38392 4.46636;-74.38369 4.46693;-74.38375 4.46817
+192896_193328,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38375 4.46817;-74.38379 4.46857
+193328_147222,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38379 4.46857;-74.38384 4.46919
+147222_156079,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38384 4.46919;-74.38386 4.46988
+156081_193340,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38193 4.43981;-74.38083 4.44051
+193340_146925,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38083 4.44051;-74.38063 4.44063
+146925_152510,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38063 4.44063;-74.37966 4.44134;-74.37949 4.44164;-74.37941 4.44196
+86425_192908,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38576 4.43236;-74.38549 4.43290;-74.38540 4.43324;-74.38523 4.43495;-74.38373 4.43802
+192908_156081,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38373 4.43802;-74.38328 4.43883;-74.38287 4.43925;-74.38193 4.43981
+93612_156227,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.27035 4.54178;-74.26966 4.54225;-74.26863 4.54255
+93502_93629,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26283 4.53910;-74.26272 4.53918
+93629_93615,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26272 4.53918;-74.26179 4.54006
+109447_133631,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.28387 4.53998;-74.28313 4.53994;-74.28258 4.53975;-74.28197 4.53912
+133631_119935,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.28197 4.53912;-74.28185 4.53896
+119935_133626,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.28185 4.53896;-74.28146 4.53847;-74.28138 4.53794
+133626_122000,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.28138 4.53794;-74.28142 4.53748;-74.28130 4.53591;-74.28038 4.53261
+122000_156679,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.28038 4.53261;-74.28002 4.53167;-74.27964 4.53108;-74.27934 4.53080;-74.27879 4.53049;-74.27816 4.53034;-74.27772 4.53034;-74.27715 4.53045;-74.27594 4.53085;-74.27518 4.53132;-74.27470 4.53187;-74.27246 4.53627
+156680_109901,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.31817 4.52859;-74.31677 4.53123;-74.31637 4.53169;-74.31584 4.53189;-74.31419 4.53201;-74.31369 4.53217;-74.31181 4.53304;-74.31158 4.53306;-74.31070 4.53293;-74.31022 4.53294;-74.30989 4.53304;-74.30959 4.53321;-74.30869 4.53426;-74.30846 4.53471;-74.30835 4.53536;-74.30850 4.53582;-74.30879 4.53634;-74.30885 4.53661;-74.30879 4.53721;-74.30794 4.53868;-74.30727 4.54025;-74.30685 4.54074;-74.30596 4.54134;-74.30525 4.54229;-74.30501 4.54250;-74.30459 4.54273;-74.30398 4.54287
+109901_109900,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.30398 4.54287;-74.30336 4.54307
+109900_133114,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.30336 4.54307;-74.30220 4.54386
+133114_109904,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.30220 4.54386;-74.30180 4.54435
+109904_133119,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.30180 4.54435;-74.30153 4.54489;-74.30104 4.54655
+133119_70188,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.30104 4.54655;-74.30084 4.54715;-74.30050 4.54765;-74.29852 4.54878
+156682_156683,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.32902 4.53106;-74.33218 4.53157;-74.33251 4.53152;-74.33315 4.53128;-74.33442 4.53041
+78475_156682,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.32534 4.53050;-74.32902 4.53106
+87805_87804,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.20903 4.58431;-74.21039 4.58363
+87804_153611,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.21039 4.58363;-74.21088 4.58339
+134607_10655,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.18424 4.59638;-74.18451 4.59626
+10655_29746,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.18451 4.59626;-74.18618 4.59559
+29746_29579,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.18618 4.59559;-74.18763 4.59497
+29579_236951,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.18763 4.59497;-74.18767 4.59495
+236951_29779,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.18767 4.59495;-74.18774 4.59492
+29779_165067,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.18774 4.59492;-74.18918 4.59421
+165067_236981,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.18918 4.59421;-74.19155 4.59305
+236981_236985,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.19155 4.59305;-74.19228 4.59277
+236985_236990,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.19228 4.59277;-74.19370 4.59207
+236990_94768,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.19370 4.59207;-74.19684 4.59046
+94768_84093,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.19684 4.59046;-74.19711 4.59034
+84093_156841,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.19711 4.59034;-74.19886 4.58951
+156841_237047,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.19886 4.58951;-74.20018 4.58887
+237047_80131,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.20018 4.58887;-74.20232 4.58772
+80131_87805,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.20232 4.58772;-74.20903 4.58431
+93500_154009,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25404 4.54141;-74.25496 4.54137
+154009_93503,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25496 4.54137;-74.25537 4.54136
+93503_251943,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25537 4.54136;-74.25586 4.54147;-74.25644 4.54186
+251943_156712,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25644 4.54186;-74.25690 4.54219;-74.25722 4.54231
+31568_199573,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21530 4.58063;-74.21490 4.58085
+199573_155603,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21490 4.58085;-74.21458 4.58104
+7971_152650,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22368 4.57571;-74.22349 4.57598
+109421_159491,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17756 4.59710;-74.17770 4.59711
+159491_160923,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17770 4.59711;-74.17779 4.59711
+160923_24053,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17779 4.59711;-74.17800 4.59710
+36273_38021,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10716 4.59860;-74.10728 4.59856
+159716_96777,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.10803 4.59800;-74.10773 4.59792;-74.10737 4.59800
+45391_160015,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11712 4.59483;-74.11697 4.59487
+160015_35204,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11697 4.59487;-74.11686 4.59490
+76461_155612,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22572 4.57219;-74.22547 4.57265
+151298_108138,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22561 4.57270;-74.22586 4.57224
+163479_111724,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17928 4.59708;-74.17939 4.59707
+163480_160939,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17827 4.59710;-74.17841 4.59710
+160939_160893,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17841 4.59710;-74.17915 4.59708
+160893_163479,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17915 4.59708;-74.17928 4.59708
+72604_109421,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17741 4.59710;-74.17756 4.59710
+109422_72528,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17758 4.59678;-74.17744 4.59677
+88048_44764,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13196 4.59372;-74.13107 4.59355
+35965_92729,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13656 4.59454;-74.13530 4.59435
+58775_163874,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.17868 4.59678;-74.17770 4.59678
+163874_109422,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.17770 4.59678;-74.17758 4.59678
+24053_163480,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17800 4.59710;-74.17827 4.59710
+45398_7412,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.12426 4.59361;-74.12348 4.59370
+495_45398,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.12498 4.59359;-74.12426 4.59361
+165752_38510,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13963 4.59547;-74.14017 4.59554
+38510_9568,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14017 4.59554;-74.14138 4.59571
+9568_262065,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14138 4.59571;-74.14156 4.59574
+262065_9571,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14156 4.59574;-74.14206 4.59577
+9571_9567,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14206 4.59577;-74.14265 4.59572
+9567_9578,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14265 4.59572;-74.14337 4.59565
+9578_112665,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14337 4.59565;-74.14394 4.59555
+112665_262067,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14394 4.59555;-74.14420 4.59551
+262067_9573,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14420 4.59551;-74.14443 4.59546
+9573_157505,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14443 4.59546;-74.14456 4.59544
+157505_165753,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14456 4.59544;-74.14533 4.59531
+164171_111956,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15387 4.59650;-74.15426 4.59658
+164166_164171,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15367 4.59645;-74.15387 4.59650
+23486_111955,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15247 4.59589;-74.15324 4.59629
+111956_10860,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15426 4.59658;-74.15490 4.59659
+103598_166412,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11362 4.59626;-74.11372 4.59622
+166412_291,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11372 4.59622;-74.11426 4.59602
+291_36283,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.11426 4.59602;-74.11436 4.59598
+113148_288,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11213 4.59684;-74.11245 4.59671
+288_166439,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11245 4.59671;-74.11308 4.59646
+497_166442,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.12814 4.59367;-74.12855 4.59371
+166456_254079,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.12266 4.59378;-74.12245 4.59380
+254079_45390,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.12245 4.59380;-74.12204 4.59385
+7412_36286,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.12348 4.59370;-74.12303 4.59374
+36286_166456,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.12303 4.59374;-74.12266 4.59378
+166457_103329,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.11298 4.59618;-74.11232 4.59644
+35189_35211,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11664 4.59497;-74.11553 4.59531
+35211_35205,Transversal 35,Bogotá D.C.,Autopista Sur > Oriente,-74.11553 4.59531;-74.11526 4.59540
+23499_159716,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.10843 4.59814;-74.10803 4.59800
+144074_153610,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21213 4.58240;-74.21169 4.58266
+111724_24049,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17939 4.59707;-74.17969 4.59707
+134606_160918,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.17929 4.59677;-74.17925 4.59677
+186705_109015,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11336 4.59635;-74.11345 4.59632
+72602_164962,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.17507 4.59684;-74.17701 4.59708
+164962_72604,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.17701 4.59708;-74.17741 4.59710
+192630_133714,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.27227 4.53689;-74.27256 4.53632
+109445_192631,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.27143 4.53870;-74.27160 4.53822
+192632_192630,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.27196 4.53750;-74.27227 4.53689
+192633_93611,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.27142 4.53817;-74.27131 4.53864
+192634_192635,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.27212 4.53683;-74.27175 4.53739
+156679_192634,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.27246 4.53627;-74.27212 4.53683
+152727_192636,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26082 4.54113;-74.26112 4.54090
+156712_93512,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.25722 4.54231;-74.25772 4.54237
+119954_181599,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24878 4.54159;-74.24969 4.54157
+181599_93499,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24969 4.54157;-74.25043 4.54154
+119955_119954,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24708 4.54194;-74.24788 4.54167;-74.24878 4.54159
+93515_119955,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24592 4.54287;-74.24631 4.54248;-74.24708 4.54194
+109448_109447,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.28467 4.54025;-74.28425 4.54003;-74.28387 4.53998
+70189_109448,Autopista Bogota-Girardot,Soacha,AP Granada-Bogotá/ RN40-05 >Oriente,-74.28515 4.54064;-74.28467 4.54025
+133715_153137,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28339 4.54024;-74.28364 4.54032
+153137_109446,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28364 4.54032;-74.28373 4.54036
+109446_109449,Autopista Bogota-Girardot,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.28373 4.54036;-74.28444 4.54061
+70186_156680,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.31855 4.52822;-74.31817 4.52859
+23018_70186,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.31961 4.52792;-74.31894 4.52801;-74.31855 4.52822
+70187_192646,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.31960 4.52824;-74.32017 4.52816;-74.32046 4.52819
+70185_70187,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.31871 4.52852;-74.31960 4.52824
+76561_70185,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.31828 4.52878;-74.31871 4.52852
+192646_69677,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.32046 4.52819;-74.32124 4.52851
+69677_78463,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.32124 4.52851;-74.32307 4.52943
+78463_78475,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.32307 4.52943;-74.32464 4.53025;-74.32534 4.53050
+2214_76542,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.36282 4.50987;-74.36331 4.50934
+145346_78457,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.36313 4.50908;-74.36280 4.50930;-74.36249 4.50968
+78458_144337,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.34973 4.52508;-74.34923 4.52525;-74.34883 4.52558
+144337_198166,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.34883 4.52558;-74.34825 4.52618
+198166_198167,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.34825 4.52618;-74.34795 4.52647
+198167_198448,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.34795 4.52647;-74.34767 4.52674
+198448_153000,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.34767 4.52674;-74.34695 4.52729;-74.34412 4.52845
+153000_193298,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.34412 4.52845;-74.34352 4.52862;-74.34129 4.52901;-74.34096 4.52912
+193298_97632,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.34096 4.52912;-74.34011 4.52947;-74.33866 4.53042;-74.33812 4.53069;-74.33776 4.53070;-74.33701 4.53032
+97632_78471,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.33701 4.53032;-74.33632 4.53001
+78471_23017,Autopista Bogota-Girardot,Granada,AP Granada-Bogotá/ RN40-05 >Oriente,-74.33632 4.53001;-74.33588 4.52992;-74.33524 4.52996;-74.33478 4.53010;-74.33444 4.53029
+144336_2213,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.34908 4.52593;-74.35001 4.52543
+156683_71302,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.33442 4.53041;-74.33489 4.53015;-74.33554 4.53001;-74.33610 4.53005;-74.33646 4.53016;-74.33698 4.53045
+71302_193293,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.33698 4.53045;-74.33765 4.53079;-74.33806 4.53083;-74.33827 4.53078;-74.34026 4.52954;-74.34094 4.52926
+193293_23173,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.34094 4.52926;-74.34106 4.52921
+23173_193304,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.34106 4.52921;-74.34359 4.52873
+193304_193303,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.34359 4.52873;-74.34445 4.52846
+193303_193299,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.34445 4.52846;-74.34685 4.52747;-74.34761 4.52702
+193299_193300,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.34761 4.52702;-74.34849 4.52637
+193300_144336,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.34849 4.52637;-74.34908 4.52593
+76007_76006,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38576 4.46256;-74.38588 4.46298;-74.38608 4.46322
+76005_23037,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38643 4.46304;-74.38612 4.46243
+23040_147182,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37920 4.47538;-74.38344 4.47116
+147182_147184,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38344 4.47116;-74.38371 4.47072
+147184_147139,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38371 4.47072;-74.38379 4.47054
+147139_147136,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38379 4.47054;-74.38398 4.46980
+147136_192898,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38398 4.46980;-74.38394 4.46902
+192898_193323,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38394 4.46902;-74.38390 4.46843
+193323_147221,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38390 4.46843;-74.38387 4.46803
+147221_147306,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38387 4.46803;-74.38377 4.46709;-74.38382 4.46678;-74.38390 4.46658;-74.38418 4.46619;-74.38654 4.46498
+147306_199101,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38654 4.46498;-74.38680 4.46458;-74.38684 4.46414
+199101_76005,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38684 4.46414;-74.38643 4.46304
+76006_147364,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38608 4.46322;-74.38657 4.46379;-74.38673 4.46420
+147364_119198,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38673 4.46420;-74.38669 4.46458;-74.38649 4.46488;-74.38432 4.46596
+119198_156080,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38432 4.46596;-74.38392 4.46636
+26922_23039,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37366 4.49066;-74.37392 4.48981
+192899_26922,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37332 4.49125;-74.37366 4.49066
+76535_145698,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37217 4.49267;-74.37241 4.49238
+145698_192899,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37241 4.49238;-74.37332 4.49125
+26923_155978,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37327 4.49053;-74.37305 4.49120
+26921_200503,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37352 4.48972;-74.37329 4.49045
+200503_26923,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.37329 4.49045;-74.37327 4.49053
+145961_146023,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38766 4.43097;-74.38735 4.43107
+146023_86423,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38735 4.43107;-74.38692 4.43124;-74.38631 4.43166
+23038_86424,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38603 4.43243;-74.38659 4.43182
+86423_206632,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38631 4.43166;-74.38608 4.43190
+206632_146008,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38608 4.43190;-74.38580 4.43227
+146008_86425,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38580 4.43227;-74.38576 4.43236
+86424_145885,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38659 4.43182;-74.38693 4.43153
+145885_145962,Autopista Bogota-Girardot,Silvania,Autopista Bogota-Girardot,-74.38693 4.43153;-74.38773 4.43118
+192636_93505,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26112 4.54090;-74.26133 4.54070
+28685_26926,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22743 4.56803;-74.22761 4.56747
+103329_170008,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.11232 4.59644;-74.11194 4.59661
+173839_110262,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22778 4.56642;-74.22746 4.56743
+26926_155659,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.22761 4.56747;-74.22766 4.56733
+79598_243248,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22831 4.56478;-74.22811 4.56538
+243248_173838,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22811 4.56538;-74.22787 4.56614
+173838_173839,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.22787 4.56614;-74.22778 4.56642
+91900_227569,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.12879 4.59373;-74.12909 4.59375
+73641_164097,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16056 4.59578;-74.15864 4.59597
+24049_75945,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.17969 4.59707;-74.18006 4.59705
+75945_109418,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.18006 4.59705;-74.18115 4.59702
+109418_168717,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.18115 4.59702;-74.18185 4.59699
+168717_19017,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Occidente,-74.18185 4.59699;-74.18222 4.59698
+40909_172080,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.17441 4.59674;-74.17498 4.59682
+172080_72602,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.17498 4.59682;-74.17507 4.59684
+72528_160885,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17744 4.59677;-74.17693 4.59675
+160885_168030,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17693 4.59675;-74.17686 4.59674
+168030_94753,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17686 4.59674;-74.17591 4.59664
+94753_102414,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17591 4.59664;-74.17572 4.59661
+102414_168041,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17572 4.59661;-74.17558 4.59658
+168041_163485,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17558 4.59658;-74.17539 4.59656
+23458_40908,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.16499 4.59596;-74.16545 4.59596
+23460_23459,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15920 4.59623;-74.16059 4.59614
+135267_228407,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14222 4.59549;-74.14112 4.59546
+164097_163553,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15864 4.59597;-74.15813 4.59602
+163553_164796,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15813 4.59602;-74.15792 4.59603
+229217_73640,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16491 4.59562;-74.16310 4.59563
+40624_174571,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15673 4.59645;-74.15747 4.59639
+174571_174568,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15747 4.59639;-74.15887 4.59624
+174568_23460,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15887 4.59624;-74.15920 4.59623
+36253_496,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.12424 4.59389;-74.12503 4.59380
+59224_237964,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16728 4.59562;-74.16670 4.59562
+237964_170340,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16670 4.59562;-74.16602 4.59562
+170340_114830,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16602 4.59562;-74.16561 4.59562
+114830_83602,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16561 4.59562;-74.16553 4.59562
+165753_45396,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14533 4.59531;-74.14607 4.59517
+45396_112019,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.14607 4.59517;-74.14622 4.59516
+112014_235271,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14739 4.59496;-74.14645 4.59493
+235271_62375,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14645 4.59493;-74.14580 4.59503
+83602_229217,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16553 4.59562;-74.16491 4.59562
+160918_58775,Avenida Carrera 77G,Bogotá D.C.,Autopista Sur > Oriente,-74.17925 4.59677;-74.17868 4.59678
+465_35965,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.13757 4.59475;-74.13656 4.59454
+166442_91900,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.12855 4.59371;-74.12879 4.59373
+164796_94658,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15792 4.59603;-74.15603 4.59619
+94658_44761,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15603 4.59619;-74.15537 4.59627
+36172_232276,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14834 4.59510;-74.14757 4.59498
+232276_112014,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14757 4.59498;-74.14739 4.59496
+230128_23909,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14534 4.59512;-74.14512 4.59516
+23909_88186,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14512 4.59516;-74.14409 4.59529
+163485_44765,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.17539 4.59656;-74.17526 4.59654
+111955_164166,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.15324 4.59629;-74.15367 4.59645
+3982_165752,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13533 4.59464;-74.13659 4.59486;-74.13802 4.59521;-74.13963 4.59547
+44762_23481,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.15357 4.59609;-74.15251 4.59572
+170008_231978,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.11194 4.59661;-74.11102 4.59705
+44766_70991,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16887 4.59564;-74.16850 4.59564
+70991_94681,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16850 4.59564;-74.16805 4.59563
+94681_170343,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16805 4.59563;-74.16803 4.59563
+170343_59224,Avenida Calle 57R Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.16803 4.59563;-74.16728 4.59562
+3175_62895,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.12066 4.59436;-74.12182 4.59414
+62895_232554,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.12182 4.59414;-74.12247 4.59405
+232554_62893,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.12247 4.59405;-74.12316 4.59399
+62893_38400,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.12316 4.59399;-74.12397 4.59392
+38400_36253,Transversal 35,Bogotá D.C.,Autopista Sur > Occidente,-74.12397 4.59392;-74.12424 4.59389
+62375_230128,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.14580 4.59503;-74.14534 4.59512
+227569_38354,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.12909 4.59375;-74.12919 4.59375
+38354_247615,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.12919 4.59375;-74.12955 4.59376
+247615_20783,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.12955 4.59376;-74.12976 4.59377
+20783_5101,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.12976 4.59377;-74.13031 4.59379
+5101_111109,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13031 4.59379;-74.13048 4.59379
+111109_115959,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13048 4.59379;-74.13099 4.59383
+115959_38521,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Occidente,-74.13099 4.59383;-74.13145 4.59389
+166439_186705,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.11308 4.59646;-74.11336 4.59635
+38021_238607,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10728 4.59856;-74.10740 4.59853
+238607_491,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10740 4.59853;-74.10779 4.59848
+491_164839,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10779 4.59848;-74.10831 4.59847
+164839_113147,Transversal 31,Bogotá D.C.,Autopista Sur > Occidente,-74.10831 4.59847;-74.10869 4.59843
+231978_109004,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.11102 4.59705;-74.11059 4.59727
+92046_238698,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.11331 4.59606;-74.11319 4.59610
+238698_166457,Transversal 31,Bogotá D.C.,Autopista Sur > Oriente,-74.11319 4.59610;-74.11298 4.59618
+103503_240782,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23163 4.56014;-74.23152 4.56027
+240782_75965,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23152 4.56027;-74.23147 4.56033
+157401_240785,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23143 4.56037;-74.23140 4.56041
+240785_79597,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23140 4.56041;-74.23103 4.56084
+75965_157401,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.23147 4.56033;-74.23143 4.56037
+153610_247728,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21169 4.58266;-74.21113 4.58296
+247728_247729,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21113 4.58296;-74.21075 4.58316
+247729_8104,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21075 4.58316;-74.21071 4.58319
+8104_247727,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21071 4.58319;-74.21017 4.58347
+247727_199312,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21017 4.58347;-74.21009 4.58351
+199312_30689,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.21009 4.58351;-74.20989 4.58361
+30689_30340,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20989 4.58361;-74.20973 4.58369
+30340_30382,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20973 4.58369;-74.20957 4.58377
+30382_237080,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20957 4.58377;-74.20945 4.58383
+237080_8102,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20945 4.58383;-74.20930 4.58390
+8102_101932,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.20930 4.58390;-74.20917 4.58396
+251246_494,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.12880 4.59342;-74.12814 4.59345
+36252_251247,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.12941 4.59342;-74.12884 4.59342
+251247_251246,Avenida Calle 45A Sur,Bogotá D.C.,Autopista Sur > Oriente,-74.12884 4.59342;-74.12880 4.59342
+93616_93506,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.24867 4.54146;-74.24791 4.54154;-74.24703 4.54185;-74.24642 4.54222;-74.24579 4.54283
+253561_253562,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26175 4.54029;-74.26192 4.54008;-74.26249 4.53975
+253563_253564,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26440 4.53963;-74.26468 4.53988;-74.26481 4.54018
+253562_253563,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26249 4.53975;-74.26301 4.53951;-74.26348 4.53941;-74.26402 4.53946;-74.26440 4.53963
+255711_192633,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.27166 4.53756;-74.27142 4.53817
+192635_255711,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.27175 4.53739;-74.27166 4.53756
+192631_255712,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.27160 4.53822;-74.27187 4.53767
+255712_192632,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.27187 4.53767;-74.27196 4.53750
+4389_226210,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.23170 4.56043;-74.23177 4.56034
+226210_226219,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.23177 4.56034;-74.23378 4.55787
+226219_161621,Autopista Sur,Soacha,Autopista Sur > Occidente,-74.23378 4.55787;-74.23602 4.55510
+161621_141234,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23602 4.55510;-74.23610 4.55500
+141234_226036,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23610 4.55500;-74.23615 4.55494
+226036_181134,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23615 4.55494;-74.23737 4.55345
+181134_154022,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23737 4.55345;-74.23802 4.55268
+154022_154024,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23802 4.55268;-74.23854 4.55205
+154024_154025,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23854 4.55205;-74.23871 4.55185
+154025_28724,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23871 4.55185;-74.23929 4.55116
+28724_154018,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23929 4.55116;-74.23985 4.55050
+154018_26932,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.23985 4.55050;-74.24016 4.55013
+26932_180729,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24016 4.55013;-74.24110 4.54901
+180729_26933,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24110 4.54901;-74.24220 4.54769
+26933_154012,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24220 4.54769;-74.24328 4.54636
+154012_159719,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24328 4.54636;-74.24349 4.54610
+159719_93514,Autopista Sur,Soacha,AP Bogotá-Granada/ RN40-05 >Occidente,-74.24349 4.54610;-74.24395 4.54550
+156227_152721,Autopista Bogota-Girardot,Sibaté,AP Granada-Bogotá/ RN40-05 >Oriente,-74.26863 4.54255;-74.26761 4.54276;-74.26708 4.54276;-74.26637 4.54252;-74.26592 4.54218
+80103_170226,Autopista Sur,Soacha,Autopista Sur > Oriente,-74.19724 4.58994;-74.19608 4.59052
+253564_109445,Autopista Bogota-Girardot,Sibaté,AP Bogotá-Granada/ RN40-05 >Occidente,-74.26481 4.54018;-74.26552 4.54180;-74.26586 4.54225;-74.26618 4.54251;-74.26655 4.54270;-74.26713 4.54286;-74.26820 4.54275;-74.26971 4.54234;-74.27028 4.54198;-74.27071 4.54153;-74.27105 4.54093;-74.27118 4.54049;-74.27143 4.53870
+109902_133130,Autopista Bogota-Girardot,Granada,AP Bogotá-Granada/ RN40-05 >Occidente,-74.30405 4.54326;-74.30448 4.54310

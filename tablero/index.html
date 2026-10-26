@@ -1,0 +1,1670 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gemelo Digital · Velocidad Autopista Sur</title>
+<meta name="description" content="Monitoreo y predicción de velocidad media en la Autopista Sur (Bogotá – Soacha – Granada). Piloto del Gemelo Digital, Observatorio de Dinámica Regional.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap">
+<style>
+/* Tokens del sitio: equivalen a los del tablero original */
+:root {
+  --font-anthropic-sans: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-anthropic-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --color-bg: #f4f6f9; --color-panel: #ffffff; --color-fg: #14202e; --color-fg-muted: #5b6878;
+  --color-border-line: #dde3ea; --color-bad: #c62828;
+  --cds-chart-muted: #8a96a6; --cds-chart-grid: #e8edf3; --cds-chart-axis: #b7c1cd; --cds-chart-reference: #8a96a6;
+  --cds-text-secondary: #5b6878; --cds-surface-popover: #ffffff; --cds-border: #d3dae3; --cds-shadow-popover: 0 6px 20px rgba(16, 32, 56, .14);
+  --cds-font-size-caption: .8125rem; --cds-font-size-body: .9375rem; --cds-font-size-heading: 1.0625rem; --cds-font-size-title: 1.6rem;
+  --cds-font-weight-medium: 600; --cds-radius: 10px;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 14px; --cds-gap-lg: 22px;
+  --cds-pad-xs: 6px; --cds-pad-sm: 10px; --cds-pad-lg: 18px;
+  --cds-dur-slow: 420ms; --cds-ease-out: cubic-bezier(.2, .8, .2, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0b1420; --color-panel: #111d2c; --color-fg: #e7edf5; --color-fg-muted: #9aa8ba; --color-border-line: #223247; --color-bad: #ff6b6b;
+    --cds-chart-muted: #6f7f94; --cds-chart-grid: #1b2a3d; --cds-chart-axis: #34465d; --cds-chart-reference: #6f7f94;
+    --cds-text-secondary: #9aa8ba; --cds-surface-popover: #15233a; --cds-border: #2a3d56; --cds-shadow-popover: 0 8px 24px rgba(0, 0, 0, .5);
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) .gd-tile { filter: invert(1) hue-rotate(180deg) brightness(.82) contrast(.9) saturate(.6); }
+}
+:root[data-theme="dark"] {
+  --color-bg: #0b1420; --color-panel: #111d2c; --color-fg: #e7edf5; --color-fg-muted: #9aa8ba; --color-border-line: #223247; --color-bad: #ff6b6b;
+  --cds-chart-muted: #6f7f94; --cds-chart-grid: #1b2a3d; --cds-chart-axis: #34465d; --cds-chart-reference: #6f7f94;
+  --cds-text-secondary: #9aa8ba; --cds-surface-popover: #15233a; --cds-border: #2a3d56; --cds-shadow-popover: 0 8px 24px rgba(0, 0, 0, .5);
+  color-scheme: dark;
+}
+:root[data-theme="dark"] .gd-tile { filter: invert(1) hue-rotate(180deg) brightness(.82) contrast(.9) saturate(.6); }
+html, body { margin: 0; }
+body { background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: 15px; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+.dash-skeleton { position: relative; color: transparent !important; }
+.dash-skeleton::after { content: ""; position: absolute; inset: 8px; border-radius: 8px; background: linear-gradient(90deg, var(--cds-chart-grid), var(--color-border-line), var(--cds-chart-grid)); background-size: 200% 100%; animation: gd-skel 1.4s linear infinite; }
+@keyframes gd-skel { to { background-position: -200% 0; } }
+.gd-osm { position: absolute; right: 6px; bottom: 4px; font-size: 10px; color: var(--color-fg-muted); background: color-mix(in srgb, var(--color-panel) 80%, transparent); padding: 1px 5px; border-radius: 4px; pointer-events: none; }
+.gd-pie { padding: 18px max(16px, 3vw) 28px; max-width: 1500px; margin: 0 auto; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); line-height: 1.5; }
+.gd-pie a { color: inherit; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+/* Mapa base en vivo (OpenStreetMap). Para quitarlo, borra esta línea. */
+window.GD_TILES = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+
+/* ------------------------------------------------------------------
+   Reemplazo mínimo de la API "dash" del tablero original:
+   lee los CSV de la carpeta datos/ y avisa a la página cuando llegan.
+   Para actualizar el tablero basta con reemplazar esos CSV.
+------------------------------------------------------------------- */
+/* Si se abre con doble clic (file://) el navegador bloquea la lectura de los CSV:
+   en ese caso se usa la copia empaquetada en datos/datos_local.js. */
+if (location.protocol === "file:") document.write('<script src="datos/datos_local.js"><\/script>');
+window.dash = (function () {
+  const ARCHIVOS = {
+    ficha_tecnica: "datos/ficha_tecnica.csv",
+    referencia_promedio30: "datos/referencia_promedio30.csv",
+    metricas_justas: "datos/metricas_justas.csv",
+    metricas_hora: "datos/metricas_hora.csv",
+    metricas_segmento: "datos/metricas_segmento.csv",
+    predicciones_ultima_ventana: "datos/predicciones_ultima_ventana.csv",
+    geometria_segmentos: "datos/geometria_segmentos.csv",
+    serie_ejemplo: "datos/serie_ejemplo.csv",
+    importancia_variables: "datos/importancia_variables.csv",
+    red_shp: "datos/red_shp.csv",
+    dia_monitoreo: "datos/dia_monitoreo.csv",
+    perfil_tipico: "datos/perfil_tipico.csv",
+    dia_info: "datos/dia_info.csv",
+  };
+  const fuentes = {}, calcs = {}, cbs = [];
+  let pend = null;
+  const avisar = () => { if (pend) return; pend = requestAnimationFrame(() => { pend = null; for (const fn of cbs) { try { fn(); } catch (e) { console.error(e); } } }); };
+  function cargar(id) {
+    if (fuentes[id]) return;
+    fuentes[id] = { status: "loading", data: [] };
+    const local = () => { const t = window.GD_DATOS && window.GD_DATOS[id]; if (t == null) return false; const rows = d3.csvParse(t); fuentes[id] = { status: "ok", data: rows, columns: rows.columns }; avisar(); return true; };
+    if (location.protocol === "file:" && local()) return;
+    fetch(ARCHIVOS[id] + "?v=" + (window.GD_VERSION || ""), { cache: "no-cache" })
+      .then((r) => { if (!r.ok) throw new Error(r.status + " " + r.statusText); return r.text(); })
+      .then((t) => { const rows = d3.csvParse(t); fuentes[id] = { status: "ok", data: rows, columns: rows.columns }; avisar(); })
+      .catch((e) => { if (local()) return; fuentes[id] = { status: "error", data: [], message: String(e) }; avisar(); });
+  }
+  function data(id) {
+    if (calcs[id]) {
+      const c = calcs[id];
+      const ins = c.inputs.map(data);
+      if (ins.some((x) => x.status === "error")) return { status: "error", data: [] };
+      if (ins.some((x) => x.status !== "ok")) return { status: "loading", data: [] };
+      if (c.cache && c.inputs.every((k, i) => c.src[i] === ins[i].data)) return c.cache;
+      try { c.cache = { status: "ok", data: c.fn(...ins.map((x) => x.data)) }; c.src = ins.map((x) => x.data); }
+      catch (e) { console.error(id, e); c.cache = { status: "error", data: [] }; c.src = ins.map((x) => x.data); }
+      return c.cache;
+    }
+    if (!ARCHIVOS[id]) return { status: "missing", data: [] };
+    cargar(id);
+    return fuentes[id];
+  }
+  let ancho = window.innerWidth;
+  window.addEventListener("resize", () => { if (Math.abs(window.innerWidth - ancho) > 20) { ancho = window.innerWidth; avisar(); } });
+  return {
+    data,
+    onData(fn) { cbs.push(fn); try { fn(); } catch (e) { console.error(e); } },
+    calc(id, o) { calcs[id] = { inputs: o.inputs, fn: o.fn }; },
+    loader() {},
+    colors: ["#1f5fa8", "#e8a317", "#2a9d8f", "#c2410c", "#7c3aed", "#0891b2", "#be185d", "#65a30d"],
+    setLink(n) { try { history.replaceState(null, "", "#" + n); } catch (e) {} },
+    params() { return {}; }, setParams() { avisar(); }, resetParams() {}, refresh() {},
+  };
+})();
+</script>
+</head>
+<body>
+<div id="dash-root">
+<style>
+#dash-root { --dash-gutter: 0; }
+.gd {
+  /* Centro de monitoreo: banda azul noche con filo amarillo, paneles sobrios y una cinta del corredor como pieza central */
+  --gd-navy: #10294a; --gd-navy-2: #17375e; --gd-navy-3: #24548a; --gd-gold: #f2c200;
+  --gd-v1: #2fae6b; --gd-v2: #e3b505; --gd-v3: #ee7d22; --gd-v4: #d63c3c; --gd-none: #9aa4ae;
+  --gd-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-anthropic-sans); color: var(--color-fg);
+}
+.gd *, .gd *::before, .gd *::after { box-sizing: border-box; }
+.gd-in { padding-left: max(16px, 3vw); padding-right: max(16px, 3vw); max-width: 1500px; margin-inline: auto; }
+
+/* ---------- Banda superior ---------- */
+.gd-band { background: radial-gradient(1200px 300px at 85% -60%, rgba(242,194,0,.16), transparent 60%), linear-gradient(115deg, #0b1f38 0%, var(--gd-navy-2) 55%, var(--gd-navy-3) 100%); color: #fff; position: relative; overflow: hidden; }
+.gd-band::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(90deg, transparent, #000 40%, #000); pointer-events: none; }
+.gd-band .gd-in { display: flex; flex-wrap: wrap; gap: var(--cds-gap-lg); align-items: center; justify-content: space-between; padding-block: 22px 20px; position: relative; }
+.gd-brand { display: flex; gap: 16px; align-items: center; min-width: 0; }
+.gd-radar { width: 58px; height: 58px; flex: none; }
+.gd-radar .gd-sweep { transform-origin: 29px 29px; }
+.gd-kicker { font-size: var(--cds-font-size-caption); letter-spacing: .14em; text-transform: uppercase; color: var(--gd-gold); font-weight: 600; }
+.gd-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.45rem, 2.6vw, 2.2rem); line-height: 1.1; margin: 4px 0 4px; text-wrap: balance; }
+.gd-sub { color: rgba(255,255,255,.78); font-size: var(--cds-font-size-body); margin: 0; }
+.gd-clockbox { display: grid; gap: 6px; justify-items: end; text-align: right; }
+.gd-clock { font-family: var(--gd-mono); font-variant-numeric: tabular-nums; font-size: clamp(1.9rem, 3.4vw, 2.7rem); letter-spacing: .04em; line-height: 1; text-shadow: 0 0 18px rgba(242,194,0,.35); }
+.gd-clock .gd-sec { color: var(--gd-gold); }
+.gd-clockmeta { font-size: var(--cds-font-size-caption); color: rgba(255,255,255,.72); letter-spacing: .06em; text-transform: uppercase; }
+.gd-chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.gd-chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.07); border-radius: 999px; padding: 4px 10px; font-size: var(--cds-font-size-caption); white-space: nowrap; }
+.gd-chip b { font-weight: 600; font-family: var(--gd-mono); font-variant-numeric: tabular-nums; }
+.gd-live { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 0 rgba(61,220,132,.6); }
+.gd-rail { height: 4px; background: var(--gd-gold); position: relative; overflow: hidden; }
+.gd-rail::after { content: ""; position: absolute; top: 0; bottom: 0; width: 18%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent); left: -20%; }
+
+/* ---------- Pestañas ---------- */
+.gd-nav { background: var(--color-panel); border-bottom: 1px solid var(--color-border-line); }
+.gd-nav .gd-in { display: flex; gap: 4px; overflow-x: auto; }
+.gd-tab { appearance: none; border: 0; background: none; color: var(--color-fg-muted); font: inherit; font-size: var(--cds-font-size-body); padding: 14px 14px 12px; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; }
+.gd-tab:hover { color: var(--color-fg); }
+.gd-tab[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--gd-gold); font-weight: 600; }
+.gd-tab:focus-visible, .gd-seg button:focus-visible, .gd-select:focus-visible, .gd-play:focus-visible { outline: 2px solid var(--gd-gold); outline-offset: 2px; }
+
+/* ---------- Contenido ---------- */
+.gd-page { padding-block: 22px 40px; display: grid; gap: var(--cds-gap-lg); }
+.gd-h2 { font-size: var(--cds-font-size-title); font-family: var(--font-anthropic-serif); font-weight: 400; margin: 0; text-wrap: balance; }
+.gd-lead { color: var(--color-fg-muted); margin: 6px 0 0; max-width: 75ch; line-height: 1.5; }
+.gd-lead b { color: var(--color-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.gd-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.gd-kpis { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+.gd-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; position: relative; }
+.gd-card h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.gd-note { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: 4px 0 0; line-height: 1.45; }
+.gd-cardhead { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+.gd-cardhead > div:first-child { min-width: 0; flex: 1 1 16rem; }
+
+.gd-kpi { display: grid; gap: 8px; overflow: hidden; }
+.gd-kpi::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gd-gold); border-radius: var(--cds-radius) 0 0 var(--cds-radius); }
+.gd-kpi-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-transform: uppercase; letter-spacing: .08em; }
+.gd-kpi-val { font-family: var(--font-anthropic-serif); font-size: clamp(2rem, 3.2vw, 2.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.gd-kpi-val small { font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); color: var(--color-fg-muted); margin-left: 4px; }
+.gd-kpi-foot { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.gd-kpi-foot b { color: var(--color-fg); font-weight: 600; }
+.gd-duel { display: grid; gap: 5px; min-height: 34px; }
+.gd-duel-row { display: grid; grid-template-columns: 7.5rem 1fr; gap: 8px; align-items: center; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.gd-duel-track { height: 8px; border-radius: 4px; background: var(--cds-chart-grid); overflow: hidden; }
+.gd-duel-bar { height: 100%; border-radius: 4px; width: 0; transition: width 900ms var(--cds-ease-out); }
+
+.gd-seg { display: inline-flex; border: 1px solid var(--color-border-line); border-radius: 999px; padding: 3px; gap: 2px; background: var(--color-bg); flex-wrap: wrap; }
+.gd-seg button { appearance: none; border: 0; background: none; color: var(--color-fg-muted); font: inherit; font-size: var(--cds-font-size-caption); padding: 5px 12px; border-radius: 999px; cursor: pointer; font-variant-numeric: tabular-nums; }
+.gd-seg button[aria-pressed="true"] { background: var(--gd-navy-2); color: #fff; font-weight: 600; }
+.gd-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.gd-select { font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg); background: var(--color-bg); border: 1px solid var(--color-border-line); border-radius: 999px; padding: 6px 12px; }
+.gd-play { appearance: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--color-border-line); background: var(--color-bg); color: var(--color-fg); border-radius: 999px; padding: 5px 12px; font: inherit; font-size: var(--cds-font-size-caption); cursor: pointer; }
+.gd-play[aria-pressed="true"] { border-color: var(--gd-gold); }
+.gd-play .gd-ico { width: 10px; height: 10px; }
+
+.gd-when { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 4px 0 12px; }
+.gd-when b { font-family: var(--gd-mono); color: var(--color-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.gd-strip { position: relative; min-height: 150px; }
+.gd-strip svg, .gd-chart svg { display: block; }
+.gd-scan { position: absolute; top: 18px; bottom: 22px; width: 60px; left: 0; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(242,194,0,.18), transparent); opacity: 0; }
+.gd-map { position: relative; min-height: 280px; margin-top: 14px; border-top: 1px dashed var(--color-border-line); padding-top: 14px; }
+.gd-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-top: 10px; align-items: center; }
+.gd-sw { display: inline-block; width: 18px; height: 8px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+.gd-chart { position: relative; min-height: 300px; }
+.gd-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); line-height: 1.5; z-index: 5; min-width: 150px; font-variant-numeric: tabular-nums; }
+.gd-tip .gd-tip-h { color: var(--cds-text-secondary); margin-bottom: 2px; }
+.gd-tip .gd-tip-r { display: flex; justify-content: space-between; gap: 14px; }
+.gd-tip .gd-tip-r span:first-child { display: inline-flex; align-items: center; gap: 6px; }
+.gd-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+.gd-tablebox { max-height: 440px; overflow: auto; }
+.gd-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.gd-table th { position: sticky; top: 0; background: var(--color-panel); text-align: right; font-weight: 600; color: var(--color-fg-muted); padding: 8px 10px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.gd-table td { text-align: right; padding: 7px 10px; border-bottom: 1px solid var(--cds-chart-grid); white-space: nowrap; }
+.gd-table th:first-child, .gd-table td:first-child, .gd-table th.gd-l, .gd-table td.gd-l { text-align: left; }
+.gd-table tr.gd-best td { background: color-mix(in srgb, var(--gd-gold) 14%, transparent); }
+.gd-table tr.gd-best td:first-child { box-shadow: inset 3px 0 0 var(--gd-gold); }
+.gd-cellbar { display: inline-block; height: 6px; border-radius: 3px; background: var(--gd-v4); vertical-align: middle; margin-right: 8px; opacity: .8; }
+.gd-def { display: grid; gap: 10px; margin: 0; }
+.gd-def div { display: grid; grid-template-columns: minmax(8rem, 12rem) 1fr; gap: 12px; font-size: var(--cds-font-size-caption); line-height: 1.5; }
+.gd-def dt { font-weight: 600; }
+.gd-def dd { margin: 0; color: var(--color-fg-muted); }
+
+.gd-maps { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr)); }
+.gd-mapcol { min-width: 0; display: grid; gap: 8px; align-content: start; }
+.gd-mapcol .gd-map { margin-top: 0; border-top: 0; padding-top: 0; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; background: var(--gd-mapbg); touch-action: none; cursor: grab; }
+.gd-mapcol .gd-legend { margin-top: 0; }
+.gd { --gd-mapbg: color-mix(in srgb, var(--gd-navy-2) 5%, var(--color-bg)); }
+.gd-maptag { display: inline-flex; align-items: center; gap: 8px; font-size: var(--cds-font-size-caption); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--color-fg); }
+.gd-maptag-p::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--gd-gold); }
+.gd-stripwrap { margin-top: 18px; display: grid; gap: 6px; }
+.gd-semaforo { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); margin-bottom: 14px; min-height: 64px; }
+.gd-light { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 10px 12px; display: grid; gap: 2px; background: var(--color-bg); cursor: pointer; text-align: left; font: inherit; color: inherit; }
+.gd-light[aria-pressed="true"] { border-color: var(--gd-navy-3); box-shadow: inset 0 0 0 1px var(--gd-navy-3); }
+.gd-light .gd-light-n { font-family: var(--font-anthropic-serif); font-size: 1.7rem; line-height: 1.1; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 10px; }
+.gd-light .gd-light-l { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.gd-bulb { width: 12px; height: 12px; border-radius: 50%; flex: none; box-shadow: 0 0 10px currentColor; background: currentColor; }
+.gd-pill { display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px; border-radius: 999px; font-size: var(--cds-font-size-caption); font-weight: 600; }
+.gd-pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.gd-mlabel { font-size: 11px; font-weight: 600; letter-spacing: .04em; fill: var(--color-fg-muted); paint-order: stroke; stroke: var(--gd-mapbg); stroke-width: 3px; text-transform: uppercase; pointer-events: none; }
+.gd-gauges { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); min-height: 180px; }
+.gd-gauge { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 14px; align-items: center; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 12px 14px; background: var(--color-bg); }
+.gd-gauge svg { width: 100%; height: auto; display: block; }
+.gd-gauge-t { font-size: var(--cds-font-size-caption); text-transform: uppercase; letter-spacing: .08em; color: var(--color-fg-muted); font-weight: 600; }
+.gd-gauge-v { font-family: var(--font-anthropic-serif); font-size: clamp(2rem, 3.4vw, 2.6rem); line-height: 1.05; font-variant-numeric: tabular-nums; }
+.gd-gauge-v small { font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); color: var(--color-fg-muted); margin-left: 4px; }
+.gd-gauge-rows { display: grid; gap: 3px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; margin-top: 6px; }
+.gd-gauge-rows div { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px dashed var(--cds-chart-grid); padding-bottom: 2px; }
+.gd-gauge-rows b { color: var(--color-fg); font-weight: 600; }
+@media (max-width: 480px) { .gd-gauge { grid-template-columns: 1fr; } }
+.gd-hero { display: grid; gap: var(--cds-gap-md); grid-template-columns: minmax(0, 1.4fr) minmax(min(100%, 22rem), 1fr); align-items: stretch; }
+@media (max-width: 860px) { .gd-hero { grid-template-columns: 1fr; } }
+.gd-hero-txt { min-width: 0; align-self: center; }
+.gd-timebox { background: linear-gradient(135deg, #0b1f38, var(--gd-navy-2)); color: #fff; border-radius: var(--cds-radius); padding: 14px 16px; display: grid; gap: 8px; position: relative; overflow: hidden; }
+.gd-timebox::after { content: ""; position: absolute; inset: auto 0 0 0; height: 3px; background: var(--gd-gold); }
+.gd-time-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gd-time-k { font-size: var(--cds-font-size-caption); letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.gd-bigtime { font-family: var(--gd-mono); font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; color: var(--gd-gold); text-shadow: 0 0 18px rgba(242,194,0,.4); font-variant-numeric: tabular-nums; }
+#sel-hora { width: 100%; accent-color: var(--gd-gold); }
+.gd-time-ticks { display: flex; align-items: flex-end; gap: 1px; height: 24px; margin-top: -4px; }
+.gd-time-ticks i { flex: 1; background: rgba(255,90,90,.75); border-radius: 1px 1px 0 0; min-height: 1px; }
+.gd-time-ticks i.gd-now { background: var(--gd-gold); box-shadow: 0 0 6px var(--gd-gold); }
+.gd-time-ctrl { display: flex; flex-wrap: wrap; gap: 6px; }
+.gd-timebox .gd-play { background: rgba(255,255,255,.08); color: #fff; border-color: rgba(255,255,255,.25); }
+.gd-timebox .gd-play[aria-pressed="true"] { border-color: var(--gd-gold); color: var(--gd-gold); }
+.gd-sw-glow { background: #ff2d2d; box-shadow: 0 0 8px 2px rgba(255,45,45,.8); }
+.gd-gauge.gd-alerta { border-color: color-mix(in srgb, #ff2d2d 60%, var(--color-border-line)); box-shadow: 0 0 0 1px color-mix(in srgb, #ff2d2d 40%, transparent) inset; }
+.gd-halo { opacity: .75; }
+.gd-fondo { opacity: .9; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+.gd-fail { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.gd-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .gd-live { animation: gd-pulse 1.8s infinite; }
+  .gd-rail::after { animation: gd-rail 5.5s linear infinite; }
+  .gd-radar .gd-sweep { animation: gd-spin 4s linear infinite; }
+  .gd-strip.gd-on .gd-scan { opacity: 1; animation: gd-scan 6s ease-in-out infinite; }
+  .gd-flow { animation-name: gd-flow; animation-timing-function: linear; animation-iteration-count: infinite; }
+  .gd-blink { animation: gd-blink 1.1s ease-in-out infinite; }
+  .gd-halo { animation: gd-halo 1.2s ease-in-out infinite; }
+  .gd-gauge.gd-alerta { animation: gd-alert 2s ease-in-out infinite; }
+  @keyframes gd-halo { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+  @keyframes gd-alert { 0%, 100% { box-shadow: 0 0 0 1px rgba(255,45,45,.2) inset; } 50% { box-shadow: 0 0 14px 1px rgba(255,45,45,.45) inset; } }
+  .gd-bulb.gd-on { animation: gd-glow 1.6s ease-in-out infinite; }
+  @keyframes gd-blink { 0%, 100% { opacity: .1; } 50% { opacity: 1; } }
+  @keyframes gd-glow { 0%, 100% { box-shadow: 0 0 4px currentColor; } 50% { box-shadow: 0 0 16px currentColor; } }
+  .gd-page.gd-enter > * { animation: gd-rise var(--cds-dur-slow) var(--cds-ease-out) both; }
+  .gd-page.gd-enter > *:nth-child(2) { animation-delay: 60ms; }
+  .gd-page.gd-enter > *:nth-child(3) { animation-delay: 120ms; }
+  .gd-page.gd-enter > *:nth-child(4) { animation-delay: 180ms; }
+  @keyframes gd-pulse { 0% { box-shadow: 0 0 0 0 rgba(61,220,132,.6); } 70% { box-shadow: 0 0 0 9px rgba(61,220,132,0); } 100% { box-shadow: 0 0 0 0 rgba(61,220,132,0); } }
+  @keyframes gd-rail { to { left: 110%; } }
+  @keyframes gd-spin { to { transform: rotate(360deg); } }
+  @keyframes gd-scan { 0% { left: 0; } 50% { left: calc(100% - 60px); } 100% { left: 0; } }
+  @keyframes gd-flow { to { stroke-dashoffset: -24; } }
+  @keyframes gd-rise { from { opacity: .001; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+@media (max-width: 640px) {
+  .gd-clockbox { justify-items: start; text-align: left; }
+  .gd-chips { justify-content: flex-start; }
+  .gd-def div { grid-template-columns: 1fr; gap: 2px; }
+}
+</style>
+
+<div class="gd" id="gd">
+  <header class="gd-band" id="inicio">
+    <div class="gd-in">
+      <div class="gd-brand">
+        <svg class="gd-radar" viewBox="0 0 58 58" aria-hidden="true">
+          <circle cx="29" cy="29" r="27" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.5"/>
+          <circle cx="29" cy="29" r="18" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.2"/>
+          <circle cx="29" cy="29" r="9" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1"/>
+          <path d="M6 40 C 18 34, 24 22, 52 14" fill="none" stroke="#f2c200" stroke-width="2.4" stroke-linecap="round"/>
+          <g class="gd-sweep"><path d="M29 29 L29 2 A27 27 0 0 1 52.4 15.5 Z" fill="rgba(242,194,0,.22)"/></g>
+          <circle cx="29" cy="29" r="2.4" fill="#f2c200"/>
+        </svg>
+        <div>
+          <div class="gd-kicker">Observatorio de Dinámica Regional · Gemelo Digital</div>
+          <h1 class="gd-title">Velocidad media · Autopista Sur</h1>
+          <p class="gd-sub">Piloto del modelo de predicción de velocidad · Bogotá – Soacha – Granada</p>
+        </div>
+      </div>
+      <div class="gd-clockbox">
+        <div class="gd-clockmeta">Hora Bogotá · UTC−5</div>
+        <div class="gd-clock" id="gd-clock" aria-live="off">--:--<span class="gd-sec">:--</span></div>
+        <div class="gd-clockmeta" id="gd-date">&nbsp;</div>
+        <div class="gd-chips">
+          <span class="gd-chip"><span class="gd-live"></span>Piloto en operación</span>
+          <span class="gd-chip">Datos hasta <b id="gd-hasta" data-source="ficha_tecnica" data-field="valor" data-where="clave=hasta">—</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="gd-rail" aria-hidden="true"></div>
+  </header>
+
+  <nav class="gd-nav" aria-label="Secciones">
+    <div class="gd-in" role="tablist">
+      <button class="gd-tab" role="tab" id="tab-monitoreo" data-tab="monitoreo" aria-selected="true">Monitoreo</button>
+      <button class="gd-tab" role="tab" id="tab-desempeno" data-tab="desempeno" aria-selected="false">Desempeño del modelo</button>
+      <button class="gd-tab" role="tab" id="tab-diagnostico" data-tab="diagnostico" aria-selected="false">Diagnóstico</button>
+      <button class="gd-tab" role="tab" id="tab-modelo" data-tab="modelo" aria-selected="false">Modelo y datos</button>
+    </div>
+  </nav>
+
+  <!-- ================= MONITOREO ================= -->
+  <section class="gd-page gd-in" id="monitoreo" data-page="monitoreo">
+    <div class="gd-hero">
+      <div class="gd-hero-txt">
+        <h2 class="gd-h2">Pulso del corredor</h2>
+        <p class="gd-lead" id="gd-lead-dia"><b data-source="dia_info" data-field="fecha_texto" data-row="0">—</b>, <b data-source="resumen_dia" data-field="hora">—</b>: <b data-source="resumen_dia" data-field="cong_ahora">—</b> segmentos congestionados y la velocidad baja en <b data-source="resumen_dia" data-field="baja_ahora">—</b> frente a 15 minutos antes. A <span class="gd-hlbl">30</span> minutos el modelo prevé que la velocidad baje en <b data-source="resumen_dia" data-field="baja_30" data-hfield="baja">—</b> segmentos y que <b data-source="resumen_dia" data-field="cong_30" data-hfield="cong">—</b> estén congestionados.</p>
+      </div>
+      <div class="gd-timebox" id="reloj-dia">
+        <div class="gd-time-top">
+          <span class="gd-time-k">Hora en el corredor</span>
+          <span class="gd-bigtime" id="gd-bigtime">--:--</span>
+        </div>
+        <input type="range" id="sel-hora" min="0" max="0" value="0" step="1" aria-label="Hora del día">
+        <div class="gd-time-ticks" id="gd-time-ticks" aria-hidden="true"></div>
+        <div class="gd-time-ctrl">
+          <button class="gd-play" id="gd-play" aria-pressed="false" type="button"><svg class="gd-ico" viewBox="0 0 10 10" aria-hidden="true"><path id="gd-play-ico" d="M2 1 L9 5 L2 9 Z" fill="currentColor"/></svg><span id="gd-play-txt">Reproducir el día</span></button>
+          <button class="gd-play" id="gd-pico" type="button">Hora con más congestión</button>
+          <button class="gd-play" id="gd-ultima" type="button">Última hora</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="gd-card" id="velocidad-corredor">
+      <div class="gd-cardhead">
+        <div>
+          <h3>Velocidad media del corredor · <span class="gd-hora-txt">—</span></h3>
+          <p class="gd-note">Longitud total ÷ tiempo total de recorrido de cada calzada. Aguja: velocidad actual. Marca azul: velocidad típica a esta hora (histórico de marzo a julio, mismo día de la semana). Marca blanca: velocidad libre.</p>
+        </div>
+      </div>
+      <div class="gd-gauges" id="gauges" data-source="corredor_dia"></div>
+    </div>
+
+    <div class="gd-card" id="corredor">
+      <div class="gd-cardhead">
+        <div>
+          <h3>Corredor ahora y en predicción</h3>
+          <p class="gd-note">Trazado oficial de los segmentos. Los puntos recorren el corredor a la velocidad de cada tramo: se amontonan donde hay trancón. Halo rojo que palpita: congestión. Parpadeo: la velocidad baja. Rueda o pellizco para acercar; arrastra para mover.</p>
+        </div>
+        <div class="gd-controls">
+          <div class="gd-seg" id="seg-h" role="group" aria-label="Horizonte de predicción"></div>
+          <select class="gd-select" id="sel-capa" aria-label="Qué colorear">
+            <option value="cambio">Cambio de velocidad (baja / se mantiene / sube)</option>
+            <option value="estado">Estado de congestión</option>
+            <option value="real">Predicho frente a lo que realmente pasó</option>
+            <option value="err">Error del modelo por segmento</option>
+            <option value="mej">Mejora frente al promedio 30 min</option>
+          </select>
+          <select class="gd-select" id="sel-sentido" aria-label="Calzada">
+            <option value="ambas">Ambas calzadas</option>
+            <option value="Occidente - Oriente">Granada → Bogotá</option>
+            <option value="Oriente - Occidente">Bogotá → Granada</option>
+          </select>
+          <button class="gd-play" id="gd-reset" type="button">Ver todo</button>
+        </div>
+      </div>
+      <div class="gd-maps">
+        <div class="gd-mapcol">
+          <div class="gd-maptag"><span class="gd-live"></span><span id="tag-ahora">Ahora</span></div>
+          <div class="gd-map" id="mapa-ahora" data-source="red_shp tendencia_dia dia_monitoreo geometria_segmentos"></div>
+          <div class="gd-legend" id="leg-ahora"></div>
+        </div>
+        <div class="gd-mapcol">
+          <div class="gd-maptag gd-maptag-p" id="tag-pred">Predicción</div>
+          <div class="gd-map" id="mapa-pred" data-source="red_shp tendencia_dia dia_monitoreo geometria_segmentos metricas_segmento"></div>
+          <div class="gd-legend" id="gd-legend"></div>
+        </div>
+      </div>
+      <div class="gd-stripwrap">
+        <div class="gd-note">Cinta del corredor: los colores del mapa de predicción, por kilómetro. Granada a la izquierda, Bogotá (NQS) a la derecha.</div>
+        <div class="gd-strip" id="strip" data-source="tendencia_dia geometria_segmentos metricas_segmento"><div class="gd-scan" aria-hidden="true"></div></div>
+      </div>
+    </div>
+
+    <div class="gd-card" id="tendencia">
+      <div class="gd-cardhead">
+        <div>
+          <h3>Segmentos por congestión y tendencia · <span class="gd-hora-txt">—</span></h3>
+          <p class="gd-note">Cambio ahora = velocidad actual − velocidad 15 minutos antes. Cambio previsto = velocidad predicha − velocidad actual. Baja si cae 3 km/h o más; sube si aumenta 3 km/h o más. Congestionado: menos del 50 % de la velocidad libre. Toca una luz para filtrar la tabla.</p>
+        </div>
+      </div>
+      <div class="gd-semaforo" id="semaforo" data-source="resumen_dia"></div>
+      <p class="gd-note" id="tabla-vacia" hidden></p>
+      <div class="gd-tablebox">
+        <table class="gd-table" id="tabla-tendencia" data-source="dia_monitoreo" data-row-key="FROM_TO,hora">
+          <thead><tr>
+            <th data-field="FROM_TO">Segmento</th>
+            <th data-source="tendencia_dia" data-field="calzada" class="gd-l">Calzada</th>
+            <th data-source="tendencia_dia" data-field="via" class="gd-l">Vía</th>
+            <th data-source="tendencia_dia" data-field="municipio" class="gd-l">Municipio</th>
+            <th data-source="tendencia_dia" data-field="km">Km</th>
+            <th data-field="vel">Ahora (km/h)</th>
+            <th data-source="tendencia_dia" data-field="cambio_ahora">Cambio vs 15 min antes</th>
+            <th data-field="p30" data-hcol="p">Predicha (km/h)</th>
+            <th data-source="tendencia_dia" data-field="cambio_30" data-hcol="cambio_">Cambio previsto</th>
+            <th data-field="r30" data-hcol="r">Real (km/h)</th>
+            <th data-source="tendencia_dia" data-field="estado_ahora" class="gd-l">Estado ahora</th>
+            <th data-source="tendencia_dia" data-field="estado_30" data-hcol="estado_" class="gd-l">Estado previsto</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="gd-h2">Desempeño del piloto</h2>
+      <p class="gd-lead">Medido en septiembre y octubre, meses que el modelo nunca vio al entrenar.</p>
+    </div>
+    <div class="gd-kpis" id="kpis">
+      <div class="gd-card gd-kpi" id="kpi-mejora">
+        <div class="gd-kpi-label">Menos error en hora pico · 30 min</div>
+        <div class="gd-kpi-val"><span data-source="mejoras" data-field="hora_pico" data-where="horizonte=30 min">—</span><small>%</small></div>
+        <div class="gd-kpi-foot">Frente al promedio de los últimos 30 min, en prueba (sep–oct)</div>
+      </div>
+      <div class="gd-card gd-kpi" id="kpi-general">
+        <div class="gd-kpi-label">Error medio general · 30 min</div>
+        <div class="gd-kpi-val"><span data-source="referencia_promedio30" data-field="xgboost_todas" data-where="horizonte=30 min">—</span><small>km/h</small></div>
+        <div class="gd-duel" data-source="referencia_promedio30" data-k="todas"></div>
+      </div>
+      <div class="gd-card gd-kpi" id="kpi-trancon">
+        <div class="gd-kpi-label">Error medio con trancón · 30 min</div>
+        <div class="gd-kpi-val"><span data-source="referencia_promedio30" data-field="xgboost_trancon_ahora" data-where="horizonte=30 min">—</span><small>km/h</small></div>
+        <div class="gd-duel" data-source="referencia_promedio30" data-k="trancon_ahora"></div>
+      </div>
+      <div class="gd-card gd-kpi" id="kpi-red">
+        <div class="gd-kpi-label">Segmentos monitoreados</div>
+        <div class="gd-kpi-val"><span data-source="ficha_tecnica" data-field="valor" data-where="clave=segmentos_activos">—</span><small>en 2 calzadas</small></div>
+        <div class="gd-kpi-foot"><b data-source="ficha_tecnica" data-field="valor" data-where="clave=filas_tabla_modelo">—</b> registros de 5 minutos en la tabla de modelado</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DESEMPEÑO ================= -->
+  <section class="gd-page gd-in" id="desempeno" data-page="desempeno" hidden>
+    <div>
+      <h2 class="gd-h2">¿Cuánto mejora el modelo?</h2>
+      <p class="gd-lead">En los meses de prueba (septiembre y octubre), que el modelo nunca vio, XGBoost reduce el error entre <b data-source="rango_mejora" data-field="minimo" data-row="0">—</b> % y <b data-source="rango_mejora" data-field="maximo" data-row="0">—</b> % frente a la mejor referencia simple, el promedio de los últimos 30 minutos, en los tres horizontes.</p>
+    </div>
+    <div class="gd-card" id="comparacion">
+      <div class="gd-cardhead">
+        <div>
+          <h3>Error medio por método y horizonte</h3>
+          <p class="gd-note">Error absoluto medio (km/h) sobre la velocidad promedio de 15 minutos alrededor del horizonte. Menos es mejor.</p>
+        </div>
+        <div class="gd-seg" id="seg-medida" role="group" aria-label="Medida"></div>
+      </div>
+      <div class="gd-chart" id="chart-comp" data-source="comparacion"></div>
+    </div>
+    <div class="gd-card" id="variantes">
+      <div class="gd-cardhead">
+        <div>
+          <h3>Todas las variantes evaluadas</h3>
+          <p class="gd-note">Error absoluto medio (km/h). La fila resaltada es la versión elegida: menor promedio de las tres medidas en validación (agosto).</p>
+        </div>
+      </div>
+      <div class="gd-tablebox">
+        <table class="gd-table" id="tabla-variantes" data-source="metricas_justas" data-row-key="horizonte,variante">
+          <thead><tr>
+            <th data-field="horizonte">Horizonte</th>
+            <th data-field="variante" class="gd-l">Método</th>
+            <th data-field="validacion_todas">Validación · todas</th>
+            <th data-field="validacion_trancon_ahora">Validación · trancón</th>
+            <th data-field="validacion_hora_pico">Validación · pico</th>
+            <th data-field="prueba_todas">Prueba · todas</th>
+            <th data-field="prueba_trancon_ahora">Prueba · trancón</th>
+            <th data-field="prueba_hora_pico">Prueba · pico</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DIAGNÓSTICO ================= -->
+  <section class="gd-page gd-in" id="diagnostico" data-page="diagnostico" hidden>
+    <div>
+      <h2 class="gd-h2">¿Cuándo y dónde se equivoca?</h2>
+      <p class="gd-lead">Errores medidos en prueba (septiembre y octubre), en los momentos en que el segmento tenía trancón.</p>
+    </div>
+    <div class="gd-card" id="por-hora">
+      <div class="gd-cardhead">
+        <div>
+          <h3>Error con trancón por hora del día</h3>
+          <p class="gd-note">Error absoluto medio (km/h) de cada método según la hora en que se hace la predicción.</p>
+        </div>
+        <div class="gd-seg" id="seg-hora" role="group" aria-label="Horizonte"></div>
+      </div>
+      <div class="gd-chart" id="chart-hora" data-source="metricas_hora"></div>
+    </div>
+    <div class="gd-card" id="dia-ejemplo">
+      <div class="gd-cardhead">
+        <div>
+          <h3>Un día real frente a lo predicho</h3>
+          <p class="gd-note">Segmento <b data-source="serie_ejemplo" data-field="FROM_TO" data-row="0">—</b> · <b data-source="serie_ejemplo" data-field="fecha" data-row="0">—</b>. Cada predicción se dibuja en la hora a la que se refiere.</p>
+        </div>
+        <div class="gd-seg" id="seg-dia" role="group" aria-label="Horizonte"></div>
+      </div>
+      <div class="gd-chart" id="chart-dia" data-source="serie_ejemplo"></div>
+    </div>
+    <div class="gd-card" id="segmentos-criticos">
+      <div class="gd-cardhead">
+        <div>
+          <h3>Segmentos con mayor error</h3>
+          <p class="gd-note">Los 12 segmentos con más error del modelo (con al menos 30 momentos de trancón en prueba). Error absoluto medio en km/h.</p>
+        </div>
+        <div class="gd-seg" id="seg-segm" role="group" aria-label="Horizonte"></div>
+      </div>
+      <div class="gd-tablebox">
+        <table class="gd-table" id="tabla-segmentos" data-source="metricas_segmento" data-row-key="FROM_TO,horizonte">
+          <thead><tr>
+            <th data-field="FROM_TO">Segmento</th>
+            <th data-field="sentido" class="gd-l">Calzada</th>
+            <th data-field="filas">Momentos</th>
+            <th data-field="MAE_xgboost">XGBoost</th>
+            <th data-field="MAE_promedio30">Promedio 30 min</th>
+            <th data-field="MAE_historico">Histórico</th>
+            <th data-field="MAE_persistencia">Persistencia</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MODELO ================= -->
+  <section class="gd-page gd-in" id="modelo" data-page="modelo" hidden>
+    <div>
+      <h2 class="gd-h2">Cómo decide el modelo</h2>
+      <p class="gd-lead">Un modelo XGBoost por horizonte, entrenado con marzo a julio, ajustado con agosto y evaluado con septiembre y octubre.</p>
+    </div>
+    <div class="gd-grid">
+      <div class="gd-card" id="importancia">
+        <div class="gd-cardhead">
+          <div>
+            <h3>Variables que más pesan</h3>
+            <p class="gd-note">Participación de cada variable en la ganancia total de los árboles.</p>
+          </div>
+          <div class="gd-seg" id="seg-imp" role="group" aria-label="Horizonte"></div>
+        </div>
+        <div class="gd-chart" id="chart-imp" data-source="importancia_variables"></div>
+      </div>
+      <div class="gd-card" id="ficha">
+        <div class="gd-cardhead"><div><h3>Ficha técnica</h3><p class="gd-note">Datos y configuración del piloto.</p></div></div>
+        <div class="gd-tablebox">
+          <table class="gd-table" id="tabla-ficha" data-source="ficha_tecnica" data-row-key="clave">
+            <thead><tr><th data-field="etiqueta">Concepto</th><th data-field="valor">Valor</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="gd-card" id="definiciones">
+      <div class="gd-cardhead"><div><h3>Definiciones</h3></div></div>
+      <dl class="gd-def">
+        <div><dt>Objetivo</dt><dd>Velocidad media del segmento, promediada en 15 minutos alrededor del horizonte (15, 30 o 60 minutos después). Promediar quita el parpadeo de los reportes de Waze.</dd></div>
+        <div><dt>Persistencia</dt><dd>Supone que la velocidad futura será igual a la de ahora.</dd></div>
+        <div><dt>Histórico</dt><dd>Velocidad típica del segmento ese día de la semana a esa hora, calculada con marzo a julio.</dd></div>
+        <div><dt>Promedio 30 min</dt><dd>Velocidad promedio del segmento en los últimos 30 minutos. Es la referencia más difícil de superar.</dd></div>
+        <div><dt>Error todas</dt><dd>Todas las ventanas de 5 minutos, ponderadas para representar la tabla completa.</dd></div>
+        <div><dt>Error con trancón</dt><dd>Ventanas en las que el segmento tenía trancón en el momento de predecir.</dd></div>
+        <div><dt>Error hora pico</dt><dd>Días hábiles, de 5 a 9 a. m. y de 4 a 8 p. m.</dd></div>
+        <div><dt>Estado de la vía</dt><dd>Velocidad frente a la velocidad libre del segmento: fluido desde el 90 %, moderado del 70 % al 90 %, lento del 40 % al 70 % y congestionado por debajo del 40 %.</dd></div>
+      </dl>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  const S = window.GD = Object.assign({ tab: 'monitoreo', h: '30', capa: 'cambio', sentido: 'ambas', filtro: null, medida: 'trancon_ahora', hHora: '30', hDia: '30', hSeg: '30', hImp: '30', play: false, drawn: {} }, window.GD || {});
+  if (!['15', '30', '60'].includes(S.h)) S.h = '30';
+  if (!['cambio', 'estado', 'real', 'err', 'mej'].includes(S.capa)) S.capa = 'cambio';
+  if (!S.sentido) S.sentido = 'ambas';
+  const q = (s, el) => (el || document).querySelector(s);
+  const qa = (s, el) => Array.from((el || document).querySelectorAll(s));
+  const nf1 = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const nf2 = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const nf0 = new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 });
+  const N = (v) => (v === '' || v == null ? NaN : Number(v));
+  const ok = (id) => dash.data(id).status === 'ok';
+  const rows = (id) => (ok(id) ? dash.data(id).data : []);
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------- Cálculos ---------------- */
+  dash.calc('tendencia_dia', {
+    inputs: ['dia_monitoreo', 'predicciones_ultima_ventana', 'red_shp'],
+    title: 'Estado y tendencia por segmento y hora',
+    description: 'Para cada segmento y ventana del día: estado frente a la velocidad libre (congestionado < 50 %, lento < 75 %, moderado < 90 %), cambio frente a 15 min antes, y cambio, estado y estado real previstos a +15, +30 y +60 min (baja si ≤ −3 km/h, sube si ≥ +3 km/h). Vía y municipio del shapefile.',
+    fn: (dia_monitoreo, predicciones_ultima_ventana, red_shp) => {
+      const seg = new Map(predicciones_ultima_ventana.map((r) => [r.FROM_TO, r]));
+      const shp = new Map(red_shp.map((r) => [r.FROM_TO, r]));
+      const vel = new Map(dia_monitoreo.map((r) => [r.FROM_TO + '|' + r.hora, Number(r.vel)]));
+      const antes = (h) => {
+        const m = Number(h.slice(0, 2)) * 60 + Number(h.slice(3, 5)) - 15;
+        return m < 0 ? '' : String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
+      };
+      const est = (i) => (!(i >= 0) ? 'Sin dato' : i >= 0.9 ? 'Fluido' : i >= 0.75 ? 'Moderado' : i >= 0.5 ? 'Lento' : 'Congestionado');
+      const tend = (d) => (d == null || isNaN(d) ? 'Sin dato' : d <= -3 ? 'Baja' : d >= 3 ? 'Sube' : 'Se mantiene');
+      const out = [];
+      for (const r of dia_monitoreo) {
+        const s = seg.get(r.FROM_TO);
+        if (!s) continue;
+        const lib = Number(s.vel_libre_ref_kmh), a = Number(r.vel), g = shp.get(r.FROM_TO) || {};
+        const prev = vel.get(r.FROM_TO + '|' + antes(r.hora));
+        const ca = prev == null ? null : Math.round((a - prev) * 10) / 10;
+        const o = { FROM_TO: r.FROM_TO, hora: r.hora, calzada: s.sentido === 'Occidente - Oriente' ? 'Granada → Bogotá' : 'Bogotá → Granada',
+          via: g.NomVia || '', municipio: g.NomMpio || '', km: Number(s.km), estado_ahora: est(a / lib), cambio_ahora: ca, tendencia_ahora: tend(ca) };
+        for (const h of ['15', '30', '60']) {
+          const p = Number(r['p' + h]), re = r['r' + h] === '' ? NaN : Number(r['r' + h]);
+          const d = Math.round((p - a) * 10) / 10;
+          o['cambio_' + h] = d; o['tendencia_' + h] = tend(d); o['estado_' + h] = est(p / lib); o['estado_real_' + h] = est(re / lib);
+        }
+        out.push(o);
+      }
+      return out;
+    },
+  });
+  dash.calc('resumen_dia', {
+    inputs: ['tendencia_dia'],
+    title: 'Conteos por hora',
+    description: 'Por ventana del día: segmentos congestionados y que bajan, se mantienen o suben, ahora (frente a 15 min antes) y previstos a +15, +30 y +60 min.',
+    fn: (tendencia_dia) => {
+      const by = new Map();
+      for (const r of tendencia_dia) {
+        let o = by.get(r.hora);
+        if (!o) { o = { hora: r.hora, cong_ahora: 0, baja_ahora: 0, mantiene_ahora: 0, sube_ahora: 0 }; for (const h of ['15', '30', '60']) { o['cong_' + h] = 0; o['baja_' + h] = 0; o['mantiene_' + h] = 0; o['sube_' + h] = 0; o['congreal_' + h] = 0; } by.set(r.hora, o); }
+        if (r.estado_ahora === 'Congestionado') o.cong_ahora++;
+        if (r.tendencia_ahora === 'Baja') o.baja_ahora++; else if (r.tendencia_ahora === 'Sube') o.sube_ahora++; else if (r.tendencia_ahora === 'Se mantiene') o.mantiene_ahora++;
+        for (const h of ['15', '30', '60']) {
+          if (r['estado_' + h] === 'Congestionado') o['cong_' + h]++;
+          if (r['estado_real_' + h] === 'Congestionado') o['congreal_' + h]++;
+          const t = r['tendencia_' + h];
+          if (t === 'Baja') o['baja_' + h]++; else if (t === 'Sube') o['sube_' + h]++; else o['mantiene_' + h]++;
+        }
+      }
+      return Array.from(by.values()).sort((a, b) => (a.hora < b.hora ? -1 : 1));
+    },
+  });
+  dash.calc('corredor_dia', {
+    inputs: ['dia_monitoreo', 'predicciones_ultima_ventana', 'geometria_segmentos', 'perfil_tipico', 'dia_info'],
+    title: 'Velocidad media del corredor por hora',
+    description: 'Por calzada y ventana: longitud total ÷ tiempo total de recorrido (longitud de cada segmento según el kilometraje de su trazado), ahora, a flujo libre y predicha a +15, +30 y +60 min; velocidad típica del perfil histórico (mar–jul) para ese día de la semana y hora, y diferencia ahora − típica.',
+    fn: (dia_monitoreo, predicciones_ultima_ventana, geometria_segmentos, perfil_tipico, dia_info) => {
+      const L = new Map();
+      for (const r of geometria_segmentos) {
+        const km = Number(r.km), o = L.get(r.FROM_TO) || [Infinity, -Infinity];
+        o[0] = Math.min(o[0], km); o[1] = Math.max(o[1], km); L.set(r.FROM_TO, o);
+      }
+      const seg = new Map(predicciones_ultima_ventana.map((r) => [r.FROM_TO, r]));
+      const dow = String(dia_info[0].dia_semana);
+      const tip = new Map(perfil_tipico.filter((r) => String(r.dia_semana) === dow).map((r) => [r.sentido + '|' + r.hora, Number(r.vel_tipica_kmh)]));
+      const acc = new Map();
+      for (const r of dia_monitoreo) {
+        const s = seg.get(r.FROM_TO); if (!s) continue;
+        const e = L.get(r.FROM_TO), l = e ? Math.max(e[1] - e[0], 0.01) : 0.01;
+        const k = r.hora + '|' + s.sentido;
+        let o = acc.get(k);
+        if (!o) { o = { hora: r.hora, sentido: s.sentido, len: {}, t: {} }; acc.set(k, o); }
+        for (const [c, v] of [['ahora', r.vel], ['libre', s.vel_libre_ref_kmh], ['p15', r.p15], ['p30', r.p30], ['p60', r.p60]]) {
+          const sp = Number(v);
+          if (sp > 0) { o.len[c] = (o.len[c] || 0) + l; o.t[c] = (o.t[c] || 0) + l / sp; }
+        }
+      }
+      const out = [];
+      for (const o of acc.values()) {
+        const v = (c) => (o.t[c] > 0 ? Math.round(10 * o.len[c] / o.t[c]) / 10 : null);
+        const t = tip.get(o.sentido + '|' + o.hora);
+        const ahora = v('ahora');
+        out.push({ hora: o.hora, sentido: o.sentido, calzada: o.sentido === 'Occidente - Oriente' ? 'Granada → Bogotá' : 'Bogotá → Granada',
+          ahora, tipica: t == null ? null : Math.round(t * 10) / 10, dif_tipica: t == null || ahora == null ? null : Math.round((ahora - t) * 10) / 10,
+          libre: v('libre'), p15: v('p15'), p30: v('p30'), p60: v('p60') });
+      }
+      return out.sort((a, b) => (a.hora < b.hora ? -1 : a.hora > b.hora ? 1 : a.sentido < b.sentido ? -1 : 1));
+    },
+  });
+  dash.calc('mejoras', {
+    inputs: ['referencia_promedio30'],
+    title: 'Mejora frente al promedio 30 min',
+    description: '(error del promedio de 30 min − error de XGBoost) ÷ error del promedio de 30 min, en %, en prueba (sep–oct).',
+    fn: (referencia_promedio30) => referencia_promedio30.map((r) => ({
+      horizonte: r.horizonte,
+      todas: Math.round(1000 * (Number(r.promedio_30min_todas) - Number(r.xgboost_todas)) / Number(r.promedio_30min_todas)) / 10,
+      trancon_ahora: Math.round(1000 * (Number(r.promedio_30min_trancon_ahora) - Number(r.xgboost_trancon_ahora)) / Number(r.promedio_30min_trancon_ahora)) / 10,
+      hora_pico: Math.round(1000 * (Number(r.promedio_30min_hora_pico) - Number(r.xgboost_hora_pico)) / Number(r.promedio_30min_hora_pico)) / 10,
+    })),
+  });
+  dash.calc('rango_mejora', {
+    inputs: ['mejoras'],
+    title: 'Rango de la mejora',
+    description: 'Menor y mayor mejora entre los tres horizontes y las tres medidas.',
+    fn: (mejoras) => {
+      const v = mejoras.flatMap((r) => [r.todas, r.trancon_ahora, r.hora_pico]);
+      return [{ minimo: Math.min(...v), maximo: Math.max(...v) }];
+    },
+  });
+  dash.calc('comparacion', {
+    inputs: ['metricas_justas', 'referencia_promedio30'],
+    title: 'Error por método (prueba)',
+    description: 'Une el error en prueba de persistencia, histórico y XGBoost (versión elegida) con el del promedio de 30 min.',
+    fn: (metricas_justas, referencia_promedio30) => {
+      const nombres = { 'ref: persistencia': 'Persistencia', 'ref: historico': 'Histórico', 'mae_peso': 'XGBoost' };
+      const out = [];
+      for (const r of metricas_justas) {
+        const m = nombres[r.variante];
+        if (!m) continue;
+        for (const med of ['todas', 'trancon_ahora', 'hora_pico']) out.push({ horizonte: r.horizonte, metodo: m, medida: med, mae: Number(r['prueba_' + med]) });
+      }
+      for (const r of referencia_promedio30) {
+        for (const med of ['todas', 'trancon_ahora', 'hora_pico']) out.push({ horizonte: r.horizonte, metodo: 'Promedio 30 min', medida: med, mae: Number(r['promedio_30min_' + med]) });
+      }
+      return out;
+    },
+  });
+
+  /* ---------------- Reloj ---------------- */
+  const fClock = new Intl.DateTimeFormat('es-CO', { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  const fDate = new Intl.DateTimeFormat('es-CO', { timeZone: 'America/Bogota', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  function tick() {
+    const now = new Date();
+    const p = Object.fromEntries(fClock.formatToParts(now).map((x) => [x.type, x.value]));
+    const c = q('#gd-clock');
+    if (c) { c.firstChild.nodeValue = `${p.hour}:${p.minute}`; c.querySelector('.gd-sec').textContent = ':' + p.second; }
+    const d = q('#gd-date'); if (d) d.textContent = fDate.format(now);
+  }
+  tick();
+  if (window.GD.clock) clearInterval(window.GD.clock);
+  window.GD.clock = setInterval(tick, 1000);
+
+  /* ---------------- Controles ---------------- */
+  const HZ = [['15', '15 min'], ['30', '30 min'], ['60', '60 min']];
+  function seg(el, opts, key, onChange) {
+    if (!el.childElementCount) {
+      for (const [v, label] of opts) {
+        const b = document.createElement('button');
+        b.type = 'button'; b.dataset.v = v; b.textContent = label;
+        b.addEventListener('click', () => { S[key] = v; onChange(true); });
+        el.appendChild(b);
+      }
+    }
+    for (const b of el.children) b.setAttribute('aria-pressed', String(b.dataset.v === S[key]));
+  }
+  function stopPlay() {
+    S.play = false; clearInterval(S.playTimer);
+    q('#gd-play').setAttribute('aria-pressed', 'false');
+    q('#gd-play-ico').setAttribute('d', 'M2 1 L9 5 L2 9 Z'); q('#gd-play-txt').textContent = 'Reproducir el día';
+  }
+  function startPlay() {
+    S.play = true; S.horaUser = true; clearInterval(S.playTimer);
+    q('#gd-play').setAttribute('aria-pressed', 'true');
+    q('#gd-play-ico').setAttribute('d', 'M2 1 H4 V9 H2 Z M6 1 H8 V9 H6 Z'); q('#gd-play-txt').textContent = 'Pausar';
+    S.playTimer = setInterval(() => {
+      const ix = indice(); if (!ix || S.tab !== 'monitoreo') return;
+      const i = ix.horas.indexOf(S.hora);
+      S.hora = ix.horas[(i + 1) % ix.horas.length];
+      drawMonitoreo();
+    }, 1600);
+  }
+  q('#gd-play').addEventListener('click', () => (S.play ? stopPlay() : startPlay()));
+  /* ---------------- Pestañas ---------------- */
+  function setTab(t, fromUser) {
+    S.tab = t;
+    for (const b of qa('.gd-tab')) b.setAttribute('aria-selected', String(b.dataset.tab === t));
+    for (const p of qa('[data-page]')) {
+      const on = p.dataset.page === t;
+      p.hidden = !on;
+      if (on && !reduce) { p.classList.remove('gd-enter'); void p.offsetWidth; p.classList.add('gd-enter'); }
+    }
+    if (fromUser) dash.setLink(t);
+    draw();
+  }
+  for (const b of qa('.gd-tab')) b.addEventListener('click', () => setTab(b.dataset.tab, true));
+
+  /* ---------------- Utilidades ---------------- */
+  function fail(el, id) {
+    const st = dash.data(id).status;
+    if (st === 'error' || st === 'connect' || st === 'declined' || st === 'missing') {
+      el.replaceChildren(); const d = document.createElement('div'); d.className = 'gd-fail'; d.textContent = 'No cargó'; el.appendChild(d);
+      el.classList.remove('dash-skeleton'); return true;
+    }
+    if (st !== 'ok') { el.classList.add('dash-skeleton'); return true; }
+    el.classList.remove('dash-skeleton'); return false;
+  }
+  function setText(sel, fmt) {
+    for (const el of qa(sel)) {
+      const id = el.dataset.source; const d = dash.data(id);
+      if (d.status !== 'ok') { el.textContent = '—'; continue; }
+      let r = null;
+      if (el.dataset.row != null) r = d.data[Number(el.dataset.row)];
+      else if (el.dataset.where) {
+        const conds = el.dataset.where.split('&').map((p) => p.split('=').map(decodeURIComponent));
+        r = d.data.find((x) => conds.every(([k, v]) => String(x[k]) === v));
+      }
+      el.textContent = r ? fmt(r[el.dataset.field], el) : '—';
+    }
+  }
+  const fmtAuto = (v) => { const n = N(v); if (!isNaN(n) && String(v).trim() !== '' && !/[-:]/.test(String(v).slice(1))) return Number.isInteger(n) ? nf0.format(n) : nf2.format(n); return String(v); };
+  function tipBox(host) { let t = q(':scope > .gd-tip', host); if (!t) { t = document.createElement('div'); t.className = 'gd-tip'; t.hidden = true; host.appendChild(t); } return t; }
+  function tipShow(host, tip, ev, head, lines) {
+    tip.replaceChildren();
+    const h = document.createElement('div'); h.className = 'gd-tip-h'; h.textContent = head; tip.appendChild(h);
+    for (const [name, val, color] of lines) {
+      const r = document.createElement('div'); r.className = 'gd-tip-r';
+      const a = document.createElement('span');
+      if (color) { const dot = document.createElement('i'); dot.className = 'gd-dot'; dot.style.background = color; a.appendChild(dot); }
+      a.appendChild(document.createTextNode(name));
+      const b = document.createElement('span'); b.textContent = val;
+      r.append(a, b); tip.appendChild(r);
+    }
+    tip.hidden = false;
+    const hb = host.getBoundingClientRect(); const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let x = ev.clientX - hb.left + 14, y = ev.clientY - hb.top + 14;
+    if (x + tw > hb.width) x = Math.max(0, ev.clientX - hb.left - tw - 14);
+    if (y + th > hb.height) y = Math.max(0, ev.clientY - hb.top - th - 10);
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  const muted = 'var(--cds-chart-muted)';
+  function cleanAxis(g) { g.attr('font-size', null).attr('font-family', null); g.selectAll('text').style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)'); g.selectAll('line,path').style('stroke', 'var(--cds-chart-axis)'); }
+
+  /* ---------------- Colores y reglas ---------------- */
+  const C = { v1: '#2fae6b', v2: '#e3b505', v3: '#ee7d22', v4: '#d63c3c', none: '#9aa4ae', tip: '#3b82f6' };
+  const ESTCOL = { Fluido: C.v1, Moderado: C.v2, Lento: C.v3, Congestionado: C.v4, 'Sin dato': C.none };
+  const TENDCOL = { 'Baja': C.v4, 'Se mantiene': C.v2, 'Sube': C.v1, 'Sin dato': C.none };
+  const estadoDe = (i) => (!(i >= 0) ? 'Sin dato' : i >= 0.9 ? 'Fluido' : i >= 0.75 ? 'Moderado' : i >= 0.5 ? 'Lento' : 'Congestionado');
+  const velColor = (i) => ESTCOL[estadoDe(i)];
+  const errRamp = d3.piecewise(d3.interpolateRgb, [C.v1, C.v2, C.v3, C.v4]);
+  const errColor = (e) => (!(e >= 0) ? C.none : errRamp(Math.min(1, e / 12)));
+  const mejRamp = d3.piecewise(d3.interpolateRgb, [C.v4, '#c3c9cf', C.v1]);
+  const mejColor = (m) => (!(m > -9) ? C.none : mejRamp(Math.max(0, Math.min(1, (m + 0.5) / 1.1))));
+  const CALZ = { 'Occidente - Oriente': 'Granada → Bogotá', 'Oriente - Occidente': 'Bogotá → Granada' };
+  const sumaMin = (h, m) => { const t = Number(h.slice(0, 2)) * 60 + Number(h.slice(3, 5)) + m; return String(Math.floor(t / 60) % 24).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); };
+  const signo = (v) => (v == null || isNaN(v) ? '—' : (v > 0 ? '▲ +' : v < 0 ? '▼ ' : '● ') + nf1.format(v));
+
+  /* ---------------- Geometrías (cache) ---------------- */
+  function geom() {
+    const g = dash.data('geometria_segmentos');
+    if (g.status !== 'ok') return null;
+    if (S.geoSrc === g.data && S.geo) return S.geo;
+    const segs = new Map(); const L = {}; const pts = {};
+    for (const r of g.data) {
+      const km = N(r.km), lon = N(r.lon), lat = N(r.lat);
+      let s = segs.get(r.FROM_TO);
+      if (!s) { s = { id: r.FROM_TO, sentido: r.sentido, kmMin: Infinity, kmMax: -Infinity }; segs.set(r.FROM_TO, s); }
+      s.kmMin = Math.min(s.kmMin, km); s.kmMax = Math.max(s.kmMax, km);
+      L[r.sentido] = Math.max(L[r.sentido] || 0, km);
+      (pts[r.sentido] || (pts[r.sentido] = [])).push([km, lon, lat]);
+    }
+    // eje de cada calzada para mover los puntos: ordenado por kilómetro, con los segmentos en orden
+    const ejes = {};
+    for (const s of Object.keys(pts)) {
+      const p = pts[s].sort((a, b) => a[0] - b[0]);
+      const ordenados = Array.from(segs.values()).filter((x) => x.sentido === s).sort((a, b) => a.kmMin - b.kmMin);
+      ejes[s] = { km: p.map((x) => x[0]), lon: p.map((x) => x[1]), lat: p.map((x) => x[2]), L: L[s],
+        ini: ordenados.map((x) => x.kmMin), ids: ordenados.map((x) => x.id) };
+    }
+    S.geoSrc = g.data; S.geo = { segs, L, ejes };
+    return S.geo;
+  }
+  function red() {
+    const g = dash.data('red_shp');
+    if (g.status !== 'ok') return null;
+    if (S.redSrc === g.data && S.red) return S.red;
+    const feats = g.data.map((r) => ({
+      id: r.FROM_TO, via: r.NomVia, mpio: r.NomMpio,
+      parts: String(r.coords || '').split('|').map((p) => p.split(';').map((c) => c.split(' ').map(Number)).filter((c) => c.length === 2 && !isNaN(c[0]) && !isNaN(c[1]))).filter((p) => p.length > 1),
+    }));
+    S.redSrc = g.data; S.red = { feats };
+    return S.red;
+  }
+  function indice() {
+    const dm = dash.data('dia_monitoreo'), td = dash.data('tendencia_dia'), pr = dash.data('predicciones_ultima_ventana');
+    if (dm.status !== 'ok' || td.status !== 'ok' || pr.status !== 'ok') return null;
+    if (S.ix && S.ix.dm === dm.data && S.ix.td === td.data && S.ix.pr === pr.data) return S.ix;
+    const byHora = new Map();
+    for (const r of dm.data) { let m = byHora.get(r.hora); if (!m) byHora.set(r.hora, (m = new Map())); m.set(r.FROM_TO, { d: r }); }
+    for (const r of td.data) { const m = byHora.get(r.hora); const o = m && m.get(r.FROM_TO); if (o) o.t = r; }
+    const seg = new Map(pr.data.map((r) => [r.FROM_TO, { sentido: r.sentido, libre: N(r.vel_libre_ref_kmh), km: N(r.km) }]));
+    S.ix = { dm: dm.data, td: td.data, pr: pr.data, byHora, seg, horas: Array.from(byHora.keys()).sort() };
+    return S.ix;
+  }
+  function valores() {
+    const ix = indice(); const out = new Map();
+    if (!ix) return out;
+    const m = ix.byHora.get(S.hora) || new Map();
+    const errBy = new Map(rows('metricas_segmento').filter((r) => r.horizonte === S.h + ' min').map((r) => [r.FROM_TO, r]));
+    for (const [id, { d, t }] of m) {
+      const sg = ix.seg.get(id); if (!sg || !t) continue;
+      const a = N(d.vel), p = N(d['p' + S.h]), r = N(d['r' + S.h]), lib = sg.libre;
+      const e = errBy.get(id); const mae = e ? N(e.MAE_xgboost) : NaN, m30 = e ? N(e.MAE_promedio30) : NaN;
+      out.set(id, { id, sentido: sg.sentido, km: sg.km, a, p, r, tip: N(d.tip), lib, t, mae, m30, mej: m30 > 0 ? (m30 - mae) / m30 : NaN });
+    }
+    return out;
+  }
+
+  /* reglas de color por mapa */
+  const LADO = {
+    ahora: {
+      color: (o) => (S.capa === 'cambio' ? TENDCOL[o.t.tendencia_ahora] : ESTCOL[o.t.estado_ahora]),
+      cong: (o) => o.t.estado_ahora === 'Congestionado',
+      blink: (o) => S.capa === 'cambio' && o.t.tendencia_ahora === 'Baja',
+      vel: (o) => o.a,
+    },
+    pred: {
+      color: (o) => (S.capa === 'cambio' ? TENDCOL[o.t['tendencia_' + S.h]] : S.capa === 'estado' ? ESTCOL[o.t['estado_' + S.h]]
+        : S.capa === 'real' ? ESTCOL[o.t['estado_real_' + S.h]] : S.capa === 'err' ? errColor(o.mae) : mejColor(o.mej)),
+      cong: (o) => (S.capa === 'real' ? o.t['estado_real_' + S.h] : o.t['estado_' + S.h]) === 'Congestionado',
+      blink: (o) => S.capa === 'cambio' && o.t['tendencia_' + S.h] === 'Baja',
+      vel: (o) => (S.capa === 'real' ? o.r : o.p),
+    },
+  };
+
+  function leyenda(el, titulo, items) {
+    el.replaceChildren();
+    const t = document.createElement('span'); t.textContent = titulo; el.appendChild(t);
+    for (const [c, label] of items) { const s = document.createElement('span'); const sw = document.createElement('i'); sw.className = 'gd-sw'; sw.style.background = c; s.append(sw, document.createTextNode(label)); el.appendChild(s); }
+    const g = document.createElement('span'); const sw = document.createElement('i'); sw.className = 'gd-sw gd-sw-glow'; g.append(sw, document.createTextNode('congestión (halo que palpita)')); el.appendChild(g);
+  }
+  const ITEMS_ESTADO = [[C.v1, 'Fluido'], [C.v2, 'Moderado'], [C.v3, 'Lento'], [C.v4, 'Congestionado (< 50 % de la libre)']];
+  const ITEMS_TEND = [[C.v4, 'Baja (−3 km/h o más)'], [C.v2, 'Se mantiene'], [C.v1, 'Sube (+3 km/h o más)']];
+  function leyendas() {
+    if (S.capa === 'cambio') leyenda(q('#leg-ahora'), 'Frente a 15 min antes:', ITEMS_TEND);
+    else leyenda(q('#leg-ahora'), 'Estado:', ITEMS_ESTADO);
+    const el = q('#gd-legend');
+    if (S.capa === 'cambio') leyenda(el, 'Frente a ahora:', ITEMS_TEND);
+    else if (S.capa === 'estado' || S.capa === 'real') leyenda(el, S.capa === 'real' ? 'Estado real:' : 'Estado previsto:', ITEMS_ESTADO);
+    else if (S.capa === 'err') leyenda(el, 'Error con trancón:', [[C.v1, '0 km/h'], [C.v2, '4'], [C.v3, '8'], [C.v4, '12 o más'], [C.none, 'sin trancones en prueba']]);
+    else leyenda(el, 'Frente al promedio 30 min:', [[C.v4, 'peor'], ['#c3c9cf', 'igual'], [C.v1, 'mejor'], [C.none, 'sin trancones en prueba']]);
+  }
+
+  /* ---------------- Mapas ---------------- */
+  const mercY = (lat) => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+  const NPUNTOS = 46;
+  function drawMapas(vals) {
+    const R = red(), G = geom();
+    const specs = [{ key: 'ahora', id: '#mapa-ahora' }, { key: 'pred', id: '#mapa-pred' }];
+    if (!R || !G) { for (const s of specs) { fail(q(s.id), 'red_shp'); fail(q(s.id), 'geometria_segmentos'); } return; }
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    for (const f of R.feats) if (vals.has(f.id) || S.seenIds?.has(f.id)) for (const p of f.parts) for (const [lon, lat] of p) {
+      const X = lon * Math.PI / 180, Y = mercY(lat);
+      if (X < x0) x0 = X; if (X > x1) x1 = X; if (Y < y0) y0 = Y; if (Y > y1) y1 = Y;
+    }
+    if (!isFinite(x0)) return;
+    const mpios = new Map();
+    for (const f of R.feats) if (vals.has(f.id)) {
+      const m = mpios.get(f.mpio) || { n: 0, x: 0, y: 0 };
+      for (const p of f.parts) for (const [lon, lat] of p) { m.n++; m.x += lon * Math.PI / 180; m.y += mercY(lat); }
+      mpios.set(f.mpio, m);
+    }
+    const sel = S.sentido;
+    const zoom = S.zoomer || (S.zoomer = d3.zoom().scaleExtent([1, 18]));
+    zoom.on('zoom', (ev) => {
+      S.zoomT = ev.transform;
+      for (const s of specs) {
+        const svg = d3.select(q(s.id)).select('svg');
+        if (svg.empty()) continue;
+        svg.select('.gd-z').attr('transform', ev.transform);
+        svg.property('__zoom', ev.transform);
+      }
+    });
+    S.mapas = [];
+    for (const s of specs) {
+      const host = q(s.id);
+      if (fail(host, 'tendencia_dia')) continue;
+      const lado = LADO[s.key];
+      const W = Math.max(260, host.clientWidth);
+      const pad = 18, sx = x1 - x0, sy = y1 - y0;
+      const H = Math.round(Math.max(320, Math.min(500, (W - 2 * pad) * sy / sx + 2 * pad)));
+      const k = Math.min((W - 2 * pad) / sx, (H - 2 * pad) / sy);
+      const ox = (W - sx * k) / 2, oy = (H - sy * k) / 2;
+      const P = (lon, lat) => [ox + (lon * Math.PI / 180 - x0) * k, oy + (y1 - mercY(lat)) * k];
+      const path = (f) => f.parts.map((p) => 'M' + p.map(([lon, lat]) => P(lon, lat).map((v) => v.toFixed(1)).join(',')).join('L')).join('');
+      let svg = d3.select(host).select('svg');
+      if (svg.empty()) {
+        svg = d3.select(host).append('svg').attr('width', '100%');
+        const fid = 'gd-glow-' + s.key;
+        svg.append('defs').append('filter').attr('id', fid).attr('x', '-50%').attr('y', '-50%').attr('width', '200%').attr('height', '200%')
+          .append('feGaussianBlur').attr('stdDeviation', 4);
+        const z = svg.append('g').attr('class', 'gd-z');
+        for (const c of ['fondo', 'ctx', 'glow', 'base', 'blink', 'dots', 'lbl']) z.append('g').attr('class', 'g-' + c);
+        svg.call(zoom).on('dblclick.zoom', null);
+      }
+      svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+      host.style.minHeight = H + 'px';
+      if (S.zoomT) { svg.property('__zoom', S.zoomT); svg.select('.gd-z').attr('transform', S.zoomT); }
+      // fondo cartográfico (si existe)
+      const F = window.GD_FONDO;
+      svg.select('.g-fondo').selectAll('image.gd-fondo').data(F ? [F] : []).join('image')
+        .attr('href', (f) => f.src).attr('preserveAspectRatio', 'none')
+        .attr('x', (f) => P(f.lonMin, f.latMax)[0]).attr('y', (f) => P(f.lonMin, f.latMax)[1])
+        .attr('width', (f) => P(f.lonMax, f.latMin)[0] - P(f.lonMin, f.latMax)[0])
+        .attr('height', (f) => P(f.lonMax, f.latMin)[1] - P(f.lonMin, f.latMax)[1])
+        .attr('class', 'gd-fondo');
+      // mosaicos en vivo (solo donde el sitio permite cargarlos, p. ej. GitHub Pages)
+      const T = window.GD_TILES, Z = 13, n2 = 2 ** Z;
+      const tiles = [];
+      if (T) {
+        const tx0 = Math.floor((x0 * 180 / Math.PI + 180) / 360 * n2) - 1, tx1 = Math.floor((x1 * 180 / Math.PI + 180) / 360 * n2) + 1;
+        const tyOf = (Y) => Math.floor((1 - Y / Math.PI) / 2 * n2);
+        const ty0 = tyOf(y1) - 1, ty1 = tyOf(y0) + 1;
+        const lonOf = (tx) => tx / n2 * 360 - 180, latOf = (ty) => Math.atan(Math.sinh(Math.PI * (1 - 2 * ty / n2))) * 180 / Math.PI;
+        for (let tx = tx0; tx <= tx1; tx++) for (let ty = ty0; ty <= ty1; ty++) {
+          const a = P(lonOf(tx), latOf(ty)), b = P(lonOf(tx + 1), latOf(ty + 1));
+          tiles.push({ k: tx + '/' + ty, url: T.replace('{z}', Z).replace('{x}', tx).replace('{y}', ty), x: a[0], y: a[1], w: b[0] - a[0], h: b[1] - a[1] });
+        }
+      }
+      svg.select('.g-fondo').selectAll('image.gd-tile').data(tiles, (d) => d.k).join('image').attr('class', 'gd-tile')
+        .attr('href', (d) => d.url).attr('x', (d) => d.x).attr('y', (d) => d.y).attr('width', (d) => d.w + 0.6).attr('height', (d) => d.h + 0.6).attr('preserveAspectRatio', 'none');
+      if (T && !q(':scope > .gd-osm', host)) { const at = document.createElement('div'); at.className = 'gd-osm'; at.textContent = '© OpenStreetMap contributors'; host.appendChild(at); }
+      const activos = R.feats.filter((f) => { const o = vals.get(f.id); return o && (sel === 'ambas' || o.sentido === sel); });
+      const setA = new Set(activos);
+      const contexto = R.feats.filter((f) => !setA.has(f));
+      const ns = 'non-scaling-stroke';
+      const key = (f, i) => f.id + '#' + i;
+      svg.select('.g-ctx').selectAll('path').data(contexto, key).join('path').attr('d', path)
+        .style('fill', 'none').style('stroke', 'var(--cds-chart-muted)').style('opacity', F || T ? 0.55 : 0.35).style('stroke-width', 2).attr('vector-effect', ns).style('stroke-linecap', 'round');
+      // halo de congestión (alumbra)
+      const cong = activos.filter((f) => lado.cong(vals.get(f.id)));
+      svg.select('.g-glow').selectAll('path').data(cong, key).join('path').attr('class', 'gd-halo').attr('d', path)
+        .attr('vector-effect', ns).attr('filter', `url(#gd-glow-${s.key})`)
+        .style('fill', 'none').style('stroke', '#ff2d2d').style('stroke-linecap', 'round').style('pointer-events', 'none')
+        .style('stroke-width', (f) => { const o = vals.get(f.id); const v = lado.vel(o) / o.lib; return v < 0.25 ? 20 : v < 0.4 ? 16 : 12; })
+        .style('animation-duration', (f) => { const o = vals.get(f.id); const v = lado.vel(o) / o.lib; return (v < 0.25 ? 0.8 : v < 0.4 ? 1.1 : 1.5) + 's'; });
+      const tip = tipBox(host);
+      const dur = reduce ? 0 : 500;
+      svg.select('.g-base').selectAll('path').data(activos, key).join('path').attr('d', path)
+        .style('fill', 'none').style('stroke-width', 5).attr('vector-effect', ns).style('stroke-linecap', 'round').style('cursor', 'pointer')
+        .on('mousemove', (ev, f) => {
+          const o = vals.get(f.id), t = o.t;
+          const lines = [['Vía', f.via || '—'], ['Municipio', f.mpio || '—'], ['Kilómetro', nf1.format(o.km)], ['Velocidad libre', nf1.format(o.lib) + ' km/h'],
+            ['Típica a esta hora', isNaN(o.tip) ? '—' : nf1.format(o.tip) + ' km/h', C.tip],
+            ['Ahora', `${nf1.format(o.a)} km/h · ${t.estado_ahora}`, ESTCOL[t.estado_ahora]],
+            ['Cambio vs 15 min antes', `${signo(t.cambio_ahora)} km/h · ${t.tendencia_ahora}`, TENDCOL[t.tendencia_ahora]]];
+          if (s.key === 'pred') {
+            lines.push([`Predicha +${S.h} min`, `${nf1.format(o.p)} km/h · ${t['estado_' + S.h]}`, ESTCOL[t['estado_' + S.h]]]);
+            lines.push(['Cambio previsto', `${signo(t['cambio_' + S.h])} km/h · ${t['tendencia_' + S.h]}`, TENDCOL[t['tendencia_' + S.h]]]);
+            lines.push([`Real +${S.h} min`, isNaN(o.r) ? '—' : `${nf1.format(o.r)} km/h · ${t['estado_real_' + S.h]}`, ESTCOL[t['estado_real_' + S.h]]]);
+          }
+          tipShow(host, tip, ev, `${CALZ[o.sentido] || ''} · ${f.id}`, lines);
+        })
+        .on('mouseleave', () => { tip.hidden = true; })
+        .transition().duration(dur).style('stroke', (f) => lado.color(vals.get(f.id)));
+      svg.select('.g-blink').selectAll('path').data(activos.filter((f) => lado.blink(vals.get(f.id))), key).join('path')
+        .attr('class', 'gd-blink').attr('d', path).attr('vector-effect', ns)
+        .style('fill', 'none').style('stroke', '#ffffff').style('stroke-width', 2.5).style('stroke-dasharray', '1 6').style('stroke-linecap', 'round').style('pointer-events', 'none');
+      const lbl = Array.from(mpios, ([m, v]) => ({ m, p: [ox + (v.x / v.n - x0) * k, oy + (y1 - v.y / v.n) * k] })).filter((d) => d.m);
+      svg.select('.g-lbl').selectAll('text').data(lbl, (d) => d.m).join('text').attr('class', 'gd-mlabel')
+        .attr('text-anchor', (d) => (d.p[0] > W * 0.6 ? 'end' : 'start'))
+        .attr('x', (d) => (d.p[0] > W * 0.6 ? d.p[0] - 10 : d.p[0] + 10)).attr('y', (d) => Math.max(14, Math.min(H - 6, d.p[1] - 10))).text((d) => d.m);
+
+      // puntos que recorren el corredor
+      const sentidos = Object.keys(G.ejes).filter((x) => sel === 'ambas' || x === sel);
+      const prev = (S.puntos || {})[s.key] || {};
+      const puntos = {};
+      for (const se of sentidos) {
+        const e = G.ejes[se];
+        puntos[se] = prev[se] && prev[se].length === NPUNTOS ? prev[se] : Array.from({ length: NPUNTOS }, (_, i) => (i + Math.random() * 0.8) * e.L / NPUNTOS);
+      }
+      (S.puntos || (S.puntos = {}))[s.key] = puntos;
+      const items = sentidos.flatMap((se) => puntos[se].map((_, i) => ({ se, i })));
+      const dots = svg.select('.g-dots').selectAll('circle').data(items, (d) => d.se + d.i).join('circle')
+        .attr('r', 3).style('stroke', '#fff').style('stroke-width', 0.8).style('pointer-events', 'none');
+      const ejesP = {};
+      for (const se of sentidos) {
+        const e = G.ejes[se];
+        ejesP[se] = { km: e.km, x: e.lon.map((lon, i) => P(lon, e.lat[i])[0]), y: e.lon.map((lon, i) => P(lon, e.lat[i])[1]), L: e.L, ini: e.ini,
+          vel: e.ids.map((id) => { const o = vals.get(id); return o ? lado.vel(o) : NaN; }),
+          lib: e.ids.map((id) => { const o = vals.get(id); return o ? o.lib : NaN; }) };
+      }
+      S.mapas.push({ key: s.key, nodes: dots.nodes(), items, puntos, ejesP });
+      moverPuntos(S.mapas[S.mapas.length - 1], 0);
+    }
+  }
+
+  const bis = (arr, v) => { let lo = 0, hi = arr.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (arr[m] <= v) lo = m; else hi = m - 1; } return lo; };
+  function moverPuntos(m, dt) {
+    const K = 0.03;                          // km recorridos por segundo por cada km/h (solo visual)
+    const kz = S.zoomT ? S.zoomT.k : 1;
+    m.items.forEach((it, j) => {
+      const e = m.ejesP[it.se]; if (!e) return;
+      let km = m.puntos[it.se][it.i];
+      const si = bis(e.ini, km);
+      let v = e.vel[si]; const lib = e.lib[si];
+      if (!(v > 0)) v = 40;
+      km += v * dt * K;
+      if (km > e.L) km -= e.L;
+      m.puntos[it.se][it.i] = km;
+      const p = bis(e.km, km), q2 = Math.min(p + 1, e.km.length - 1);
+      const span = e.km[q2] - e.km[p], f = span > 0 ? (km - e.km[p]) / span : 0;
+      const node = m.nodes[j]; if (!node) return;
+      node.setAttribute('cx', e.x[p] + (e.x[q2] - e.x[p]) * f);
+      node.setAttribute('cy', e.y[p] + (e.y[q2] - e.y[p]) * f);
+      node.setAttribute('r', 3.2 / Math.sqrt(kz));
+      node.style.fill = velColor(v / lib);
+    });
+  }
+  function bucle(ts) {
+    S.raf = requestAnimationFrame(bucle);
+    const dt = Math.min(0.1, (ts - (S.lastTs || ts)) / 1000); S.lastTs = ts;
+    if (S.tab !== 'monitoreo' || document.hidden || !S.mapas) return;
+    for (const m of S.mapas) moverPuntos(m, dt);
+  }
+  if (!reduce) { if (S.raf) cancelAnimationFrame(S.raf); S.raf = requestAnimationFrame(bucle); }
+
+  /* ---------------- Reloj del día ---------------- */
+  function horaInicial(ix) {
+    const res = rows('resumen_dia');
+    if (res.length) return res.reduce((a, b) => (N(b.cong_ahora) > N(a.cong_ahora) ? b : a)).hora;
+    return ix.horas[0];
+  }
+  function drawReloj() {
+    const ix = indice();
+    const sl = q('#sel-hora');
+    if (!ix) return false;
+    const hayRes = rows('resumen_dia').length > 0;
+    if (!S.hora || !ix.byHora.has(S.hora) || (!S.horaUser && hayRes && !S.picoListo)) { S.hora = horaInicial(ix); if (hayRes) S.picoListo = true; }
+    sl.max = String(ix.horas.length - 1);
+    sl.value = String(ix.horas.indexOf(S.hora));
+    q('#gd-bigtime').textContent = S.hora;
+    for (const el of qa('.gd-hora-txt')) el.textContent = S.hora;
+    const tk = q('#gd-time-ticks');
+    if (!tk.childElementCount || (!S.ticksOk && hayRes)) {
+      tk.replaceChildren(); S.ticksOk = hayRes;
+      const res = new Map(rows('resumen_dia').map((r) => [r.hora, N(r.cong_ahora)]));
+      const mx = Math.max(1, ...res.values());
+      for (const h of ix.horas) { const b = document.createElement('i'); b.style.height = Math.max(1, 22 * (res.get(h) || 0) / mx) + 'px'; b.title = h; tk.appendChild(b); }
+    }
+    qa('#gd-time-ticks i').forEach((b, i) => b.classList.toggle('gd-now', ix.horas[i] === S.hora));
+    return true;
+  }
+  function irA(h) { S.hora = h; S.horaUser = true; drawMonitoreo(); }
+  q('#sel-hora').addEventListener('input', (e) => { const ix = indice(); if (ix) { stopPlay(); irA(ix.horas[Number(e.target.value)]); } });
+  q('#gd-pico').addEventListener('click', () => { const ix = indice(); if (ix) { stopPlay(); irA(horaInicial(ix)); } });
+  q('#gd-ultima').addEventListener('click', () => { const ix = indice(); if (ix) { stopPlay(); irA(ix.horas[ix.horas.length - 1]); } });
+
+  /* ---------------- Cinta ---------------- */
+  const LANES = [
+    { s: 'Occidente - Oriente', label: 'Granada → Bogotá', flip: false },
+    { s: 'Oriente - Occidente', label: 'Bogotá → Granada', flip: true },
+  ];
+  function drawCinta(vals) {
+    const host = q('#strip');
+    const g = geom();
+    if (fail(host, 'tendencia_dia') || !g) { if (!g) fail(host, 'geometria_segmentos'); return; }
+    host.classList.add('gd-on');
+    const lado = LADO.pred;
+    const W = Math.max(280, host.clientWidth);
+    const lh2 = 26, gap = 30, top = 20, bottom = 26;
+    const lanes0 = LANES.filter((l) => S.sentido === 'ambas' || l.s === S.sentido);
+    const H = top + lanes0.length * lh2 + (lanes0.length - 1) * gap + bottom;
+    const Lmax = Math.max(...Object.values(g.L));
+    const x = d3.scaleLinear([0, Lmax], [0, W]);
+    let svg = d3.select(host).select('svg');
+    if (svg.empty()) { svg = d3.select(host).append('svg').attr('width', '100%'); svg.append('g').attr('class', 'gd-axis'); svg.append('g').attr('class', 'gd-lanes'); }
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    host.style.minHeight = H + 'px';
+    const tip = tipBox(host);
+    const lanes = svg.select('.gd-lanes').selectAll('g.gd-lane').data(lanes0, (d) => d.s).join((en) => {
+      const gg = en.append('g').attr('class', 'gd-lane');
+      gg.append('text').attr('class', 'gd-lane-l'); gg.append('rect').attr('class', 'gd-lane-bg'); gg.append('g').attr('class', 'gd-cells'); gg.append('g').attr('class', 'gd-cblink');
+      return gg;
+    });
+    lanes.attr('transform', (d, i) => `translate(0,${top + i * (lh2 + gap)})`);
+    lanes.select('.gd-lane-l').attr('x', (d) => (d.flip ? W : 0)).attr('y', -7).attr('text-anchor', (d) => (d.flip ? 'end' : 'start'))
+      .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text((d) => d.label);
+    lanes.select('.gd-lane-bg').attr('x', 0).attr('width', W).attr('height', lh2).attr('rx', 6).style('fill', 'var(--cds-chart-grid)');
+    const dur = reduce ? 0 : 500;
+    lanes.each(function (lane) {
+      const segs = Array.from(g.segs.values()).filter((s) => s.sentido === lane.s && vals.has(s.id));
+      const L = g.L[lane.s];
+      const pos = (s) => { const a = lane.flip ? L - s.kmMax : s.kmMin, b = lane.flip ? L - s.kmMin : s.kmMax; return [x(a), Math.max(1.5, x(b) - x(a) - 0.6)]; };
+      d3.select(this).select('.gd-cells').selectAll('rect').data(segs, (s) => s.id).join('rect')
+        .attr('y', 2).attr('height', lh2 - 4).attr('rx', 2).attr('x', (s) => pos(s)[0]).attr('width', (s) => pos(s)[1])
+        .on('mousemove', (ev, s) => {
+          const o = vals.get(s.id), t = o.t;
+          tipShow(host, tip, ev, `${lane.label} · ${s.id}`, [['Kilómetro', nf1.format(o.km)], ['Ahora', `${nf1.format(o.a)} km/h · ${t.estado_ahora}`, ESTCOL[t.estado_ahora]],
+            [`Predicha +${S.h} min`, `${nf1.format(o.p)} km/h`, ESTCOL[t['estado_' + S.h]]], ['Cambio previsto', `${signo(t['cambio_' + S.h])} km/h · ${t['tendencia_' + S.h]}`, TENDCOL[t['tendencia_' + S.h]]]]);
+        })
+        .on('mouseleave', () => { tip.hidden = true; })
+        .transition().duration(dur).style('fill', (s) => lado.color(vals.get(s.id)));
+      d3.select(this).select('.gd-cblink').selectAll('rect').data(segs.filter((s) => lado.cong(vals.get(s.id)) || lado.blink(vals.get(s.id))), (s) => s.id).join('rect')
+        .attr('class', 'gd-blink').attr('y', -3).attr('height', lh2 + 6).attr('rx', 3).attr('x', (s) => pos(s)[0] - 1).attr('width', (s) => pos(s)[1] + 2)
+        .style('fill', 'none').style('stroke', '#ff2d2d').style('stroke-width', 2).style('pointer-events', 'none');
+    });
+    const ax = svg.select('.gd-axis').attr('transform', `translate(0,${H - bottom + 4})`);
+    ax.call(d3.axisBottom(x).ticks(W < 520 ? 5 : 10).tickSize(4).tickFormat((d) => (d === 0 ? 'Granada' : nf0.format(d) + ' km')));
+    cleanAxis(ax); ax.select('.domain').remove();
+    ax.selectAll('.tick').filter((d) => x(d) > W - 90 && d !== 0).remove();
+    ax.selectAll('.tick').filter((d) => d === 0).select('text').attr('text-anchor', 'start');
+    ax.selectAll('.gd-end').data([0]).join('text').attr('class', 'gd-end').attr('x', W).attr('y', 18).attr('text-anchor', 'end')
+      .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text('Bogotá (NQS)');
+  }
+
+  /* ---------------- Velocímetros ---------------- */
+  function drawGauges() {
+    const box = q('#gauges');
+    if (fail(box, 'corredor_dia')) return;
+    const data = rows('corredor_dia').filter((r) => r.hora === S.hora);
+    if (!box.querySelector('.gd-gauge')) {
+      box.replaceChildren(...['Occidente - Oriente', 'Oriente - Occidente'].map((sen) => {
+        const g = document.createElement('div'); g.className = 'gd-gauge'; g.dataset.s = sen;
+        const svgw = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svgw.setAttribute('viewBox', '0 0 220 128'); svgw.setAttribute('aria-hidden', 'true');
+        const info = document.createElement('div');
+        const t = document.createElement('div'); t.className = 'gd-gauge-t'; t.textContent = CALZ[sen];
+        const v = document.createElement('div'); v.className = 'gd-gauge-v';
+        const vn = document.createElement('span'); vn.dataset.source = 'corredor_dia'; vn.dataset.field = 'ahora'; vn.textContent = '—';
+        const u = document.createElement('small'); u.textContent = 'km/h ahora'; v.append(vn, u);
+        const rowsBox = document.createElement('div'); rowsBox.className = 'gd-gauge-rows';
+        for (const [f, label, color] of [['tipica', 'Típica a esta hora', C.tip], ['dif_tipica', 'Diferencia frente a la típica'], ['libre', 'Velocidad libre'], ['p15', 'Prevista +15 min'], ['p30', 'Prevista +30 min'], ['p60', 'Prevista +60 min']]) {
+          const d = document.createElement('div'); const a = document.createElement('span');
+          if (color) { const dot = document.createElement('i'); dot.className = 'gd-dot'; dot.style.background = color; dot.style.marginRight = '6px'; a.appendChild(dot); }
+          a.appendChild(document.createTextNode(label));
+          const b = document.createElement('b'); b.dataset.source = 'corredor_dia'; b.dataset.field = f; b.textContent = '—';
+          d.append(a, b); rowsBox.appendChild(d);
+        }
+        info.append(t, v, rowsBox); g.append(svgw, info); return g;
+      }));
+    }
+    for (const b of qa('#gauges [data-source="corredor_dia"]')) b.dataset.where = `hora=${S.hora}&sentido=${b.closest('.gd-gauge').dataset.s}`;
+    setText('#gauges [data-source="corredor_dia"]', (v, el) => (el.dataset.field === 'dif_tipica' ? (N(v) > 0 ? '+' : '') + nf1.format(N(v)) + ' km/h' : nf1.format(N(v))));
+    const MAX = 80, cx = 110, cy = 112, R = 92;
+    const ang = (v) => (-90 + 180 * Math.max(0, Math.min(MAX, v)) / MAX) * Math.PI / 180;
+    const tick = (svg, cls, val, color, w) => svg.selectAll('line.' + cls).data(isNaN(val) ? [] : [val]).join('line').attr('class', cls)
+      .attr('x1', (d) => cx + (R + 4) * Math.sin(ang(d))).attr('y1', (d) => cy - (R + 4) * Math.cos(ang(d)))
+      .attr('x2', (d) => cx + (R - 18) * Math.sin(ang(d))).attr('y2', (d) => cy - (R - 18) * Math.cos(ang(d)))
+      .style('stroke', color).style('stroke-width', w).style('stroke-linecap', 'round');
+    for (const el of qa('.gd-gauge', box)) {
+      const r = data.find((x) => x.sentido === el.dataset.s); if (!r) continue;
+      const svg = d3.select(el).select('svg');
+      const lib = N(r.libre);
+      const bandas = [[0, 0.5 * lib, C.v4], [0.5 * lib, 0.75 * lib, C.v3], [0.75 * lib, 0.9 * lib, C.v2], [0.9 * lib, MAX, C.v1]];
+      const arc = d3.arc().innerRadius(R - 14).outerRadius(R);
+      svg.selectAll('path.gd-band').data(bandas).join('path').attr('class', 'gd-band').attr('transform', `translate(${cx},${cy})`)
+        .attr('d', (b) => arc({ startAngle: ang(b[0]), endAngle: ang(b[1]) })).style('fill', (b) => b[2]).style('opacity', 0.85);
+      svg.selectAll('text.gd-tk').data([0, 20, 40, 60, 80]).join('text').attr('class', 'gd-tk')
+        .attr('x', (d) => cx + (R - 28) * Math.sin(ang(d))).attr('y', (d) => cy - (R - 28) * Math.cos(ang(d)) + 4)
+        .attr('text-anchor', 'middle').style('font-size', '10px').style('fill', 'var(--color-fg-muted)').text((d) => d);
+      tick(svg, 'gd-lib', lib, 'var(--color-fg)', 3);
+      tick(svg, 'gd-tipk', N(r.tipica), C.tip, 4);
+      let needle = svg.select('g.gd-needle');
+      if (needle.empty()) {
+        needle = svg.append('g').attr('class', 'gd-needle').attr('transform', `translate(${cx},${cy}) rotate(-90)`);
+        needle.append('path').attr('d', `M-4,0 L0,${-(R - 8)} L4,0 Z`).style('fill', 'var(--color-fg)');
+        svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', 7).style('fill', '#f2c200').style('stroke', 'var(--color-panel)').style('stroke-width', 2);
+      }
+      const deg = -90 + 180 * Math.max(0, Math.min(MAX, N(r.ahora))) / MAX;
+      needle.transition().duration(reduce ? 0 : 900).ease(d3.easeCubicOut).attr('transform', `translate(${cx},${cy}) rotate(${deg})`);
+      el.classList.toggle('gd-alerta', N(r.ahora) < 0.75 * lib);
+    }
+  }
+
+  /* ---------------- Semáforo y tabla ---------------- */
+  const FILTROS = () => [
+    ['cong_ahora', 'Congestionados ahora', 'cong_ahora', C.v4, true],
+    ['baja_ahora', 'Bajan frente a 15 min antes', 'baja_ahora', C.v4, true],
+    ['cong_h', `Congestionados en +${S.h} min`, 'cong_' + S.h, C.v4, true],
+    ['baja_h', `Bajan en +${S.h} min`, 'baja_' + S.h, C.v4, true],
+    ['mantiene_h', `Se mantienen en +${S.h} min`, 'mantiene_' + S.h, C.v2, false],
+    ['sube_h', `Suben en +${S.h} min`, 'sube_' + S.h, C.v1, false],
+  ];
+  function pill(texto, color) { const s = document.createElement('span'); s.className = 'gd-pill'; s.style.color = color; s.style.background = `color-mix(in srgb, ${color} 14%, transparent)`; const i = document.createElement('i'); s.append(i, document.createTextNode(texto)); return s; }
+  function drawTabla() {
+    const box = q('#semaforo');
+    if (fail(box, 'resumen_dia')) { q('#tabla-tendencia tbody').replaceChildren(); return; }
+    const res = rows('resumen_dia').find((r) => r.hora === S.hora) || {};
+    const fl = FILTROS();
+    if (!S.filtro) S.filtro = 'cong_ahora';
+    if (!box.querySelector('.gd-light')) {
+      box.replaceChildren(...fl.map(([k]) => {
+        const b = document.createElement('button'); b.type = 'button'; b.className = 'gd-light'; b.dataset.k = k;
+        const n = document.createElement('span'); n.className = 'gd-light-n';
+        const bulb = document.createElement('i'); bulb.className = 'gd-bulb';
+        const v = document.createElement('span'); v.dataset.source = 'resumen_dia'; v.textContent = '—';
+        n.append(bulb, v);
+        const l = document.createElement('span'); l.className = 'gd-light-l';
+        b.append(n, l);
+        b.addEventListener('click', () => { S.filtro = k; drawTabla(); });
+        return b;
+      }));
+    }
+    for (const b of qa('.gd-light', box)) {
+      const [k, label, f, color, alerta] = fl.find((x) => x[0] === b.dataset.k);
+      const v = q('[data-source]', b); v.dataset.field = f; v.dataset.where = 'hora=' + S.hora;
+      q('.gd-light-l', b).textContent = label;
+      const bulb = q('.gd-bulb', b); bulb.style.color = color;
+      bulb.classList.toggle('gd-on', alerta && N(res[f]) > 0);
+      b.setAttribute('aria-pressed', String(k === S.filtro));
+    }
+    setText('#semaforo [data-source="resumen_dia"]', (v) => nf0.format(N(v)));
+
+    // columnas que dependen del horizonte
+    for (const th of qa('#tabla-tendencia th[data-hcol]')) th.dataset.field = th.dataset.hcol + S.h;
+    const tb = q('#tabla-tendencia tbody');
+    const ix = indice();
+    if (!ix) { tb.replaceChildren(); return; }
+    const m = ix.byHora.get(S.hora) || new Map();
+    let t = Array.from(m.values()).filter((o) => o.t && (S.sentido === 'ambas' || ix.seg.get(o.t.FROM_TO)?.sentido === S.sentido));
+    const h = S.h, fk = S.filtro;
+    const num = (x) => (x == null || x === '' ? NaN : Number(x));
+    if (fk === 'cong_ahora') t = t.filter((o) => o.t.estado_ahora === 'Congestionado').sort((a, b) => num(a.d.vel) - num(b.d.vel));
+    else if (fk === 'baja_ahora') t = t.filter((o) => o.t.tendencia_ahora === 'Baja').sort((a, b) => num(a.t.cambio_ahora) - num(b.t.cambio_ahora));
+    else if (fk === 'cong_h') t = t.filter((o) => o.t['estado_' + h] === 'Congestionado').sort((a, b) => num(a.d['p' + h]) - num(b.d['p' + h]));
+    else if (fk === 'baja_h') t = t.filter((o) => o.t['tendencia_' + h] === 'Baja').sort((a, b) => num(a.t['cambio_' + h]) - num(b.t['cambio_' + h]));
+    else if (fk === 'sube_h') t = t.filter((o) => o.t['tendencia_' + h] === 'Sube').sort((a, b) => num(b.t['cambio_' + h]) - num(a.t['cambio_' + h]));
+    else t = t.filter((o) => o.t['tendencia_' + h] === 'Se mantiene').sort((a, b) => (a.t.calzada < b.t.calzada ? -1 : a.t.calzada > b.t.calzada ? 1 : a.t.km - b.t.km));
+    const vacio = q('#tabla-vacia');
+    vacio.hidden = t.length > 0;
+    vacio.textContent = t.length ? '' : `Ningún segmento en "${fl.find((x) => x[0] === fk)[1].toLowerCase()}" a las ${S.hora}.`;
+    tb.replaceChildren(...t.map(({ d, t: c }) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = encodeURIComponent(d.FROM_TO) + ',' + encodeURIComponent(d.hora);
+      const td = (v, cls) => { const e = document.createElement('td'); if (cls) e.className = cls; if (v instanceof Node) e.appendChild(v); else e.textContent = v; tr.appendChild(e); };
+      td(d.FROM_TO); td(c.calzada, 'gd-l'); td(c.via || '—', 'gd-l'); td(c.municipio || '—', 'gd-l');
+      td(nf1.format(num(c.km))); td(nf1.format(num(d.vel))); td(signo(num(c.cambio_ahora)));
+      td(nf1.format(num(d['p' + h]))); td(signo(num(c['cambio_' + h]))); td(isNaN(num(d['r' + h])) ? '—' : nf1.format(num(d['r' + h])));
+      td(pill(c.estado_ahora, ESTCOL[c.estado_ahora]), 'gd-l');
+      td(pill(c['estado_' + h], ESTCOL[c['estado_' + h]]), 'gd-l');
+      return tr;
+    }));
+  }
+
+  /* ---------------- Monitoreo completo ---------------- */
+  function drawMonitoreo() {
+    if (!['15', '30', '60'].includes(S.h)) S.h = '30';
+    seg(q('#seg-h'), [['15', '+15 min'], ['30', '+30 min'], ['60', '+60 min']], 'h', () => drawMonitoreo());
+    q('#sel-capa').value = S.capa; q('#sel-sentido').value = S.sentido;
+    const listo = drawReloj();
+    for (const el of qa('.gd-hlbl')) el.textContent = S.h;
+    // texto principal
+    for (const b of qa('#gd-lead-dia [data-source="resumen_dia"]')) {
+      if (b.dataset.hfield) b.dataset.field = b.dataset.hfield + '_' + S.h;
+      b.dataset.where = 'hora=' + (S.hora || '');
+    }
+    setText('#gd-lead-dia [data-source="dia_info"]', (v) => String(v));
+    setText('#gd-lead-dia [data-source="resumen_dia"]', (v, el) => (el.dataset.field === 'hora' ? String(v) : nf0.format(N(v))));
+    q('#tag-ahora').textContent = `Ahora · ${S.hora || '—'}`;
+    q('#tag-pred').textContent = S.capa === 'real' ? `Lo que realmente pasó · ${S.hora ? sumaMin(S.hora, Number(S.h)) : '—'} (+${S.h} min)` : `Predicción · ${S.hora ? sumaMin(S.hora, Number(S.h)) : '—'} (+${S.h} min)`;
+    leyendas();
+    drawGauges();
+    if (!listo) { for (const id of ['#mapa-ahora', '#mapa-pred', '#strip']) fail(q(id), 'tendencia_dia'); drawTabla(); return; }
+    const vals = valores();
+    drawMapas(vals);
+    drawCinta(vals);
+    drawTabla();
+    if (!reduce && !S.autoplayed && S.picoListo) { S.autoplayed = true; startPlay(); }
+  }
+  q('#sel-capa').addEventListener('change', (e) => { S.capa = e.target.value; drawMonitoreo(); });
+  q('#sel-sentido').addEventListener('change', (e) => { S.sentido = e.target.value; drawMonitoreo(); });
+  q('#gd-reset').addEventListener('click', () => {
+    S.zoomT = d3.zoomIdentity;
+    for (const id of ['#mapa-ahora', '#mapa-pred']) { const svg = d3.select(q(id)).select('svg'); if (!svg.empty() && S.zoomer) svg.transition().duration(reduce ? 0 : 400).call(S.zoomer.transform, d3.zoomIdentity); }
+  });
+
+  /* ---------------- KPIs ---------------- */
+  function drawKpis() {
+    setText('#monitoreo [data-source="mejoras"]', (v) => nf1.format(N(v)));
+    setText('#kpis [data-source="referencia_promedio30"][data-field]', (v) => nf2.format(N(v)));
+    setText('#kpis [data-source="ficha_tecnica"]', (v) => nf0.format(N(v)));
+    for (const el of qa('.gd-duel')) {
+      if (fail(el, 'referencia_promedio30')) continue;
+      const r = rows('referencia_promedio30').find((x) => x.horizonte === '30 min');
+      if (!r) continue;
+      const k = el.dataset.k, a = N(r['xgboost_' + k]), b = N(r['promedio_30min_' + k]), mx = Math.max(a, b) || 1;
+      if (!el.childElementCount) {
+        for (const [name, color] of [['XGBoost', dash.colors[0]], ['Promedio 30 min', 'var(--cds-chart-muted)']]) {
+          const row = document.createElement('div'); row.className = 'gd-duel-row';
+          const t = document.createElement('span'); t.textContent = name;
+          const tr = document.createElement('div'); tr.className = 'gd-duel-track';
+          const bar = document.createElement('div'); bar.className = 'gd-duel-bar'; bar.style.background = color;
+          tr.appendChild(bar); row.append(t, tr); el.appendChild(row);
+        }
+      }
+      const bars = qa('.gd-duel-bar', el);
+      requestAnimationFrame(() => { bars[0].style.width = (100 * a / mx) + '%'; bars[1].style.width = (100 * b / mx) + '%'; });
+      bars[0].parentElement.parentElement.firstChild.textContent = `XGBoost · ${nf2.format(a)}`;
+      bars[1].parentElement.parentElement.firstChild.textContent = `Prom. 30 min · ${nf2.format(b)}`;
+    }
+  }
+
+  /* ---------------- Desempeño ---------------- */
+  const METODOS = ['Persistencia', 'Histórico', 'Promedio 30 min', 'XGBoost'];
+  const metColor = (m) => (m === 'XGBoost' ? dash.colors[0] : muted);
+  const metOp = { 'Persistencia': 0.4, 'Histórico': 0.65, 'Promedio 30 min': 0.95, 'XGBoost': 1 };
+  function drawComp() {
+    seg(q('#seg-medida'), [['todas', 'Todas las ventanas'], ['trancon_ahora', 'Con trancón'], ['hora_pico', 'Hora pico']], 'medida', () => drawComp());
+    const host = q('#chart-comp');
+    if (fail(host, 'comparacion')) return;
+    const data = rows('comparacion').filter((r) => r.medida === S.medida);
+    const W = Math.max(280, host.clientWidth), H = 320, m = { t: 28, r: 8, b: 30, l: 44 };
+    const x0 = d3.scaleBand(['15 min', '30 min', '60 min'], [m.l, W - m.r]).paddingInner(0.22).paddingOuter(0.06);
+    const x1 = d3.scaleBand(METODOS, [0, x0.bandwidth()]).padding(0.12);
+    const y = d3.scaleLinear([0, (d3.max(data, (d) => d.mae) || 1) * 1.12], [H - m.b, m.t]).nice();
+    let svg = d3.select(host).select('svg');
+    if (svg.empty()) { svg = d3.select(host).append('svg').attr('width', '100%'); svg.append('g').attr('class', 'gy'); svg.append('g').attr('class', 'gx'); svg.append('g').attr('class', 'gb'); svg.append('g').attr('class', 'gl'); svg.append('g').attr('class', 'gleg'); }
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    host.style.minHeight = H + 'px';
+    const gy = svg.select('.gy').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat((d) => nf0.format(d)));
+    cleanAxis(gy); gy.select('.domain').remove(); gy.selectAll('.tick line').style('stroke', 'var(--cds-chart-grid)');
+    const gx = svg.select('.gx').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x0).tickSize(0).tickPadding(10));
+    cleanAxis(gx); gx.select('.domain').style('stroke', 'var(--cds-chart-axis)');
+    const dur = reduce ? 0 : 700;
+    const bw = Math.min(32, x1.bandwidth());
+    const bx = (d) => x0(d.horizonte) + x1(d.metodo) + (x1.bandwidth() - bw) / 2;
+    svg.select('.gb').selectAll('rect').data(data, (d) => d.horizonte + d.metodo).join((en) => en.append('rect').attr('y', H - m.b).attr('height', 0))
+      .attr('x', bx).attr('width', bw).attr('rx', 4)
+      .style('fill', (d) => metColor(d.metodo)).style('opacity', (d) => metOp[d.metodo])
+      .transition().duration(dur).attr('y', (d) => y(d.mae)).attr('height', (d) => H - m.b - y(d.mae));
+    const showLbl = bw >= 22;
+    svg.select('.gl').selectAll('text').data(showLbl ? data : [], (d) => d.horizonte + d.metodo).join('text')
+      .attr('x', (d) => bx(d) + bw / 2).attr('text-anchor', 'middle').attr('y', (d) => y(d.mae) - 6)
+      .style('fill', (d) => (d.metodo === 'XGBoost' ? 'var(--color-fg)' : 'var(--color-fg-muted)')).style('font-size', 'var(--cds-font-size-caption)')
+      .style('font-weight', (d) => (d.metodo === 'XGBoost' ? 600 : 400)).text((d) => nf2.format(d.mae));
+    // leyenda arriba
+    const leg = svg.select('.gleg').attr('transform', `translate(${m.l},10)`);
+    const items = leg.selectAll('g').data(METODOS).join((en) => { const gg = en.append('g'); gg.append('rect'); gg.append('text'); return gg; });
+    let cx = 0;
+    items.each(function (d) {
+      const gg = d3.select(this);
+      gg.select('rect').attr('width', 10).attr('height', 10).attr('rx', 2).attr('y', -5).style('fill', metColor(d)).style('opacity', metOp[d]);
+      const t = gg.select('text').attr('x', 14).attr('y', 4).style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(d);
+      gg.attr('transform', `translate(${cx},0)`);
+      cx += 14 + t.node().getComputedTextLength() + 16;
+    });
+    if (cx > W - m.l) { leg.attr('transform', `translate(${m.l},10) scale(${(W - m.l - 4) / cx})`); }
+    const tip = tipBox(host);
+    svg.select('.gb').selectAll('rect').on('mousemove', (ev, d) => tipShow(host, tip, ev, `${d.horizonte} · ${d.metodo}`, [['Error medio', nf2.format(d.mae) + ' km/h', metColor(d.metodo)]])).on('mouseleave', () => { tip.hidden = true; });
+  }
+  const VAR_NOMBRE = { 'ref: persistencia': 'Persistencia', 'ref: historico': 'Histórico', 'mse_peso': 'XGBoost · error cuadrático, con pesos', 'mse_sin_peso': 'XGBoost · error cuadrático, sin pesos', 'mae_peso': 'XGBoost · error absoluto, con pesos (elegida)', 'mae_sin_peso': 'XGBoost · error absoluto, sin pesos' };
+  function drawVariantes() {
+    const t = q('#tabla-variantes'), tb = q('tbody', t);
+    if (!ok('metricas_justas')) { tb.replaceChildren(); return; }
+    const cols = ['validacion_todas', 'validacion_trancon_ahora', 'validacion_hora_pico', 'prueba_todas', 'prueba_trancon_ahora', 'prueba_hora_pico'];
+    tb.replaceChildren(...rows('metricas_justas').map((r) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = encodeURIComponent(r.horizonte) + ',' + encodeURIComponent(r.variante);
+      if (r.variante === 'mae_peso') tr.className = 'gd-best';
+      const cells = [r.horizonte, VAR_NOMBRE[r.variante] || r.variante, ...cols.map((c) => nf2.format(N(r[c])))];
+      cells.forEach((v, i) => { const td = document.createElement('td'); if (i === 1) td.className = 'gd-l'; td.textContent = v; tr.appendChild(td); });
+      return tr;
+    }));
+  }
+
+  /* ---------------- Diagnóstico ---------------- */
+  const LINEAS = [['persistencia', 'Persistencia', 0.4], ['historico', 'Histórico', 0.75], ['xgboost', 'XGBoost', 1]];
+  function drawHora() {
+    seg(q('#seg-hora'), HZ, 'hHora', () => drawHora());
+    const host = q('#chart-hora');
+    if (fail(host, 'metricas_hora')) return;
+    const data = rows('metricas_hora').filter((r) => r.horizonte === S.hHora + ' min').map((r) => ({ modelo: r.modelo, hora: N(r.hora), mae: N(r.MAE) }));
+    const W = Math.max(280, host.clientWidth), H = 300, m = { t: 14, r: 92, b: 30, l: 40 };
+    const x = d3.scaleLinear([0, 23], [m.l, W - m.r]);
+    const y = d3.scaleLinear([0, (d3.max(data, (d) => d.mae) || 1) * 1.05], [H - m.b, m.t]).nice();
+    let svg = d3.select(host).select('svg');
+    if (svg.empty()) { svg = d3.select(host).append('svg').attr('width', '100%'); svg.append('g').attr('class', 'gy'); svg.append('g').attr('class', 'gx'); svg.append('g').attr('class', 'gl'); svg.append('g').attr('class', 'ge'); svg.append('line').attr('class', 'grule'); }
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    host.style.minHeight = H + 'px';
+    const gy = svg.select('.gy').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat((d) => nf0.format(d)));
+    cleanAxis(gy); gy.select('.domain').remove(); gy.selectAll('.tick line').style('stroke', 'var(--cds-chart-grid)');
+    const gx = svg.select('.gx').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 500 ? 6 : 12).tickFormat((d) => d + ' h'));
+    cleanAxis(gx);
+    const series = LINEAS.map(([k, label, op]) => ({ k, label, op, pts: data.filter((d) => d.modelo === k).sort((a, b) => a.hora - b.hora) }));
+    const col = (k) => (k === 'xgboost' ? dash.colors[0] : muted);
+    const ln = d3.line().x((d) => x(d.hora)).y((d) => y(d.mae));
+    svg.select('.gl').selectAll('path').data(series, (d) => d.k).join('path')
+      .style('fill', 'none').style('stroke', (d) => col(d.k)).style('opacity', (d) => d.op).style('stroke-width', (d) => (d.k === 'xgboost' ? 2.5 : 2)).style('stroke-linejoin', 'round').style('stroke-linecap', 'round')
+      .style('stroke-dasharray', (d) => (d.k === 'persistencia' ? '5 4' : null))
+      .transition().duration(reduce ? 0 : 500).attr('d', (d) => ln(d.pts));
+    // etiquetas al final, separadas
+    const ends = series.filter((s) => s.pts.length).map((s) => ({ ...s, y: y(s.pts[s.pts.length - 1].mae), v: s.pts[s.pts.length - 1].mae })).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 15) ends[i].y = ends[i - 1].y + 15;
+    svg.select('.ge').selectAll('text').data(ends, (d) => d.k).join('text').attr('x', W - m.r + 8).attr('y', (d) => d.y + 4)
+      .style('fill', (d) => (d.k === 'xgboost' ? 'var(--color-fg)' : 'var(--color-fg-muted)')).style('font-size', 'var(--cds-font-size-caption)').style('font-weight', (d) => (d.k === 'xgboost' ? 600 : 400)).text((d) => d.label);
+    const tip = tipBox(host), rule = svg.select('.grule').style('stroke', 'var(--cds-chart-reference)').attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0);
+    svg.on('mousemove', (ev) => {
+      const [mx] = d3.pointer(ev); const h = Math.max(0, Math.min(23, Math.round(x.invert(mx))));
+      rule.attr('x1', x(h)).attr('x2', x(h)).style('opacity', 1);
+      tipShow(host, tip, ev, `${h}:00 – ${h}:59`, series.map((s) => { const p = s.pts.find((d) => d.hora === h); return [s.label, p ? nf2.format(p.mae) + ' km/h' : '—', s.k === 'xgboost' ? dash.colors[0] : 'var(--cds-chart-muted)']; }));
+    }).on('mouseleave', () => { tip.hidden = true; rule.style('opacity', 0); });
+  }
+
+  function drawDia() {
+    seg(q('#seg-dia'), HZ, 'hDia', () => drawDia());
+    setText('#dia-ejemplo [data-source="serie_ejemplo"]', (v) => String(v));
+    const host = q('#chart-dia');
+    if (fail(host, 'serie_ejemplo')) return;
+    const h = S.hDia;
+    const data = rows('serie_ejemplo').map((r) => ({ t: new Date(String(r.t).replace(' ', 'T')), real: N(r.vel_real), pred: N(r['pred_' + h]), p30: N(r['promedio30_' + h]), his: N(r['historico_' + h]) })).filter((d) => !isNaN(d.t));
+    const W = Math.max(280, host.clientWidth), H = 320, m = { t: 14, r: 104, b: 30, l: 40 };
+    const x = d3.scaleTime(d3.extent(data, (d) => d.t), [m.l, W - m.r]);
+    const y = d3.scaleLinear([0, (d3.max(data, (d) => Math.max(d.real || 0, d.pred || 0, d.p30 || 0, d.his || 0)) || 1) * 1.05], [H - m.b, m.t]).nice();
+    let svg = d3.select(host).select('svg');
+    if (svg.empty()) { svg = d3.select(host).append('svg').attr('width', '100%'); svg.append('g').attr('class', 'gy'); svg.append('g').attr('class', 'gx'); svg.append('g').attr('class', 'gl'); svg.append('g').attr('class', 'ge'); svg.append('line').attr('class', 'grule'); }
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    host.style.minHeight = H + 'px';
+    const gy = svg.select('.gy').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat((d) => nf0.format(d)));
+    cleanAxis(gy); gy.select('.domain').remove(); gy.selectAll('.tick line').style('stroke', 'var(--cds-chart-grid)');
+    const gx = svg.select('.gx').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 500 ? 4 : 8).tickFormat(d3.timeFormat('%H:%M')));
+    cleanAxis(gx);
+    const S4 = [
+      { k: 'real', label: 'Real', color: 'var(--color-fg-muted)', w: 1.2, dash: null, op: 0.75 },
+      { k: 'his', label: 'Histórico', color: muted, w: 1.5, dash: '2 4', op: 0.9 },
+      { k: 'p30', label: 'Promedio 30 min', color: muted, w: 1.8, dash: '6 4', op: 0.9 },
+      { k: 'pred', label: 'XGBoost', color: dash.colors[0], w: 2.4, dash: null, op: 1 },
+    ];
+    svg.select('.gl').selectAll('path').data(S4, (d) => d.k).join('path')
+      .style('fill', 'none').style('stroke', (d) => d.color).style('stroke-width', (d) => d.w).style('stroke-dasharray', (d) => d.dash).style('opacity', (d) => d.op)
+      .style('stroke-linejoin', 'round').style('stroke-linecap', 'round')
+      .attr('d', (s) => d3.line().defined((d) => !isNaN(d[s.k])).x((d) => x(d.t)).y((d) => y(d[s.k]))(data));
+    const ends = S4.map((s) => { const last = data.filter((d) => !isNaN(d[s.k])).pop(); return last ? { ...s, y: y(last[s.k]) } : null; }).filter(Boolean).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 15) ends[i].y = ends[i - 1].y + 15;
+    if (ends.length && ends[ends.length - 1].y > H - m.b) { const sh = ends[ends.length - 1].y - (H - m.b); ends.forEach((e) => (e.y -= sh)); }
+    svg.select('.ge').selectAll('text').data(ends, (d) => d.k).join('text').attr('x', W - m.r + 8).attr('y', (d) => d.y + 4)
+      .style('fill', (d) => (d.k === 'pred' ? 'var(--color-fg)' : 'var(--color-fg-muted)')).style('font-size', 'var(--cds-font-size-caption)').style('font-weight', (d) => (d.k === 'pred' ? 600 : 400)).text((d) => d.label);
+    const tip = tipBox(host), rule = svg.select('.grule').style('stroke', 'var(--cds-chart-reference)').attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0);
+    const bis = d3.bisector((d) => d.t).center;
+    const fT = d3.timeFormat('%H:%M');
+    svg.on('mousemove', (ev) => {
+      const [mx] = d3.pointer(ev); const d = data[bis(data, x.invert(mx))]; if (!d) return;
+      rule.attr('x1', x(d.t)).attr('x2', x(d.t)).style('opacity', 1);
+      const f = (v) => (isNaN(v) ? '—' : nf1.format(v) + ' km/h');
+      tipShow(host, tip, ev, fT(d.t), [['Real', f(d.real)], ['XGBoost', f(d.pred), dash.colors[0]], ['Promedio 30 min', f(d.p30), 'var(--cds-chart-muted)'], ['Histórico', f(d.his), 'var(--cds-chart-muted)']]);
+    }).on('mouseleave', () => { tip.hidden = true; rule.style('opacity', 0); });
+  }
+
+  function drawSegmentos() {
+    seg(q('#seg-segm'), HZ, 'hSeg', () => drawSegmentos());
+    const tb = q('#tabla-segmentos tbody');
+    if (!ok('metricas_segmento')) { tb.replaceChildren(); return; }
+    const top = rows('metricas_segmento').filter((r) => r.horizonte === S.hSeg + ' min' && N(r.filas) >= 30)
+      .sort((a, b) => N(b.MAE_xgboost) - N(a.MAE_xgboost)).slice(0, 12);
+    const mx = d3.max(top, (r) => N(r.MAE_xgboost)) || 1;
+    tb.replaceChildren(...top.map((r) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = encodeURIComponent(r.FROM_TO) + ',' + encodeURIComponent(r.horizonte);
+      const cells = [r.FROM_TO, r.sentido === 'Occidente - Oriente' ? 'Granada → Bogotá' : 'Bogotá → Granada', nf0.format(N(r.filas)), N(r.MAE_xgboost), nf2.format(N(r.MAE_promedio30)), nf2.format(N(r.MAE_historico)), nf2.format(N(r.MAE_persistencia))];
+      cells.forEach((v, i) => {
+        const td = document.createElement('td');
+        if (i === 1) td.className = 'gd-l';
+        if (i === 3) { const b = document.createElement('span'); b.className = 'gd-cellbar'; b.style.width = Math.round(60 * v / mx) + 'px'; td.append(b, document.createTextNode(nf2.format(v))); }
+        else td.textContent = v;
+        tr.appendChild(td);
+      });
+      return tr;
+    }));
+  }
+
+  /* ---------------- Modelo ---------------- */
+  const NOMBRES = {
+    vel_media_30: 'Velocidad promedio últimos 30 min', vel_kmh: 'Velocidad ahora', vel_l1: 'Velocidad hace 5 min', vel_l2: 'Velocidad hace 10 min', vel_l3: 'Velocidad hace 15 min', vel_l6: 'Velocidad hace 30 min', vel_l12: 'Velocidad hace 60 min',
+    vel_ayer: 'Velocidad ayer a esta hora', vel_semana: 'Velocidad hace una semana', vel_min_30: 'Velocidad mínima últimos 30 min', delta_15: 'Cambio en 15 min', indice_vel: 'Velocidad ÷ velocidad libre',
+    segmento_peaje: 'Segmento de peaje', vel_libre_ref_kmh: 'Velocidad libre del segmento', tipica_15: 'Velocidad típica (+15 min)', tipica_30: 'Velocidad típica (+30 min)', tipica_60: 'Velocidad típica (+60 min)',
+    nivel_max: 'Nivel de congestión Waze', cobertura: 'Parte del segmento con trancón', retraso_s: 'Retraso reportado', vel_adelante_500: 'Velocidad 500 m adelante', vel_adelante_1000: 'Velocidad 1 km adelante',
+    vel_atras_500: 'Velocidad 500 m atrás', cob_adelante_500: 'Trancón 500 m adelante', cob_atras_500: 'Trancón 500 m atrás', vel_adelante_l3: 'Velocidad adelante hace 15 min', dist_trancon_adelante_m: 'Distancia al próximo trancón',
+    hora_decimal: 'Hora del día', hora_sin: 'Hora del día (ciclo)', hora_cos: 'Hora del día (ciclo)', dia_semana: 'Día de la semana', abs_ini_m: 'Kilómetro del segmento', orden_seg: 'Orden del segmento', longitud_m: 'Longitud del segmento',
+    n_capturas: 'Capturas en la ventana', sentido_n: 'Calzada', cierre_cerca_1km: 'Cierre a menos de 1 km', festivo: 'Festivo', puente: 'Puente festivo',
+  };
+  function drawImp() {
+    seg(q('#seg-imp'), HZ, 'hImp', () => drawImp());
+    const host = q('#chart-imp');
+    if (fail(host, 'importancia_variables')) return;
+    const data = rows('importancia_variables').filter((r) => r.horizonte === S.hImp + ' min').map((r) => ({ v: r.variable, nombre: NOMBRES[r.variable] || r.variable, imp: N(r.importancia) }))
+      .sort((a, b) => b.imp - a.imp).slice(0, 12);
+    const W = Math.max(280, host.clientWidth), rowH = 24, m = { t: 4, r: 52, b: 4 };
+    const H = m.t + m.b + data.length * rowH;
+    let svg = d3.select(host).select('svg');
+    if (svg.empty()) { svg = d3.select(host).append('svg').attr('width', '100%'); svg.append('g').attr('class', 'gn'); svg.append('g').attr('class', 'gb'); svg.append('g').attr('class', 'gv'); }
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    host.style.minHeight = H + 'px';
+    const names = svg.select('.gn').selectAll('text').data(data, (d) => d.v).join('text')
+      .attr('x', 0).attr('y', (d, i) => m.t + i * rowH + rowH / 2 + 4).style('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text((d) => d.nombre);
+    let lw = 0; names.each(function () { lw = Math.max(lw, this.getComputedTextLength()); });
+    lw = Math.min(lw + 10, W * 0.55);
+    const x = d3.scaleLinear([0, d3.max(data, (d) => d.imp) || 1], [0, W - lw - m.r]);
+    svg.select('.gb').selectAll('rect').data(data, (d) => d.v).join((en) => en.append('rect').attr('width', 0))
+      .attr('x', lw).attr('y', (d, i) => m.t + i * rowH + 5).attr('height', rowH - 10).attr('rx', 4)
+      .style('fill', (d, i) => (i < 2 ? dash.colors[0] : 'var(--cds-chart-muted)'))
+      .transition().duration(reduce ? 0 : 600).attr('width', (d) => Math.max(1, x(d.imp)));
+    svg.select('.gv').selectAll('text').data(data, (d) => d.v).join('text')
+      .attr('x', (d) => lw + Math.max(1, x(d.imp)) + 6).attr('y', (d, i) => m.t + i * rowH + rowH / 2 + 4)
+      .style('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text((d) => nf1.format(100 * d.imp) + ' %');
+  }
+  function drawFicha() {
+    const tb = q('#tabla-ficha tbody');
+    if (!ok('ficha_tecnica')) { tb.replaceChildren(); return; }
+    tb.replaceChildren(...rows('ficha_tecnica').map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = encodeURIComponent(r.clave);
+      const a = document.createElement('td'); a.textContent = r.etiqueta;
+      const b = document.createElement('td'); b.textContent = fmtAuto(r.valor);
+      tr.append(a, b); return tr;
+    }));
+  }
+
+  /* ---------------- Dibujo general ---------------- */
+  function draw() {
+    setText('#gd-hasta', (v) => String(v));
+    if (S.tab === 'monitoreo') {
+      drawMonitoreo(); drawKpis();
+    } else if (S.tab === 'desempeno') {
+      setText('#desempeno [data-source="rango_mejora"]', (v) => nf1.format(N(v)));
+      drawComp(); drawVariantes();
+    } else if (S.tab === 'diagnostico') {
+      drawHora(); drawDia(); drawSegmentos();
+    } else if (S.tab === 'modelo') {
+      drawImp(); drawFicha();
+    }
+  }
+
+  const inicial = location.hash.slice(1);
+  if (['monitoreo', 'desempeno', 'diagnostico', 'modelo'].includes(inicial)) S.tab = inicial;
+  setTab(S.tab, false);
+  dash.onData(draw);
+})();
+</script>
+
+</div>
+<footer class="gd-pie">
+  Fuente de datos: Waze for Cities (jams del corredor). Trazado: shapefile del corredor Autopista Sur. Mapa base © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>.
+  Modelo de predicción XGBoost, piloto del Gemelo Digital de la Región Metropolitana Bogotá–Cundinamarca · Observatorio de Dinámica Regional.
+</footer>
+</body>
+</html>
