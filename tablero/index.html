@@ -396,7 +396,7 @@ window.dash = (function () {
         <table class="gd-table" id="tabla-ciudad-via">
           <thead><tr>
             <th class="gd-l">Calzada</th><th class="gd-l">Ciudad</th><th class="gd-l">Vía (NomVia2)</th>
-            <th>Km</th><th>Km con trancón</th><th>Ahora (km/h)</th><th>Típica (km/h)</th><th>Diferencia</th>
+            <th>Longitud (km)</th><th>Km con trancón</th><th>Ahora (km/h)</th><th>Típica (km/h)</th><th>Diferencia</th>
             <th id="th-cv-pred">Prevista +30 (km/h)</th>
           </tr></thead>
           <tbody></tbody>
@@ -461,7 +461,8 @@ window.dash = (function () {
             <th data-source="tendencia_dia" data-field="calzada" class="gd-l">Calzada</th>
             <th data-source="tendencia_dia" data-field="via" class="gd-l">Vía (NomVia2)</th>
             <th data-source="tendencia_dia" data-field="municipio" class="gd-l">Ciudad</th>
-            <th data-source="tendencia_dia" data-field="km">Km</th>
+            <th data-source="tendencia_dia" data-field="km">Abscisa (km)</th>
+            <th data-source="tendencia_dia" data-field="longitud_m">Longitud (m)</th>
             <th data-field="vel">Ahora (km/h)</th>
             <th data-source="tendencia_dia" data-field="cambio_ahora">Cambio vs 15 min antes</th>
             <th data-field="p30" data-hcol="p">Predicha (km/h)</th>
@@ -658,10 +659,17 @@ window.dash = (function () {
 
   /* ---------------- Cálculos ---------------- */
   dash.calc('tendencia_dia', {
-    inputs: ['dia_monitoreo', 'predicciones_ultima_ventana', 'red_shp', 'segmentos_atributos'],
+    inputs: ['dia_monitoreo', 'predicciones_ultima_ventana', 'red_shp', 'segmentos_atributos', 'geometria_segmentos'],
     title: 'Estado y tendencia por segmento y hora',
     description: 'Para cada segmento y ventana del día: estado frente a la velocidad libre (congestionado < 50 %, lento < 75 %, moderado < 90 %), cambio frente a 15 min antes, y cambio, estado y estado real previstos a +15, +30 y +60 min (baja si ≤ −3 km/h, sube si ≥ +3 km/h). Vía y municipio del shapefile.',
-    fn: (dia_monitoreo, predicciones_ultima_ventana, red_shp, segmentos_atributos) => {
+    fn: (dia_monitoreo, predicciones_ultima_ventana, red_shp, segmentos_atributos, geometria_segmentos) => {
+      const ext = new Map();
+      for (const r of geometria_segmentos) {
+        const km = Number(r.km), o = ext.get(r.FROM_TO) || [Infinity, -Infinity];
+        o[0] = Math.min(o[0], km); o[1] = Math.max(o[1], km); ext.set(r.FROM_TO, o);
+      }
+      const largo = (ft, a) => (a && Number(a.longitud_km) > 0 ? 1000 * Number(a.longitud_km)
+        : ext.has(ft) ? 1000 * Math.max(ext.get(ft)[1] - ext.get(ft)[0], 0) : NaN);
       const seg = new Map(predicciones_ultima_ventana.map((r) => [r.FROM_TO, r]));
       const shp = new Map(red_shp.map((r) => [r.FROM_TO, r]));
       const atr = new Map(segmentos_atributos.map((r) => [r.FROM_TO, r]));
@@ -680,7 +688,7 @@ window.dash = (function () {
         const prev = vel.get(r.FROM_TO + '|' + antes(r.hora));
         const ca = prev == null ? null : Math.round((a - prev) * 10) / 10;
         const o = { FROM_TO: r.FROM_TO, hora: r.hora, calzada: s.sentido === 'Occidente - Oriente' ? 'Granada → Bogotá' : 'Bogotá → Granada',
-          via: (atr.get(r.FROM_TO) || {}).NomVia2 || g.NomVia2 || g.NomVia || '', municipio: (atr.get(r.FROM_TO) || {}).city || g.NomMpio || '', km: Number(s.km), estado_ahora: est(a / lib), cambio_ahora: ca, tendencia_ahora: tend(ca) };
+          via: (atr.get(r.FROM_TO) || {}).NomVia2 || g.NomVia2 || g.NomVia || '', municipio: (atr.get(r.FROM_TO) || {}).city || g.NomMpio || '', km: Number(s.km), longitud_m: Math.round(largo(r.FROM_TO, atr.get(r.FROM_TO))), estado_ahora: est(a / lib), cambio_ahora: ca, tendencia_ahora: tend(ca) };
         for (const h of ['15', '30', '60']) {
           const p = Number(r['p' + h]), re = r['r' + h] === '' ? NaN : Number(r['r' + h]);
           const d = Math.round((p - a) * 10) / 10;
@@ -1394,8 +1402,24 @@ window.dash = (function () {
   function drawTabla() {
     const box = q('#semaforo');
     if (fail(box, 'resumen_dia')) { q('#tabla-tendencia tbody').replaceChildren(); return; }
-    const res = rows('resumen_dia').find((r) => r.hora === S.hora) || {};
     const fl = FILTROS();
+    // conteos de las luces: solo los segmentos del filtro (ciudad, vía y calzada)
+    const res = {};
+    const ix0 = indice();
+    if (ix0) {
+      const filtrados = Array.from((ix0.byHora.get(S.hora) || new Map()).values()).filter((o) => o.t
+        && (S.sentido === 'ambas' || ix0.seg.get(o.t.FROM_TO)?.sentido === S.sentido)
+        && (S.city === 'todas' || o.t.municipio === S.city) && (S.via === 'todas' || o.t.via === S.via)).map((o) => o.t);
+      const cuenta = (fn) => filtrados.filter(fn).length;
+      res.cong_ahora = cuenta((t) => t.estado_ahora === 'Congestionado');
+      res.baja_ahora = cuenta((t) => t.tendencia_ahora === 'Baja');
+      for (const hh of ['15', '30', '60']) {
+        res['cong_' + hh] = cuenta((t) => t['estado_' + hh] === 'Congestionado');
+        res['baja_' + hh] = cuenta((t) => t['tendencia_' + hh] === 'Baja');
+        res['mantiene_' + hh] = cuenta((t) => t['tendencia_' + hh] === 'Se mantiene');
+        res['sube_' + hh] = cuenta((t) => t['tendencia_' + hh] === 'Sube');
+      }
+    }
     if (!S.filtro) S.filtro = 'cong_ahora';
     if (!box.querySelector('.gd-light')) {
       box.replaceChildren(...fl.map(([k]) => {
@@ -1412,13 +1436,12 @@ window.dash = (function () {
     }
     for (const b of qa('.gd-light', box)) {
       const [k, label, f, color, alerta] = fl.find((x) => x[0] === b.dataset.k);
-      const v = q('[data-source]', b); v.dataset.field = f; v.dataset.where = 'hora=' + S.hora;
+      const v = q('[data-source]', b); v.textContent = f in res ? nf0.format(res[f]) : '—';
       q('.gd-light-l', b).textContent = label;
       const bulb = q('.gd-bulb', b); bulb.style.color = color;
       bulb.classList.toggle('gd-on', alerta && N(res[f]) > 0);
       b.setAttribute('aria-pressed', String(k === S.filtro));
     }
-    setText('#semaforo [data-source="resumen_dia"]', (v) => nf0.format(N(v)));
 
     // columnas que dependen del horizonte
     for (const th of qa('#tabla-tendencia th[data-hcol]')) th.dataset.field = th.dataset.hcol + S.h;
@@ -1444,7 +1467,7 @@ window.dash = (function () {
       tr.dataset.key = encodeURIComponent(d.FROM_TO) + ',' + encodeURIComponent(d.hora);
       const td = (v, cls) => { const e = document.createElement('td'); if (cls) e.className = cls; if (v instanceof Node) e.appendChild(v); else e.textContent = v; tr.appendChild(e); };
       td(d.FROM_TO); td(c.calzada, 'gd-l'); td(c.via || '—', 'gd-l'); td(c.municipio || '—', 'gd-l');
-      td(nf1.format(num(c.km))); td(nf1.format(num(d.vel))); td(signo(num(c.cambio_ahora)));
+      td(nf1.format(num(c.km))); td(isNaN(num(c.longitud_m)) ? '—' : nf0.format(num(c.longitud_m))); td(nf1.format(num(d.vel))); td(signo(num(c.cambio_ahora)));
       td(nf1.format(num(d['p' + h]))); td(signo(num(c['cambio_' + h]))); td(isNaN(num(d['r' + h])) ? '—' : nf1.format(num(d['r' + h])));
       td(pill(c.estado_ahora, ESTCOL[c.estado_ahora]), 'gd-l');
       td(pill(c['estado_' + h], ESTCOL[c['estado_' + h]]), 'gd-l');
