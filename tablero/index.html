@@ -7,18 +7,18 @@
 <meta name="description" content="Monitoreo y predicción de velocidad media en la Autopista Sur (Bogotá – Soacha – Granada). Piloto del Gemelo Digital, Observatorio de Dinámica Regional.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap">
 <style>
 /* Tokens del sitio: equivalen a los del tablero original */
 :root {
-  --font-anthropic-sans: "Segoe UI", "Open Sans", "Helvetica Neue", Arial, sans-serif;
-  --font-anthropic-serif: "Segoe UI", "Open Sans", "Helvetica Neue", Arial, sans-serif;
-  --color-bg: #f2f4f6; --color-panel: #ffffff; --color-fg: #1b2a41; --color-fg-muted: #5f6b7a;
-  --color-border-line: #e1e6ec; --color-bad: #c62828;
+  --font-anthropic-sans: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-anthropic-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --color-bg: #f4f6f9; --color-panel: #ffffff; --color-fg: #14202e; --color-fg-muted: #5b6878;
+  --color-border-line: #dde3ea; --color-bad: #c62828;
   --cds-chart-muted: #8a96a6; --cds-chart-grid: #e8edf3; --cds-chart-axis: #b7c1cd; --cds-chart-reference: #8a96a6;
   --cds-text-secondary: #5b6878; --cds-surface-popover: #ffffff; --cds-border: #d3dae3; --cds-shadow-popover: 0 6px 20px rgba(16, 32, 56, .14);
   --cds-font-size-caption: .8125rem; --cds-font-size-body: .9375rem; --cds-font-size-heading: 1.0625rem; --cds-font-size-title: 1.6rem;
-  --cds-font-weight-medium: 700; --cds-radius: 18px;
+  --cds-font-weight-medium: 600; --cds-radius: 10px;
   --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 14px; --cds-gap-lg: 22px;
   --cds-pad-xs: 6px; --cds-pad-sm: 10px; --cds-pad-lg: 18px;
   --cds-dur-slow: 420ms; --cds-ease-out: cubic-bezier(.2, .8, .2, 1);
@@ -316,68 +316,28 @@ window.dash = (function () {
   .gd-chips { justify-content: flex-start; }
   .gd-def div { grid-template-columns: 1fr; gap: 2px; }
 }
-
-/* ================= Estilo institucional (franja azul, línea amarilla, banda azul marino) ================= */
-.gd { --gd-navy: #1a3a6b; --gd-ink: #1b2a41; --gd-blue: #2e86c1; --gd-gold: #f5c400; }
-.gd-head { background: #fff; color: var(--gd-ink); }
-.gd-topbar { height: 14px; background: var(--gd-blue); }
-.gd-head-in { display: flex; flex-wrap: wrap; gap: var(--cds-gap-lg); align-items: center; justify-content: space-between; padding-block: 18px 16px; }
-.gd-head .gd-title { font-family: var(--font-anthropic-sans); font-weight: 700; color: var(--gd-ink); font-size: clamp(1.4rem, 2.2vw, 1.85rem); margin: 0 0 8px; }
-.gd-head .gd-sub { color: var(--color-fg-muted); font-size: 1.05rem; margin: 0; }
-.gd-head .gd-clock { color: var(--gd-ink); font-family: var(--font-anthropic-sans); font-weight: 600; text-shadow: none; font-size: clamp(1.6rem, 2.8vw, 2.2rem); }
-.gd-head .gd-clock .gd-sec { color: var(--gd-blue); }
-.gd-head .gd-clockmeta { color: var(--color-fg-muted); }
-.gd-head .gd-chip { border-color: var(--color-border-line); background: var(--color-bg); color: var(--gd-ink); }
-.gd-head .gd-chip b { font-family: var(--font-anthropic-sans); }
-.gd-rail { height: 6px; background: var(--gd-gold); }
-.gd-nav { background: var(--gd-navy); border-bottom: 0; }
-.gd-nav .gd-in { min-height: 64px; align-items: flex-end; }
-.gd-tab { color: rgba(255,255,255,.78); font-weight: 600; font-size: 1rem; padding: 18px 16px 14px; border-bottom-width: 4px; }
-.gd-tab:hover { color: #fff; }
-.gd-tab[aria-selected="true"] { color: #fff; border-bottom-color: var(--gd-gold); font-weight: 700; }
-.gd-h2 { font-family: var(--font-anthropic-sans); font-weight: 700; color: var(--gd-ink); font-size: 1.35rem; }
-.gd-lead { color: var(--color-fg-muted); font-size: 1.02rem; }
-.gd-card { border-radius: 18px; border-color: var(--color-border-line); box-shadow: 0 1px 2px rgba(16, 32, 56, .04); }
-.gd-card h3 { color: var(--gd-ink); font-weight: 700; font-size: 1.1rem; }
-.gd-note { color: var(--color-fg-muted); }
-.gd-select { border-radius: 2px; background: #fff; border-color: #c9d0d8; font-size: .95rem; padding: 7px 10px; color: var(--gd-ink); max-width: 100%; }
-@media (min-width: 700px) { .gd-flabel .gd-select { min-width: 12rem; } }
-.gd-controls { max-width: 100%; min-width: 0; }
-.gd-controls > * { min-width: 0; max-width: 100%; }
-@media (max-width: 699px) { .gd-controls { width: 100%; } .gd-controls .gd-select, .gd-flabel { width: 100%; } }
-.gd-flabel { max-width: 100%; }
-/* Reloj del día: tarjeta clara como los filtros del diseño */
-.gd-timebox { background: #fff; color: var(--gd-ink); border: 1px solid var(--color-border-line); border-radius: 18px; box-shadow: 0 1px 2px rgba(16, 32, 56, .04); }
-.gd-timebox::after { height: 4px; background: var(--gd-gold); }
-.gd-time-k { color: #4a5563; font-weight: 700; letter-spacing: .04em; }
-.gd-bigtime { font-family: var(--font-anthropic-sans); font-weight: 700; color: var(--gd-navy); text-shadow: none; }
-.gd-timebox .gd-play { background: var(--color-bg); color: var(--gd-ink); border-color: #c9d0d8; }
-.gd-timebox .gd-play[aria-pressed="true"] { border-color: var(--gd-navy); background: var(--gd-navy); color: #fff; }
-.gd-flabel { display: grid; gap: 6px; font-size: var(--cds-font-size-caption); font-weight: 700; color: #4a5563; }
-.gd-kpi .gd-kpi-val, .gd-gauge-v span { color: var(--gd-ink); }
-.gd-table th { color: #4a5563; font-weight: 700; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .gd-head { background: var(--color-panel); color: var(--color-fg); }
-  :root:not([data-theme="light"]) .gd-head .gd-title, :root:not([data-theme="light"]) .gd-head .gd-clock,
-  :root:not([data-theme="light"]) .gd-h2, :root:not([data-theme="light"]) .gd-card h3,
-  :root:not([data-theme="light"]) .gd-gauge-v span, :root:not([data-theme="light"]) .gd-kpi .gd-kpi-val { color: var(--color-fg); }
-  :root:not([data-theme="light"]) .gd-select { background: var(--color-bg); color: var(--color-fg); border-color: var(--color-border-line); }
-  :root:not([data-theme="light"]) .gd-flabel, :root:not([data-theme="light"]) .gd-table th { color: var(--color-fg-muted); }
-  :root:not([data-theme="light"]) .gd-timebox { background: var(--color-panel); color: var(--color-fg); }
-  :root:not([data-theme="light"]) .gd-bigtime { color: var(--gd-gold); }
-  :root:not([data-theme="light"]) .gd-timebox .gd-play { background: var(--color-bg); color: var(--color-fg); border-color: var(--color-border-line); }
-}
 </style>
 
 <div class="gd" id="gd">
-  <header class="gd-head" id="inicio">
-    <div class="gd-topbar" aria-hidden="true"></div>
-    <div class="gd-in gd-head-in">
-      <div>
-        <h1 class="gd-title">Gemelo Digital - Autopista Sur</h1>
-        <p class="gd-sub">Monitoreo y predicción de velocidades · Bogotá – Soacha – Granada</p>
+  <header class="gd-band" id="inicio">
+    <div class="gd-in">
+      <div class="gd-brand">
+        <svg class="gd-radar" viewBox="0 0 58 58" aria-hidden="true">
+          <circle cx="29" cy="29" r="27" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.5"/>
+          <circle cx="29" cy="29" r="18" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.2"/>
+          <circle cx="29" cy="29" r="9" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1"/>
+          <path d="M6 40 C 18 34, 24 22, 52 14" fill="none" stroke="#f2c200" stroke-width="2.4" stroke-linecap="round"/>
+          <g class="gd-sweep"><path d="M29 29 L29 2 A27 27 0 0 1 52.4 15.5 Z" fill="rgba(242,194,0,.22)"/></g>
+          <circle cx="29" cy="29" r="2.4" fill="#f2c200"/>
+        </svg>
+        <div>
+          <div class="gd-kicker">Observatorio de Dinámica Regional · Gemelo Digital</div>
+          <h1 class="gd-title">Velocidad media · Autopista Sur</h1>
+          <p class="gd-sub">Piloto del modelo de predicción de velocidad · Bogotá – Soacha – Granada</p>
+        </div>
       </div>
       <div class="gd-clockbox">
+        <div class="gd-clockmeta">Hora Bogotá · UTC−5</div>
         <div class="gd-clock" id="gd-clock" aria-live="off">--:--<span class="gd-sec">:--</span></div>
         <div class="gd-clockmeta" id="gd-date">&nbsp;</div>
         <div class="gd-chips">
@@ -427,8 +387,8 @@ window.dash = (function () {
           <p class="gd-note">Longitud total ÷ tiempo total de recorrido de los segmentos del filtro (ciudad y vía), en cada calzada. Aguja: velocidad actual. Marca azul: velocidad típica a esta hora (histórico, mismo día de la semana). Marca blanca: velocidad de flujo libre.</p>
         </div>
         <div class="gd-controls">
-          <label class="gd-flabel">Municipio<select class="gd-select" id="sel-city" aria-label="Municipio"><option value="todas">Todas las ciudades</option></select></label>
-          <label class="gd-flabel">Tramo (vía)<select class="gd-select" id="sel-via" aria-label="Tramo"><option value="todas">Todas las vías</option></select></label>
+          <select class="gd-select" id="sel-city" aria-label="Ciudad"><option value="todas">Todas las ciudades</option></select>
+          <select class="gd-select" id="sel-via" aria-label="Vía"><option value="todas">Todas las vías</option></select>
         </div>
       </div>
       <div class="gd-gauges" id="gauges" data-source="corredor_dia"></div>
