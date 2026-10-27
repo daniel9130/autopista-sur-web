@@ -79,19 +79,25 @@ window.dash = (function () {
     dia_monitoreo: "datos/dia_monitoreo.csv",
     perfil_tipico: "datos/perfil_tipico.csv",
     dia_info: "datos/dia_info.csv",
+    segmentos_atributos: "datos/segmentos_atributos.csv",
   };
+  const OPCIONALES = new Set(["segmentos_atributos"]);   // si no existe, el tablero sigue con el shapefile
   const fuentes = {}, calcs = {}, cbs = [];
   let pend = null;
   const avisar = () => { if (pend) return; pend = requestAnimationFrame(() => { pend = null; for (const fn of cbs) { try { fn(); } catch (e) { console.error(e); } } }); };
   function cargar(id) {
     if (fuentes[id]) return;
     fuentes[id] = { status: "loading", data: [] };
-    const local = () => { const t = window.GD_DATOS && window.GD_DATOS[id]; if (t == null) return false; const rows = d3.csvParse(t); fuentes[id] = { status: "ok", data: rows, columns: rows.columns }; avisar(); return true; };
+    const local = () => { const t = window.GD_DATOS && window.GD_DATOS[id];
+      if (t == null && location.protocol === "file:" && OPCIONALES.has(id)) { fuentes[id] = { status: "ok", data: [], columns: [] }; avisar(); return true; }
+      if (t == null) return false; const rows = d3.csvParse(t); fuentes[id] = { status: "ok", data: rows, columns: rows.columns }; avisar(); return true; };
     if (location.protocol === "file:" && local()) return;
     fetch(ARCHIVOS[id] + "?v=" + (window.GD_VERSION || ""), { cache: "no-cache" })
       .then((r) => { if (!r.ok) throw new Error(r.status + " " + r.statusText); return r.text(); })
       .then((t) => { const rows = d3.csvParse(t); fuentes[id] = { status: "ok", data: rows, columns: rows.columns }; avisar(); })
-      .catch((e) => { if (local()) return; fuentes[id] = { status: "error", data: [], message: String(e) }; avisar(); });
+      .catch((e) => { if (local()) return;
+        fuentes[id] = OPCIONALES.has(id) ? { status: "ok", data: [], columns: [] } : { status: "error", data: [], message: String(e) };
+        avisar(); });
   }
   function data(id) {
     if (calcs[id]) {
@@ -244,6 +250,8 @@ window.dash = (function () {
 .gd-pill { display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px; border-radius: 999px; font-size: var(--cds-font-size-caption); font-weight: 600; }
 .gd-pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 .gd-mlabel { font-size: 11px; font-weight: 600; letter-spacing: .04em; fill: var(--color-fg-muted); paint-order: stroke; stroke: var(--gd-mapbg); stroke-width: 3px; text-transform: uppercase; pointer-events: none; }
+.gd-cv { margin-top: var(--cds-gap-md); }
+.gd-gauge-km { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .gd-gauges { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); min-height: 180px; }
 .gd-gauge { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 14px; align-items: center; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 12px 14px; background: var(--color-bg); }
 .gd-gauge svg { width: 100%; height: auto; display: block; }
@@ -376,10 +384,24 @@ window.dash = (function () {
       <div class="gd-cardhead">
         <div>
           <h3>Velocidad media del corredor · <span class="gd-hora-txt">—</span></h3>
-          <p class="gd-note">Longitud total ÷ tiempo total de recorrido de cada calzada. Aguja: velocidad actual. Marca azul: velocidad típica a esta hora (histórico de marzo a julio, mismo día de la semana). Marca blanca: velocidad libre.</p>
+          <p class="gd-note">Longitud total ÷ tiempo total de recorrido de los segmentos del filtro (ciudad y vía), en cada calzada. Aguja: velocidad actual. Marca azul: velocidad típica a esta hora (histórico, mismo día de la semana). Marca blanca: velocidad de flujo libre.</p>
+        </div>
+        <div class="gd-controls">
+          <select class="gd-select" id="sel-city" aria-label="Ciudad"><option value="todas">Todas las ciudades</option></select>
+          <select class="gd-select" id="sel-via" aria-label="Vía"><option value="todas">Todas las vías</option></select>
         </div>
       </div>
       <div class="gd-gauges" id="gauges" data-source="corredor_dia"></div>
+      <div class="gd-tablebox gd-cv">
+        <table class="gd-table" id="tabla-ciudad-via">
+          <thead><tr>
+            <th class="gd-l">Calzada</th><th class="gd-l">Ciudad</th><th class="gd-l">Vía (NomVia2)</th>
+            <th>Km</th><th>Km con trancón</th><th>Ahora (km/h)</th><th>Típica (km/h)</th><th>Diferencia</th>
+            <th id="th-cv-pred">Prevista +30 (km/h)</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
 
     <div class="gd-card" id="corredor">
@@ -437,8 +459,8 @@ window.dash = (function () {
           <thead><tr>
             <th data-field="FROM_TO">Segmento</th>
             <th data-source="tendencia_dia" data-field="calzada" class="gd-l">Calzada</th>
-            <th data-source="tendencia_dia" data-field="via" class="gd-l">Vía</th>
-            <th data-source="tendencia_dia" data-field="municipio" class="gd-l">Municipio</th>
+            <th data-source="tendencia_dia" data-field="via" class="gd-l">Vía (NomVia2)</th>
+            <th data-source="tendencia_dia" data-field="municipio" class="gd-l">Ciudad</th>
             <th data-source="tendencia_dia" data-field="km">Km</th>
             <th data-field="vel">Ahora (km/h)</th>
             <th data-source="tendencia_dia" data-field="cambio_ahora">Cambio vs 15 min antes</th>
@@ -622,6 +644,8 @@ window.dash = (function () {
   if (!['15', '30', '60'].includes(S.h)) S.h = '30';
   if (!['cambio', 'estado', 'real', 'err', 'mej'].includes(S.capa)) S.capa = 'cambio';
   if (!S.sentido) S.sentido = 'ambas';
+  if (!S.city) S.city = 'todas';
+  if (!S.via) S.via = 'todas';
   const q = (s, el) => (el || document).querySelector(s);
   const qa = (s, el) => Array.from((el || document).querySelectorAll(s));
   const nf1 = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -634,12 +658,13 @@ window.dash = (function () {
 
   /* ---------------- Cálculos ---------------- */
   dash.calc('tendencia_dia', {
-    inputs: ['dia_monitoreo', 'predicciones_ultima_ventana', 'red_shp'],
+    inputs: ['dia_monitoreo', 'predicciones_ultima_ventana', 'red_shp', 'segmentos_atributos'],
     title: 'Estado y tendencia por segmento y hora',
     description: 'Para cada segmento y ventana del día: estado frente a la velocidad libre (congestionado < 50 %, lento < 75 %, moderado < 90 %), cambio frente a 15 min antes, y cambio, estado y estado real previstos a +15, +30 y +60 min (baja si ≤ −3 km/h, sube si ≥ +3 km/h). Vía y municipio del shapefile.',
-    fn: (dia_monitoreo, predicciones_ultima_ventana, red_shp) => {
+    fn: (dia_monitoreo, predicciones_ultima_ventana, red_shp, segmentos_atributos) => {
       const seg = new Map(predicciones_ultima_ventana.map((r) => [r.FROM_TO, r]));
       const shp = new Map(red_shp.map((r) => [r.FROM_TO, r]));
+      const atr = new Map(segmentos_atributos.map((r) => [r.FROM_TO, r]));
       const vel = new Map(dia_monitoreo.map((r) => [r.FROM_TO + '|' + r.hora, Number(r.vel)]));
       const antes = (h) => {
         const m = Number(h.slice(0, 2)) * 60 + Number(h.slice(3, 5)) - 15;
@@ -655,7 +680,7 @@ window.dash = (function () {
         const prev = vel.get(r.FROM_TO + '|' + antes(r.hora));
         const ca = prev == null ? null : Math.round((a - prev) * 10) / 10;
         const o = { FROM_TO: r.FROM_TO, hora: r.hora, calzada: s.sentido === 'Occidente - Oriente' ? 'Granada → Bogotá' : 'Bogotá → Granada',
-          via: g.NomVia || '', municipio: g.NomMpio || '', km: Number(s.km), estado_ahora: est(a / lib), cambio_ahora: ca, tendencia_ahora: tend(ca) };
+          via: (atr.get(r.FROM_TO) || {}).NomVia2 || g.NomVia2 || g.NomVia || '', municipio: (atr.get(r.FROM_TO) || {}).city || g.NomMpio || '', km: Number(s.km), estado_ahora: est(a / lib), cambio_ahora: ca, tendencia_ahora: tend(ca) };
         for (const h of ['15', '30', '60']) {
           const p = Number(r['p' + h]), re = r['r' + h] === '' ? NaN : Number(r['r' + h]);
           const d = Math.round((p - a) * 10) / 10;
@@ -688,40 +713,41 @@ window.dash = (function () {
     },
   });
   dash.calc('corredor_dia', {
-    inputs: ['dia_monitoreo', 'predicciones_ultima_ventana', 'geometria_segmentos', 'perfil_tipico', 'dia_info'],
-    title: 'Velocidad media del corredor por hora',
-    description: 'Por calzada y ventana: longitud total ÷ tiempo total de recorrido (longitud de cada segmento según el kilometraje de su trazado), ahora, a flujo libre y predicha a +15, +30 y +60 min; velocidad típica del perfil histórico (mar–jul) para ese día de la semana y hora, y diferencia ahora − típica.',
-    fn: (dia_monitoreo, predicciones_ultima_ventana, geometria_segmentos, perfil_tipico, dia_info) => {
+    inputs: ['dia_monitoreo', 'predicciones_ultima_ventana', 'geometria_segmentos', 'segmentos_atributos', 'red_shp'],
+    title: 'Velocidad del corredor por hora, calzada, ciudad y vía',
+    description: 'Por ventana, calzada, ciudad (city de Waze) y vía (NomVia2): sumas de longitud y de tiempo de recorrido (longitud ÷ velocidad) ahora, típica, a flujo libre y prevista a +15, +30 y +60 min. La velocidad de cualquier filtro = suma de longitudes ÷ suma de tiempos.',
+    fn: (dia_monitoreo, predicciones_ultima_ventana, geometria_segmentos, segmentos_atributos, red_shp) => {
       const L = new Map();
       for (const r of geometria_segmentos) {
         const km = Number(r.km), o = L.get(r.FROM_TO) || [Infinity, -Infinity];
         o[0] = Math.min(o[0], km); o[1] = Math.max(o[1], km); L.set(r.FROM_TO, o);
       }
+      const A = new Map();
+      for (const r of red_shp) A.set(r.FROM_TO, { city: r.NomMpio || 'Sin dato', via: r.NomVia2 || 'Sin dato', L: NaN });
+      for (const r of segmentos_atributos) A.set(r.FROM_TO, { city: r.city || 'Sin dato', via: r.NomVia2 || 'Sin dato', L: Number(r.longitud_km) });
       const seg = new Map(predicciones_ultima_ventana.map((r) => [r.FROM_TO, r]));
-      const dow = String(dia_info[0].dia_semana);
-      const tip = new Map(perfil_tipico.filter((r) => String(r.dia_semana) === dow).map((r) => [r.sentido + '|' + r.hora, Number(r.vel_tipica_kmh)]));
+      const CAMPOS = ['ahora', 'tipica', 'libre', 'p15', 'p30', 'p60'];
       const acc = new Map();
       for (const r of dia_monitoreo) {
         const s = seg.get(r.FROM_TO); if (!s) continue;
-        const e = L.get(r.FROM_TO), l = e ? Math.max(e[1] - e[0], 0.01) : 0.01;
-        const k = r.hora + '|' + s.sentido;
+        const a = A.get(r.FROM_TO) || { city: 'Sin dato', via: 'Sin dato', L: NaN };
+        const e = L.get(r.FROM_TO);
+        const l = a.L > 0 ? a.L : (e ? Math.max(e[1] - e[0], 0.01) : 0.01);
+        const k = r.hora + '|' + s.sentido + '|' + a.city + '|' + a.via;
         let o = acc.get(k);
-        if (!o) { o = { hora: r.hora, sentido: s.sentido, len: {}, t: {} }; acc.set(k, o); }
-        for (const [c, v] of [['ahora', r.vel], ['libre', s.vel_libre_ref_kmh], ['p15', r.p15], ['p30', r.p30], ['p60', r.p60]]) {
+        if (!o) {
+          o = { hora: r.hora, sentido: s.sentido, city: a.city, via: a.via, km: 0, km_trancon: 0 };
+          for (const c of CAMPOS) { o['L_' + c] = 0; o['T_' + c] = 0; }
+          acc.set(k, o);
+        }
+        o.km += l;
+        if (r.estado === 'trancon') o.km_trancon += l;
+        for (const [c, v] of [['ahora', r.vel], ['tipica', r.tip], ['libre', s.vel_libre_ref_kmh], ['p15', r.p15], ['p30', r.p30], ['p60', r.p60]]) {
           const sp = Number(v);
-          if (sp > 0) { o.len[c] = (o.len[c] || 0) + l; o.t[c] = (o.t[c] || 0) + l / sp; }
+          if (sp > 0) { o['L_' + c] += l; o['T_' + c] += l / sp; }
         }
       }
-      const out = [];
-      for (const o of acc.values()) {
-        const v = (c) => (o.t[c] > 0 ? Math.round(10 * o.len[c] / o.t[c]) / 10 : null);
-        const t = tip.get(o.sentido + '|' + o.hora);
-        const ahora = v('ahora');
-        out.push({ hora: o.hora, sentido: o.sentido, calzada: o.sentido === 'Occidente - Oriente' ? 'Granada → Bogotá' : 'Bogotá → Granada',
-          ahora, tipica: t == null ? null : Math.round(t * 10) / 10, dif_tipica: t == null || ahora == null ? null : Math.round((ahora - t) * 10) / 10,
-          libre: v('libre'), p15: v('p15'), p30: v('p30'), p60: v('p60') });
-      }
-      return out.sort((a, b) => (a.hora < b.hora ? -1 : a.hora > b.hora ? 1 : a.sentido < b.sentido ? -1 : 1));
+      return Array.from(acc.values());
     },
   });
   dash.calc('mejoras', {
@@ -1241,32 +1267,82 @@ window.dash = (function () {
   }
 
   /* ---------------- Velocímetros ---------------- */
+  const CAMPOS_VC = ['ahora', 'tipica', 'libre', 'p15', 'p30', 'p60'];
+  const pasaFiltro = (r) => (S.city === 'todas' || r.city === S.city) && (S.via === 'todas' || r.via === S.via);
+  function velCorredor(lista) {
+    // velocidad del grupo = suma de longitudes ÷ suma de tiempos
+    if (!lista.length) return null;
+    const o = { km: 0, km_trancon: 0 };
+    for (const c of CAMPOS_VC) {
+      let L = 0, T = 0;
+      for (const r of lista) { L += r['L_' + c]; T += r['T_' + c]; }
+      o[c] = T > 0 ? L / T : NaN;
+    }
+    for (const r of lista) { o.km += r.km; o.km_trancon += r.km_trancon; }
+    o.dif_tipica = o.ahora - o.tipica;
+    return o;
+  }
+  function opcionesFiltro() {
+    const todos = rows('corredor_dia');
+    const llenar = (sel, valores, todosTxt, actual) => {
+      const vals = Array.from(new Set(valores)).sort((a, b) => a.localeCompare(b, 'es'));
+      const clave = vals.join('|');
+      if (sel.dataset.clave !== clave) {
+        sel.replaceChildren(new Option(todosTxt, 'todas'), ...vals.map((v) => new Option(v, v)));
+        sel.dataset.clave = clave;
+      }
+      if (actual !== 'todas' && !vals.includes(actual)) actual = 'todas';
+      sel.value = actual;
+      return actual;
+    };
+    S.city = llenar(q('#sel-city'), todos.map((r) => r.city), 'Todas las ciudades', S.city);
+    S.via = llenar(q('#sel-via'), todos.filter((r) => S.city === 'todas' || r.city === S.city).map((r) => r.via), 'Todas las vías', S.via);
+  }
+  function drawCiudadVia(data) {
+    const tb = q('#tabla-ciudad-via tbody');
+    q('#th-cv-pred').textContent = `Prevista +${S.h} (km/h)`;
+    const grupos = d3.groups(data.filter(pasaFiltro), (r) => r.sentido, (r) => r.city, (r) => r.via);
+    const filas = [];
+    for (const [sen, gc] of grupos) for (const [city, gv] of gc) for (const [via, lista] of gv) filas.push({ sen, city, via, ...velCorredor(lista) });
+    filas.sort((a, b) => (CALZ[a.sen] < CALZ[b.sen] ? -1 : CALZ[a.sen] > CALZ[b.sen] ? 1 : a.ahora - b.ahora));
+    tb.replaceChildren(...filas.map((f) => {
+      const tr = document.createElement('tr');
+      const td = (v, cls) => { const e = document.createElement('td'); if (cls) e.className = cls; e.textContent = v; tr.appendChild(e); };
+      const n1 = (v) => (isNaN(v) ? '—' : nf1.format(v));
+      td(CALZ[f.sen], 'gd-l'); td(f.city, 'gd-l'); td(f.via, 'gd-l');
+      td(n1(f.km)); td(n1(f.km_trancon)); td(n1(f.ahora)); td(n1(f.tipica));
+      td(isNaN(f.dif_tipica) ? '—' : (f.dif_tipica > 0 ? '+' : '') + nf1.format(f.dif_tipica)); td(n1(f['p' + S.h]));
+      tr.style.color = f.ahora < 0.5 * f.libre ? 'var(--color-bad)' : '';
+      return tr;
+    }));
+  }
   function drawGauges() {
     const box = q('#gauges');
     if (fail(box, 'corredor_dia')) return;
+    opcionesFiltro();
     const data = rows('corredor_dia').filter((r) => r.hora === S.hora);
+    drawCiudadVia(data);
     if (!box.querySelector('.gd-gauge')) {
       box.replaceChildren(...['Occidente - Oriente', 'Oriente - Occidente'].map((sen) => {
         const g = document.createElement('div'); g.className = 'gd-gauge'; g.dataset.s = sen;
         const svgw = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svgw.setAttribute('viewBox', '0 0 220 128'); svgw.setAttribute('aria-hidden', 'true');
         const info = document.createElement('div');
         const t = document.createElement('div'); t.className = 'gd-gauge-t'; t.textContent = CALZ[sen];
+        const km = document.createElement('div'); km.className = 'gd-gauge-km';
         const v = document.createElement('div'); v.className = 'gd-gauge-v';
-        const vn = document.createElement('span'); vn.dataset.source = 'corredor_dia'; vn.dataset.field = 'ahora'; vn.textContent = '—';
+        const vn = document.createElement('span'); vn.dataset.f = 'ahora'; vn.textContent = '—';
         const u = document.createElement('small'); u.textContent = 'km/h ahora'; v.append(vn, u);
         const rowsBox = document.createElement('div'); rowsBox.className = 'gd-gauge-rows';
         for (const [f, label, color] of [['tipica', 'Típica a esta hora', C.tip], ['dif_tipica', 'Diferencia frente a la típica'], ['libre', 'Velocidad libre'], ['p15', 'Prevista +15 min'], ['p30', 'Prevista +30 min'], ['p60', 'Prevista +60 min']]) {
           const d = document.createElement('div'); const a = document.createElement('span');
           if (color) { const dot = document.createElement('i'); dot.className = 'gd-dot'; dot.style.background = color; dot.style.marginRight = '6px'; a.appendChild(dot); }
           a.appendChild(document.createTextNode(label));
-          const b = document.createElement('b'); b.dataset.source = 'corredor_dia'; b.dataset.field = f; b.textContent = '—';
+          const b = document.createElement('b'); b.dataset.f = f; b.textContent = '—';
           d.append(a, b); rowsBox.appendChild(d);
         }
-        info.append(t, v, rowsBox); g.append(svgw, info); return g;
+        info.append(t, km, v, rowsBox); g.append(svgw, info); return g;
       }));
     }
-    for (const b of qa('#gauges [data-source="corredor_dia"]')) b.dataset.where = `hora=${S.hora}&sentido=${b.closest('.gd-gauge').dataset.s}`;
-    setText('#gauges [data-source="corredor_dia"]', (v, el) => (el.dataset.field === 'dif_tipica' ? (N(v) > 0 ? '+' : '') + nf1.format(N(v)) + ' km/h' : nf1.format(N(v))));
     const MAX = 80, cx = 110, cy = 112, R = 92;
     const ang = (v) => (-90 + 180 * Math.max(0, Math.min(MAX, v)) / MAX) * Math.PI / 180;
     const tick = (svg, cls, val, color, w) => svg.selectAll('line.' + cls).data(isNaN(val) ? [] : [val]).join('line').attr('class', cls)
@@ -1274,7 +1350,14 @@ window.dash = (function () {
       .attr('x2', (d) => cx + (R - 18) * Math.sin(ang(d))).attr('y2', (d) => cy - (R - 18) * Math.cos(ang(d)))
       .style('stroke', color).style('stroke-width', w).style('stroke-linecap', 'round');
     for (const el of qa('.gd-gauge', box)) {
-      const r = data.find((x) => x.sentido === el.dataset.s); if (!r) continue;
+      const r = velCorredor(data.filter((x) => x.sentido === el.dataset.s && pasaFiltro(x)));
+      for (const b of qa('[data-f]', el)) {
+        const v = r ? r[b.dataset.f] : NaN;
+        b.textContent = isNaN(v) ? '—' : b.dataset.f === 'dif_tipica' ? (v > 0 ? '+' : '') + nf1.format(v) + ' km/h' : nf1.format(v);
+      }
+      q('.gd-gauge-km', el).textContent = r ? `${nf1.format(r.km)} km en el filtro · ${nf1.format(r.km_trancon)} km con trancón` : 'Sin segmentos en este filtro';
+      el.style.opacity = r ? '' : '0.45';
+      if (!r) continue;
       const svg = d3.select(el).select('svg');
       const lib = N(r.libre);
       const bandas = [[0, 0.5 * lib, C.v4], [0.5 * lib, 0.75 * lib, C.v3], [0.75 * lib, 0.9 * lib, C.v2], [0.9 * lib, MAX, C.v1]];
@@ -1343,7 +1426,8 @@ window.dash = (function () {
     const ix = indice();
     if (!ix) { tb.replaceChildren(); return; }
     const m = ix.byHora.get(S.hora) || new Map();
-    let t = Array.from(m.values()).filter((o) => o.t && (S.sentido === 'ambas' || ix.seg.get(o.t.FROM_TO)?.sentido === S.sentido));
+    let t = Array.from(m.values()).filter((o) => o.t && (S.sentido === 'ambas' || ix.seg.get(o.t.FROM_TO)?.sentido === S.sentido)
+      && (S.city === 'todas' || o.t.municipio === S.city) && (S.via === 'todas' || o.t.via === S.via));
     const h = S.h, fk = S.filtro;
     const num = (x) => (x == null || x === '' ? NaN : Number(x));
     if (fk === 'cong_ahora') t = t.filter((o) => o.t.estado_ahora === 'Congestionado').sort((a, b) => num(a.d.vel) - num(b.d.vel));
@@ -1395,6 +1479,8 @@ window.dash = (function () {
   }
   q('#sel-capa').addEventListener('change', (e) => { S.capa = e.target.value; drawMonitoreo(); });
   q('#sel-sentido').addEventListener('change', (e) => { S.sentido = e.target.value; drawMonitoreo(); });
+  q('#sel-city').addEventListener('change', (e) => { S.city = e.target.value; S.via = 'todas'; drawMonitoreo(); });
+  q('#sel-via').addEventListener('change', (e) => { S.via = e.target.value; drawMonitoreo(); });
   q('#gd-reset').addEventListener('click', () => {
     S.zoomT = d3.zoomIdentity;
     for (const id of ['#mapa-ahora', '#mapa-pred']) { const svg = d3.select(q(id)).select('svg'); if (!svg.empty() && S.zoomer) svg.transition().duration(reduce ? 0 : 400).call(S.zoomer.transform, d3.zoomIdentity); }
