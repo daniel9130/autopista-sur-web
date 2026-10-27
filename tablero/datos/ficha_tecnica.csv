@@ -1,16 +1,16 @@
 clave,etiqueta,valor
 corredor,Corredor,Autopista Sur (Bogotá – Soacha – Granada)
 fuente,Fuente,Waze for Cities (jams)
-desde,Primer dato,2026-03-12 16:40
-hasta,Último dato,2026-10-23 22:55
-filas_tabla_modelo,Filas tabla de modelado,34456452
-filas_muestra,Filas muestra de entrenamiento,8856901
+desde,Primer dato,2026-03-12 11:40
+hasta,Último dato,2026-10-26 11:55
+filas_tabla_modelo,Filas tabla de modelado,34928679
+filas_muestra,Filas muestra de entrenamiento,15516499
 segmentos_activos,Segmentos monitoreados,597
-filas_entrenamiento,Filas entrenamiento (mar–jul),20140989
-filas_validacion,Filas validación (ago),5280465
-filas_prueba,Filas prueba (sep–oct),9034998
+filas_entrenamiento,Filas entrenamiento (12 mar – 31 jul 2026),20176809
+filas_validacion,Filas validación (1 ago – 31 ago 2026),5280465
+filas_prueba,Filas prueba (1 sep – 26 oct 2026),9471405
 objetivo,Variable objetivo,velocidad promedio de 15 min alrededor del horizonte (km/h)
 modelo,Modelo,"XGBoost 3.4.1 (GPU), error absoluto, con pesos"
-arboles_15,Árboles modelo 15 min,851
-arboles_30,Árboles modelo 30 min,1138
-arboles_60,Árboles modelo 60 min,995
+arboles_15,Árboles modelo 15 min,2152
+arboles_30,Árboles modelo 30 min,2088
+arboles_60,Árboles modelo 60 min,1910
